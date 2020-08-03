@@ -7,6 +7,11 @@ const loginRouter = require('./api/login/router')
 const profileRouter = require('./api/profile/router')
 const familyRouter = require('./api/family/router')
 const educationRouter = require('./api/education/router')
+const workRouter = require('./api/work/router')
+const trainingRouter = require('./api/training/router')
+const knowledgeRouter = require('./api/knowledge/router')
+
+const proofRouter = require('./api/proofs/router')
 
 app.use(express.json());
 app.options('*', cors())
@@ -15,6 +20,16 @@ app.use("/api/login", loginRouter);
 app.use("/api/profile", profileRouter);
 app.use('/api/family', familyRouter)
 app.use('/api/education', educationRouter)
+app.use('/api/work', workRouter)
+app.use('/api/training', trainingRouter)
+app.use('/api/knowledge', knowledgeRouter)
+
+
+app.use('/api/proof', proofRouter)
+
+
+
+
 
 app.get('/user/:id(\\d+)', function(req, res) {
     res.send({ msg: 'params is number ', data: req.params });
