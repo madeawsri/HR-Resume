@@ -25,9 +25,10 @@
                 <li><a href="/proof">ข้อมูลหลักฐานการสมัคร</a></li>
                 <li><a href="/benefits">ข้อมูลสวัสดิการและสิทธิประโยชน์</a></li>
                 <li><a href="/position">ข้อมูลตำแหน่งสมัครงาน</a></li>
-                <li><a href="/jobs">ข้อมูลประกาศรับสมัครงาน</a></li>
+                <li><a href="/jobattr" style="font-weight: bold;">กำหนดคุณลักษณ์ของผู้สมัคร</a></li>
+                <li><a href="/jobs" style="font-weight: bold;">ข้อมูลประกาศรับสมัครงาน</a></li>
                 
-                <li><a href="#">นำข้อมูลออก Resume</a></li>
+                <li><a href="#" style="color:#000099;font-weight: bold;">นำข้อมูลออก Resume</a></li>
 
                 <li><a href="/logout" style="color:red;font-weight: bold;">ออกจากระบบ</a></li>
 

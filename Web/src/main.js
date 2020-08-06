@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
-
+// register globally
 import MaskedInput from 'vue-text-mask'
 Vue.component('masked-input', MaskedInput);
 import Vuelidate from 'vuelidate';
@@ -11,13 +11,23 @@ Vue.use(Vuelidate)
 import VueSimpleAlert from "vue-simple-alert";
 Vue.use(VueSimpleAlert, { reverseButtons: true });
 
+import Multiselect from 'vue-multiselect'
+Vue.component('v-multiselect', Multiselect)
+
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
+
+
 import Config from './config'
 Vue.prototype.$config = Config
 
 import axios from 'axios'
+axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT;
 axios.defaults.headers.get['Accepts'] = 'application/json';
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept';
+
+console.log('url:' + process.env.VUE_APP_API_ENDPOINT)
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false;

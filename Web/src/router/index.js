@@ -17,6 +17,7 @@ import Proof from '../views/jobs/proof.vue';
 import Benefits from '../views/jobs/benefits.vue';
 import Position from '../views/jobs/position.vue';
 import Jobs from '../views/jobs/jobs.vue';
+import Jobattr from '../views/jobs/jobsattr.vue';
 
 Vue.use(VueRouter);
 
@@ -30,6 +31,14 @@ const routes = [{
         path: '/qualify',
         name: 'qualify',
         component: Qualify,
+        meta: {
+            requiresVisitor: true
+        }
+    },
+    {
+        path: '/jobattr',
+        name: 'jobattr',
+        component: Jobattr,
         meta: {
             requiresVisitor: true
         }

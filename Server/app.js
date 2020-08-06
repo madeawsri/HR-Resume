@@ -12,9 +12,11 @@ const trainingRouter = require('./api/training/router')
 const knowledgeRouter = require('./api/knowledge/router')
 
 const proofRouter = require('./api/proofs/router')
+const qualifyRouter = require('./api/qualify/router')
 
 app.use(express.json());
-app.options('*', cors())
+//app.options('*', cors())
+app.use(cors({ origin: 'http://192.168.2.2:8080' }))
 
 app.use("/api/login", loginRouter);
 app.use("/api/profile", profileRouter);
@@ -24,12 +26,11 @@ app.use('/api/work', workRouter)
 app.use('/api/training', trainingRouter)
 app.use('/api/knowledge', knowledgeRouter)
 
-
 app.use('/api/proof', proofRouter)
-
-
-
-
+app.use('/api/qualify', qualifyRouter)
+app.use('/api/position', require('./api/position/router'))
+app.use('/api/benefits', require('./api/benefits/router'))
+app.use('/api/jobattr', require('./api/jobattr/router'))
 
 app.get('/user/:id(\\d+)', function(req, res) {
     res.send({ msg: 'params is number ', data: req.params });

@@ -62,7 +62,7 @@ export default {
         memberLayout
     },
     created() {
-this.showDataAll();
+        this.showDataAll();
     },
     data() {
         return {
@@ -76,16 +76,7 @@ this.showDataAll();
             dataForm: {
                 topic: ""
             },
-            listDatas: [{
-                id: 1,
-                topic: 'อายุ 18 ปี บริบูรณ์ '
-            }, {
-                id: 2,
-                topic: 'มีความอดทน ขยัน รับผิดชอบสูง'
-            }, {
-                id: 3,
-                topic: 'สุขภาพสมบูรณ์แข็งแรง'
-            }]
+            listDatas: []
         }
     },
     methods: {
@@ -161,7 +152,7 @@ this.showDataAll();
                 this.alertFail()
             }
         },
-       async delData(index, keyDB) {
+        async delData(index, keyDB) {
             try {
                 const {
                     data
@@ -180,16 +171,16 @@ this.showDataAll();
             }
 
         },
-        async showDataAll(){
-try {
+        async showDataAll() {
+            try {
                 const {
                     data
                 } = await this.$http.get(`api/proof`)
 
                 if (data.success == 1) {
-                    
+
                     this.listDatas = data.data
-                    
+
                 } else {
                     this.alertFail()
                 }

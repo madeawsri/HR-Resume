@@ -43,7 +43,7 @@ const actions = {
     retrieveToken: async function(context, credentials) {
         await this._vm.$http.post('/api/login', credentials)
             .then(response => {
-                // console.log(response)
+                console.log(response)
                 const token = response.data.token
                 if (response.data.success) {
                     localStorage.setItem('access_token', token)

@@ -34,7 +34,7 @@
                                         <label>ชื่อ-สกุล (ไทย)</label>
                                         <input placeholder="" type="text" v-model="profileData.nameth" name="nameth">
                                     </div>
-                                    
+
                                     <label>เบอร์โทร</label>
                                     <input placeholder="" type="text" v-model="profileData.phone" name="phone">
 
@@ -127,15 +127,15 @@ import memberLayout from '@/components/member-layouts/index'
 
 export default {
     created() {
-        
+
         let userData = JSON.parse(this.$store.state.user.data)
         this.profileData.nameth = userData.nameth
         this.profileData.idcard = userData.idcard
         this.profileData.birthday = userData.birthday
+
         this.getProfile();
-        
+
         this.loadMyPicture()
-        
 
     },
     data() {
@@ -171,7 +171,7 @@ export default {
         memberLayout,
     },
     methods: {
-        
+
         alertSuccess: function () {
             this.$fire({
                 title: "ข้อมูลส่วนตัว",
@@ -250,12 +250,11 @@ export default {
                 const {
                     data
                 } = await this.$http.get(`api/profile/${this.profileData.idcard}`)
-                if (data.success) {
-                  this.profileData = data.data
-                  this.profileData.idcard = this.profileData.profileid
-                  console.log(this.profileData)
-                  
-                    
+                if (data.success && data.data) {
+                    this.profileData = data.data
+                    this.profileData.idcard = this.profileData.profileid
+                    console.log(this.data)
+
                 }
             } catch (err) {
                 console.log(err)
