@@ -12,15 +12,19 @@ module.exports = {
         pool.query(
             `insert into ${tableName} (
                 topic,
-                qualifys,
-                proofs,
-                benefits
+                datein,
+                dateout,
+                jobattrid,
+                positionid,
+                num
             ) 
-                values( ?,?,?,?)`, [
+                values( ?,?,?,?,?,?)`, [
                 data.topic,
-                data.qualifys,
-                data.proofs,
-                data.benefits
+                data.datein,
+                data.dateout,
+                data.jobattr,
+                data.position,
+                data.num
             ],
             (error, results, fields) => {
                 if (error) {
@@ -34,19 +38,21 @@ module.exports = {
         console.log(data)
         pool.query(
             `UPDATE  ${tableName} SET 
-
-                topic=?,
-                qualifys=?,
-                proofs=?,
-                benefits=?
+            topic=?,
+            datein=?,
+            dateout=?,
+            jobattrid=?,
+            positionid=?,
+            num=?
 
             WHERE  id=? `, [
                 data.topic,
-                data.qualifys,
-                data.proofs,
-                data.benefits,
+                data.datein,
+                data.dateout,
+                data.jobattr,
+                data.position,
+                data.num,
                 data.id
-
             ],
             (error, results, fields) => {
                 if (error) {

@@ -31,6 +31,8 @@ app.use('/api/qualify', qualifyRouter)
 app.use('/api/position', require('./api/position/router'))
 app.use('/api/benefits', require('./api/benefits/router'))
 app.use('/api/jobattr', require('./api/jobattr/router'))
+app.use('/api/jobs', require('./api/jobs/router'))
+
 
 app.get('/user/:id(\\d+)', function(req, res) {
     res.send({ msg: 'params is number ', data: req.params });

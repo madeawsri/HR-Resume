@@ -14,9 +14,10 @@ Vue.use(VueSimpleAlert, { reverseButtons: true });
 import Multiselect from 'vue-multiselect'
 Vue.component('v-multiselect', Multiselect)
 
-import vSelect from 'vue-select'
-Vue.component('v-select', vSelect)
-
+//import vSelect from 'vue-select'
+//Vue.component('v-select', vSelect)
+import DatePicker from 'vue2-datepicker';
+Vue.component('v-date', DatePicker)
 
 import Config from './config'
 Vue.prototype.$config = Config

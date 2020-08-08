@@ -1,4 +1,4 @@
-<template>
+<template lang="th">
 <memberLayout>
     <div slot="content">
 
@@ -13,42 +13,26 @@
                         <div class="submit-page">
 
                             <div class="form">
-                                <h5> ตั้งชื่อคุณลักษณะผู้สมัคร </h5>
-                                <input type="text" ref="topic" placeholder="ตั้งชื่อคุณลักษณะผู้สมัคร " v-model="dataForm.topic" v-focus required />
+                                <h5> เลือกตำแหน่งเปิดรับสมัคร </h5>
+                                <v-multiselect placeholder=" ตำแหน่งงาน " label="topic" track-by="topic" v-model="dataForm.position" :options="lstPositions" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" required></v-multiselect>
+
                             </div>
 
                             <div class="form">
-                                <h5> เลือกคุณสมบัติผู้สมัคร </h5>
-                                <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " 
-                                label="topic" 
-                                track-by="topic"
-                                v-model="dataForm.benefits" 
-                                :options="lstBenefits" 
-                                :multiple="true" 
-                                :close-on-select="false" 
-                                :hide-selected="true" 
-                                :show-labels="false" 
-                                ></v-multiselect>
-
-                            </div>
-                            <div class="form">
-                                <h5> เลือกหลักฐานผู้สมัคร </h5>
-                                <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " 
-                                label="topic" 
-                                track-by="topic"
-                                v-model="dataForm.qualifys" 
-                                :options="lstQualifys" 
-                                :multiple="true" 
-                                :close-on-select="false"  
-                                :hide-selected="true" 
-                                :show-labels="false" />
-                            </div>
-                            <div class="form">
-                                <h5> เลือกสวัสดิการและผลประโยชน์ </h5>
-                                <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " track-by="topic" label="topic" v-model="dataForm.proofs" :options="lstProofs" :multiple="true" :close-on-select="false"  :hide-selected="true" :show-labels="false" />
+                                <h5> จำนวนผู้รับเข้าทำงาน </h5>
+                                <input type="number" maxlength="2" placeholder="จำนวนผู้รับเข้าทำงาน " v-model="dataForm.num" required />
                             </div>
 
-                            <button type="submit" class="button margin-bottom-30 float-xl-right "> {{editForm.modeTitle}} <i class="fa fa-arrow-circle-right"></i></button>
+                            <div class="form">
+                                <h5> เลือกคุณลักษณะผู้สมัคร </h5>
+                                <v-multiselect placeholder=" คุณลักษณะผู้สมัคร " label="topic" track-by="topic" v-model="dataForm.jobattr" :options="lstJobattrs" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" />
+                            </div>
+                            <div class="form">
+                                <h5> ระยะเวลาในการประกาศรับสมัคร </h5>
+                                <v-date v-model="dataForm.regdate" class="datetime-picker"  value-type="format" format="YYYY-MM-DD"     :lang="dateFormatThai" type="date" range placeholder="Select date range"></v-date>
+                            </div>
+
+                            <button type="submit" class="button margin-bottom-30  float-xl-right "> {{editForm.modeTitle}} <i class="fa fa-arrow-circle-right"></i></button>
 
                         </div>
                     </form>
@@ -63,11 +47,16 @@
                     <table class="manage-table responsive-table">
 
                         <tr>
-                            <th width="80%"><i class="fa fa-file-text"></i> รายงาน{{headTitle}}</th>
-                            <th width="20%"></th>
+                            <th width="25%"><i class="fa fa-tasks"></i> ตำแหน่ง / คน</th>
+                            <th width="30%"><i class="fa fa-file-text"></i> คุณลักษณะผู้สมัคร</th>
+                            <th width="25%"><i class="fa fa-file-text"></i> ระยะเวลารับสมัคร</th>
+                            <th width="15%"></th>
+
                         </tr>
 
                         <tr style="padding: 5px 5px;" v-for="(item, index) in listDatas" :key="index">
+                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> <i class="fa fa-check"></i> xxxx / 2 </td>
+                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> <i class="fa fa-check"></i> {{item.topic}}</td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> <i class="fa fa-check"></i> {{item.topic}}</td>
                             <td style="padding: 5px 5px;">
                                 <a href="#" @click="preEditData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-pencil"></i> แก้ไข</a>
@@ -100,9 +89,17 @@ export default {
     },
     data() {
         return {
-
+            dateFormatThai: {
+                'days': ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'],
+                'months': ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+                'pickers': ['7 วันถัดไป', '30 วันถัดไป', '7 ที่ผ่านมา', '30 วันที่ผ่านมา'],
+                'placeholder': {
+                    'date': 'เลือกวันที่',
+                    'dateRange': 'เลือกช่วงวันที่'
+                }
+            },
             isLoading: false,
-            headTitle: 'คุณลักษณะผู้สมัคร',
+            headTitle: 'ประกาศรับสมัครงาน',
             editForm: {
                 keydb: 0,
                 index: 0,
@@ -110,23 +107,18 @@ export default {
                 modeTitle: "บันทึกข้อมูล"
             },
             dataForm: {
-                topic: '',
-                qualifys: [],
-                benefits: [],
-                proofs: []
-
+                position: [],
+                num: 1,
+                regdate: ['2020-01-01','2020-02-02'],
+                jobattr: []
             },
             dataFormReset: {
                 ...this.dataForm
             },
-            lstBenefits: [],
-            lstQualifys: [],
-            lstProofs: [],
+            lstPositions: [],
+            lstJobattrs: [],
 
-            listDatas: [{
-                id: 1,
-                topic: 'xxx'
-            }] // data in table
+            listDatas: [] // data in table
 
         }
     },
@@ -135,15 +127,13 @@ export default {
         getLstDatas: async function () {
             try {
 
-                const dataQ = await this.$http.get('api/qualify')
-                const dataB = await this.$http.get('api/benefits')
-                const dataP = await this.$http.get('api/Proof')
+                const dataP = await this.$http.get('api/position')
+                const dataJ = await this.$http.get('api/jobattr')
 
-                this.$http.all([dataQ, dataB, dataP]).then(
+                this.$http.all([dataP, dataJ]).then(
                     this.$http.spread((...res) => {
-                        this.lstQualifys = res[0].data.data
-                        this.lstBenefits = res[1].data.data
-                        this.lstProofs = res[2].data.data
+                        this.lstPositions = res[0].data.data
+                        this.lstJobattrs = res[1].data.data
                     })
                 )
 
@@ -173,19 +163,29 @@ export default {
         async sendData() {
             try {
 
+                //console.log(this.dataForm.regdate[0])
+
                 if (this.editForm.mode == "save") {
                     console.log('----save---')
 
                     const dataForm2 = {
                         ...this.dataForm
                     }
-                    dataForm2.qualifys = JSON.stringify(dataForm2.qualifys)
-                    dataForm2.proofs = JSON.stringify(dataForm2.proofs)
-                    dataForm2.benefits = JSON.stringify(dataForm2.benefits)
+                    console.log(dataForm2.position)
+                    dataForm2.topic = dataForm2.position.topic
+                    dataForm2.position = JSON.stringify(dataForm2.position)
+                    dataForm2.jobattr = JSON.stringify({
+                        id: this.dataForm.jobattr.id,
+                        topic: this.dataForm.jobattr.topic
+                    })
+                    dataForm2.datein = dataForm2.regdate[0]
+                    dataForm2.dateout = dataForm2.regdate[1]
+
+                    
 
                     const {
                         data
-                    } = await this.$http.post(`api/jobattr`, dataForm2)
+                    } = await this.$http.post(`api/jobs`, dataForm2)
 
                     console.log(data)
 
@@ -197,7 +197,7 @@ export default {
                         this.dataForm = {
                             ...this.dataFormReset
                         }
-                        this.focusInput('topic')
+                      //  this.focusInput('topic')
                         this.alertSuccess()
                     } else {
                         this.alertFail()
@@ -208,17 +208,21 @@ export default {
                     const dataForm2 = {
                         ...this.dataForm
                     }
-                    dataForm2.qualifys = JSON.stringify(dataForm2.qualifys)
-                    dataForm2.proofs = JSON.stringify(dataForm2.proofs)
-                    dataForm2.benefits = JSON.stringify(dataForm2.benefits)
+                    dataForm2.position = JSON.stringify(dataForm2.position)
+                    dataForm2.jobattr = JSON.stringify({
+                        id: this.dataForm.jobattr.id,
+                        topic: this.dataForm.jobattr.topic
+                    })
+                    dataForm2.datein = dataForm2.regdate[0]
+                    dataForm2.dateout = dataForm2.regdate[1]
 
                     const {
                         data
-                    } = await this.$http.post(`api/jobattr/${this.editForm.keydb}`, dataForm2)
+                    } = await this.$http.post(`api/jobs/${this.editForm.keydb}`, dataForm2)
 
                     if (data.success == 1) {
                         this.listDatas[this.editForm.index].topic = this.dataForm.topic
-                        this.focusInput('topic')
+                        //this.focusInput('topic')
                         this.alertSuccess('แก้ไขข้อมูลเรียบร้อย.')
                         this.dataForm = {
                             ...this.dataFormReset
@@ -233,17 +237,18 @@ export default {
                     }
 
                 }
+
             } catch (e) {
                 console.log(e)
                 this.alertFail()
             }
         },
-      async  delData(index,keyDB) {
-            
+        async delData(index, keyDB) {
+
             try {
                 const {
                     data
-                } = await this.$http.delete(`api/jobattr/${keyDB}`)
+                } = await this.$http.delete(`api/jobs/${keyDB}`)
 
                 if (data.success == 1) {
                     this.listDatas.splice(index, 1);
@@ -257,7 +262,7 @@ export default {
 
             }
         },
-       async preEditData(index, keyDB) {
+        async preEditData(index, keyDB) {
 
             this.editForm.keydb = keyDB
             this.editForm.index = index
@@ -267,16 +272,15 @@ export default {
             try {
                 const {
                     data
-                } = await this.$http.get(`api/jobattr/${keyDB}`)
+                } = await this.$http.get(`api/jobs/${keyDB}`)
 
                 if (data.success == 1) {
 
-                     data.data.benefits = JSON.parse(data.data.benefits)
-                     data.data.qualifys = JSON.parse(data.data.qualifys)
-                     data.data.proofs = JSON.parse(data.data.proofs)
-                    
+                    data.data.benefits = JSON.parse(data.data.benefits)
+                    data.data.qualifys = JSON.parse(data.data.qualifys)
+                    data.data.proofs = JSON.parse(data.data.proofs)
+
                     this.dataForm = data.data
-                    
 
                 } else {
                     this.alertFail()
@@ -296,7 +300,7 @@ export default {
             try {
                 const {
                     data
-                } = await this.$http.get(`api/jobattr`)
+                } = await this.$http.get(`api/jobs`)
 
                 if (data.success == 1) {
 
@@ -316,7 +320,13 @@ export default {
 }
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style><style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
+<style src="vue2-datepicker/index.css"></style><style>
+.multiselect__single {
+    height: 30px;
+}
+
 .vs--searchable .vs__dropdown-toggle {
     cursor: text;
     height: 48px;
@@ -346,5 +356,7 @@ export default {
     color: slategrey;
 }
 
-
+.mx-input {
+    height: 48px;
+}
 </style>
