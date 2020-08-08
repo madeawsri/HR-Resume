@@ -29,7 +29,7 @@
                             </div>
                             <div class="form">
                                 <h5> ระยะเวลาในการประกาศรับสมัคร </h5>
-                                <v-date v-model="dataForm.regdate" class="datetime-picker"  value-type="format" format="YYYY-MM-DD"     :lang="dateFormatThai" type="date" range placeholder="Select date range"></v-date>
+                                <v-date v-model="dataForm.regdate" class="datetime-picker" value-type="format" format="YYYY-MM-DD" :lang="dateFormatThai" type="date" range placeholder="Select date range"></v-date>
                             </div>
 
                             <button type="submit" class="button margin-bottom-30  float-xl-right "> {{editForm.modeTitle}} <i class="fa fa-arrow-circle-right"></i></button>
@@ -48,16 +48,16 @@
 
                         <tr>
                             <th width="25%"><i class="fa fa-tasks"></i> ตำแหน่ง / คน</th>
-                            <th width="30%"><i class="fa fa-file-text"></i> คุณลักษณะผู้สมัคร</th>
+                            <th width="20%"><i class="fa fa-file-text"></i> คุณลักษณะผู้สมัคร</th>
                             <th width="25%"><i class="fa fa-file-text"></i> ระยะเวลารับสมัคร</th>
-                            <th width="15%"></th>
+                            <th width="30%"></th>
 
                         </tr>
 
                         <tr style="padding: 5px 5px;" v-for="(item, index) in listDatas" :key="index">
-                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> <i class="fa fa-check"></i> xxxx / 2 </td>
-                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> <i class="fa fa-check"></i> {{item.topic}}</td>
-                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> <i class="fa fa-check"></i> {{item.topic}}</td>
+                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> <i class="fa fa-check"></i> {{item.topic}} / {{item.num}} คน</td>
+                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{ item.jobattrid | stringToJson }}</td>
+                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.datein | moment("DD MMMM YYYY")}} ถีง {{item.dateout | moment("DD MMMM YYYY")}}</td>
                             <td style="padding: 5px 5px;">
                                 <a href="#" @click="preEditData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-pencil"></i> แก้ไข</a>
                                 <a href="#" @click="delData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-remove"></i> ลบ </a>
@@ -78,10 +78,15 @@
 <script>
 import "vue-select/src/scss/vue-select.scss";
 import memberLayout from '@/components/member-layouts/index'
+//import moment from 'moment'
 
 export default {
     components: {
-        memberLayout
+        memberLayout,
+        //  moment
+    },
+    mounted() {
+
     },
     async created() {
         await this.getLstDatas();
@@ -109,7 +114,7 @@ export default {
             dataForm: {
                 position: [],
                 num: 1,
-                regdate: ['2020-01-01','2020-02-02'],
+                regdate: ['2020-01-01', '2020-02-02'],
                 jobattr: []
             },
             dataFormReset: {
@@ -163,15 +168,13 @@ export default {
         async sendData() {
             try {
 
-                //console.log(this.dataForm.regdate[0])
-
                 if (this.editForm.mode == "save") {
                     console.log('----save---')
 
                     const dataForm2 = {
                         ...this.dataForm
                     }
-                    console.log(dataForm2.position)
+                    //console.log(dataForm2.position)
                     dataForm2.topic = dataForm2.position.topic
                     dataForm2.position = JSON.stringify(dataForm2.position)
                     dataForm2.jobattr = JSON.stringify({
@@ -180,8 +183,6 @@ export default {
                     })
                     dataForm2.datein = dataForm2.regdate[0]
                     dataForm2.dateout = dataForm2.regdate[1]
-
-                    
 
                     const {
                         data
@@ -192,12 +193,13 @@ export default {
                     if (data.success == 1) {
                         this.listDatas.push({
                             id: data.data.insertId,
-                            topic: this.dataForm.topic
+                            topic: dataForm2.topic,
+
                         })
                         this.dataForm = {
                             ...this.dataFormReset
                         }
-                      //  this.focusInput('topic')
+                        //  this.focusInput('topic')
                         this.alertSuccess()
                     } else {
                         this.alertFail()
@@ -221,8 +223,16 @@ export default {
                     } = await this.$http.post(`api/jobs/${this.editForm.keydb}`, dataForm2)
 
                     if (data.success == 1) {
+
                         this.listDatas[this.editForm.index].topic = this.dataForm.topic
-                        //this.focusInput('topic')
+                        this.listDatas[this.editForm.index].jobattrid = JSON.stringify({
+                            id: this.dataForm.jobattr.id,
+                            topic: this.dataForm.jobattr.topic
+                        })
+                        this.listDatas[this.editForm.index].datein = dataForm2.datein
+                        this.listDatas[this.editForm.index].dateout = dataForm2.dateout
+                        this.listDatas[this.editForm.index].num = dataForm2.num
+
                         this.alertSuccess('แก้ไขข้อมูลเรียบร้อย.')
                         this.dataForm = {
                             ...this.dataFormReset
@@ -276,11 +286,12 @@ export default {
 
                 if (data.success == 1) {
 
-                    data.data.benefits = JSON.parse(data.data.benefits)
-                    data.data.qualifys = JSON.parse(data.data.qualifys)
-                    data.data.proofs = JSON.parse(data.data.proofs)
-
-                    this.dataForm = data.data
+                    this.dataForm = {
+                        position: JSON.parse(data.data.positionid),
+                        jobattr: JSON.parse(data.data.jobattrid),
+                        num: data.data.num,
+                        regdate: [data.data.datein, data.data.dateout]
+                    }
 
                 } else {
                     this.alertFail()
@@ -305,6 +316,8 @@ export default {
                 if (data.success == 1) {
 
                     this.listDatas = data.data
+
+                    console.log(this.listDatas)
 
                 } else {
                     this.alertFail()

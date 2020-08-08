@@ -2,7 +2,8 @@
 
 const state = {
     data: localStorage.getItem('access_data') || null,
-    token: localStorage.getItem('access_token') || null
+    token: localStorage.getItem('access_token') || null,
+    status: 0
 }
 
 const getters = {
@@ -13,6 +14,12 @@ const getters = {
     },
     dataLogged: (state) => {
         return state.data
+    },
+    isAdmin: (state) => {
+        return state.status === 3
+    },
+    isWebAdmin: (state) => {
+        return state.status === 2
     }
 }
 
@@ -25,6 +32,9 @@ const mutations = {
     destroyToken: (state) => {
         state.token = null
         state.data = null
+    },
+    userStatus: (state, data) => {
+        state.status = data
     }
 }
 

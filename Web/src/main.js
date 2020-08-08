@@ -19,6 +19,19 @@ Vue.component('v-multiselect', Multiselect)
 import DatePicker from 'vue2-datepicker';
 Vue.component('v-date', DatePicker)
 
+//import moment from 'moment'
+//import 'moment/locale/th'
+//moment.locale("th")
+
+//Vue.use(require('vue-moment'));
+
+const moment = require('moment')
+require('moment/locale/th')
+Vue.use(require('vue-moment'), {
+    moment
+})
+
+
 import Config from './config'
 Vue.prototype.$config = Config
 
@@ -56,6 +69,12 @@ Vue.directive('focus', {
     inserted: function(el) {
         el.focus()
     }
+})
+
+Vue.filter('stringToJson', function(value) {
+    let x = JSON.parse(value)
+        //console.log(x)
+    return x.topic
 })
 
 

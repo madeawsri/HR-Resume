@@ -9928,10 +9928,23 @@ CREATE TABLE IF NOT EXISTS `hr_benefits` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `topic` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_benefits: ~0 rows (approximately)
+-- Dumping data for table jobksl_db.hr_benefits: ~11 rows (approximately)
 /*!40000 ALTER TABLE `hr_benefits` DISABLE KEYS */;
+REPLACE INTO `hr_benefits` (`id`, `topic`) VALUES
+	(1, 'โบนัสประจำปี'),
+	(2, 'ค่าวิชาชีพ'),
+	(3, 'เบี้ยขยันประจำสัปดาห์'),
+	(4, 'เงินกองทุนสำรองเลี้ยงชีพ'),
+	(5, 'ปรับค่าจ้างประจำปี'),
+	(6, 'ปรับตำแนห่ง / ปรับระดับ ประจำปี'),
+	(7, 'เงินช่วยเหลืองานพิธีต่างๆ '),
+	(8, 'เครื่องแบบพนักงาน'),
+	(9, 'ทุนการศึกษาบุตรพนักงาน'),
+	(10, 'บ้านพักสวัสดิการ'),
+	(11, 'ตรวจสุขภาพประจำปี / ประกันชีวิต'),
+	(12, 'งานเลี้ยงสังสรรค์ประจำปี');
 /*!40000 ALTER TABLE `hr_benefits` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_depart
@@ -9959,7 +9972,7 @@ CREATE TABLE IF NOT EXISTS `hr_education` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_education: ~5 rows (approximately)
+-- Dumping data for table jobksl_db.hr_education: ~6 rows (approximately)
 /*!40000 ALTER TABLE `hr_education` DISABLE KEYS */;
 REPLACE INTO `hr_education` (`id`, `profileid`, `levelid`, `institution`, `subject`, `begintime`, `endtime`, `gpa`, `flag`) VALUES
 	(2, '1 1111 11111 11 1', 1, 'โรงเรียนชุมชนบ้านหนองโก', 'วิทย-คณิตฯ', '2530', '2537', '3.55', NULL),
@@ -9976,7 +9989,7 @@ CREATE TABLE IF NOT EXISTS `hr_education_level` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_education_level: ~5 rows (approximately)
+-- Dumping data for table jobksl_db.hr_education_level: ~4 rows (approximately)
 /*!40000 ALTER TABLE `hr_education_level` DISABLE KEYS */;
 REPLACE INTO `hr_education_level` (`id`, `topic`) VALUES
 	(1, 'ประถมศึกษา'),
@@ -10026,25 +10039,41 @@ CREATE TABLE IF NOT EXISTS `hr_family` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_family: ~1 rows (approximately)
+-- Dumping data for table jobksl_db.hr_family: ~0 rows (approximately)
 /*!40000 ALTER TABLE `hr_family` DISABLE KEYS */;
 REPLACE INTO `hr_family` (`id`, `profileid`, `namewh`, `career`, `workplace`, `position`, `numchild`, `numchildedu`, `numchildeduno`, `numchildwork`, `father`, `fage`, `fnation`, `forigin`, `flive`, `mother`, `mage`, `mnation`, `morigin`, `mlive`, `nameo`, `phoneo`, `addro`, `relationo`) VALUES
 	(1, '1 1111 11111 11 1', 'xxxx', 'ค้าขาย', 'บ้าน', 'แม่บ้าน', 2, 3, 2, 1, 'ปปปป', 60, 'ไวาส', 'ไทย', 1, 'ำไพหกดห', 50, 'ไทย', 'ไทย', 1, 'ฟฟฟฟ', '0956855465', 'xxxไไไ', 'ไไไไไไ');
 /*!40000 ALTER TABLE `hr_family` ENABLE KEYS */;
 
+-- Dumping structure for table jobksl_db.hr_jobattr
+CREATE TABLE IF NOT EXISTS `hr_jobattr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `topic` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `qualifys` varchar(1000) CHARACTER SET utf8 DEFAULT NULL,
+  `proofs` varchar(1000) CHARACTER SET utf8 DEFAULT NULL,
+  `benefits` varchar(1000) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table jobksl_db.hr_jobattr: ~2 rows (approximately)
+/*!40000 ALTER TABLE `hr_jobattr` DISABLE KEYS */;
+REPLACE INTO `hr_jobattr` (`id`, `topic`, `qualifys`, `proofs`, `benefits`) VALUES
+	(2, 'แผนกโรงกลึง', '[{"id":1,"topic":"อายุ 18 ปี บริบูรณ์"}]', '[{"id":16,"topic":"รูปถ่ายขนาด 1 นิ้ว 2 แผ่น"}]', '[{"id":1,"topic":"โบนัสประจำปี"},{"id":2,"topic":"ค่าวิชาชีพ"},{"id":3,"topic":"เบี้ยขยันประจำสัปดาห์"}]'),
+	(3, NULL, NULL, NULL, NULL);
+/*!40000 ALTER TABLE `hr_jobattr` ENABLE KEYS */;
+
 -- Dumping structure for table jobksl_db.hr_jobs
 CREATE TABLE IF NOT EXISTS `hr_jobs` (
-  `jobid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `topic` varchar(150) DEFAULT NULL,
-  `positionid` int(10) unsigned DEFAULT NULL,
-  `qualificationsid` varchar(150) DEFAULT NULL,
-  `proofid` varchar(150) DEFAULT NULL,
-  `benefitsid` varchar(150) DEFAULT NULL,
-  `open` int(10) unsigned DEFAULT NULL,
-  `closed` int(10) unsigned DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `topic` varchar(200) DEFAULT NULL,
+  `regdate` varchar(100) DEFAULT NULL,
+  `jobattrid` varchar(100) DEFAULT NULL,
+  `positionid` varchar(100) DEFAULT NULL,
+  `num` tinyint(3) unsigned DEFAULT '1',
   `flag` tinyint(3) unsigned DEFAULT '1',
-  `departid` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`jobid`)
+  `dateout` varchar(50) DEFAULT NULL,
+  `datein` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table jobksl_db.hr_jobs: ~0 rows (approximately)
@@ -10054,14 +10083,33 @@ CREATE TABLE IF NOT EXISTS `hr_jobs` (
 -- Dumping structure for table jobksl_db.hr_knowledge
 CREATE TABLE IF NOT EXISTS `hr_knowledge` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `profileid` int(10) unsigned DEFAULT NULL,
-  `topic` varchar(150) DEFAULT NULL,
+  `profileid` varchar(50) DEFAULT NULL,
+  `topic` varchar(255) DEFAULT NULL,
   `detail` varchar(255) DEFAULT NULL,
+  `reng` tinyint(3) unsigned DEFAULT NULL,
+  `weng` tinyint(3) unsigned DEFAULT NULL,
+  `seng` tinyint(3) unsigned DEFAULT NULL,
+  `rch` tinyint(3) unsigned DEFAULT NULL,
+  `wch` tinyint(3) unsigned DEFAULT NULL,
+  `sch` tinyint(3) unsigned DEFAULT NULL,
+  `oth` varchar(100) DEFAULT NULL,
+  `roth` tinyint(3) unsigned DEFAULT NULL,
+  `woth` tinyint(3) unsigned DEFAULT NULL,
+  `soth` tinyint(3) unsigned DEFAULT NULL,
+  `workname` varchar(100) DEFAULT NULL,
+  `raw` tinyint(4) DEFAULT '0',
+  `certcarid` int(11) DEFAULT '0',
+  `sick` tinyint(4) DEFAULT '0',
+  `sickname` varchar(100) DEFAULT NULL,
+  `workid` int(11) DEFAULT '0',
+  `rawok` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table jobksl_db.hr_knowledge: ~0 rows (approximately)
 /*!40000 ALTER TABLE `hr_knowledge` DISABLE KEYS */;
+REPLACE INTO `hr_knowledge` (`id`, `profileid`, `topic`, `detail`, `reng`, `weng`, `seng`, `rch`, `wch`, `sch`, `oth`, `roth`, `woth`, `soth`, `workname`, `raw`, `certcarid`, `sick`, `sickname`, `workid`, `rawok`) VALUES
+	(1, '1 1111 11111 11 1', 'พัฒนาโปรแกรมคอมพิวเตอร์ต่างๆ ', 'เครื่องพิมพ์เอกสาร เครื่อง Scan', 25, 50, 25, 25, 25, 25, NULL, 25, 25, 25, 'คอมพิวเตอร์ ', 0, 1, 0, 'xxxx', 1, 0);
 /*!40000 ALTER TABLE `hr_knowledge` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_position
@@ -10069,10 +10117,13 @@ CREATE TABLE IF NOT EXISTS `hr_position` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `topic` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_position: ~0 rows (approximately)
+-- Dumping data for table jobksl_db.hr_position: ~2 rows (approximately)
 /*!40000 ALTER TABLE `hr_position` DISABLE KEYS */;
+REPLACE INTO `hr_position` (`id`, `topic`) VALUES
+	(1, 'เจ้าหน้าที่วิเคราะห์และประมวลผล'),
+	(2, 'ช่างกลึง');
 /*!40000 ALTER TABLE `hr_position` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_profiles
@@ -10100,10 +10151,12 @@ CREATE TABLE IF NOT EXISTS `hr_profiles` (
   PRIMARY KEY (`profileid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_profiles: ~2 rows (approximately)
+-- Dumping data for table jobksl_db.hr_profiles: ~4 rows (approximately)
 /*!40000 ALTER TABLE `hr_profiles` DISABLE KEYS */;
 REPLACE INTO `hr_profiles` (`profileid`, `nameth`, `nameen`, `addr`, `addrcur`, `flagaddr`, `lineid`, `email`, `phone`, `birthday`, `age`, `height`, `weight`, `nation`, `origin`, `religion`, `idcard`, `placecard`, `expiredcard`, `regtime`) VALUES
-	('1 1111 11111 11 1', 'อุทยาน ภูกิ่งเงิน', 'uttanyan ', '43 หมู่ 10 ถ.น้ำพอง-กระนวน\r\nอ.น้ำพอง ต.น้ำพอง \r\nจ.ขอนแก่น 40140', NULL, NULL, NULL, 'ีutaan@gmail.com', '0855124512', '11/12/2525', 37, 188, 110, 'ไทย', 'ไทย', 'พุทธ', NULL, '11/12/2525', '11/12/2525', '2020-7-23 17:23'),
+	('1 1111 11111 11 1', 'อุทยาน ภูกิ่งเงิน', 'uttanyan xxxxx', '43 หมู่ 10 ถ.น้ำพอง-กระนวน\r\nอ.น้ำพอง ต.น้ำพอง \r\nจ.ขอนแก่น 40140', NULL, NULL, NULL, 'ีutaan@gmail.com', '0855124512', '11/12/2525', 37, 188, 110, 'ไทย', 'ไทย', 'พุทธ', NULL, '11/12/2525', '11/12/2525', '2020-8-3 14:21'),
+	('2 2222 22222 22 2', 'xxxx xx', 'xxxxxxxxx', '', NULL, NULL, NULL, '', '', '10/10/2525', 37, 0, 0, '', '', '', NULL, '', '', '2020-8-3 14:34'),
+	('3 3515 21456 46 5', 'ทดสอบ ทดสอบ', 'test test', '', NULL, NULL, NULL, '', '', '13/01/2563', 0, 0, 0, '', '', '', NULL, '', '', '2020-8-3 14:41'),
 	('9 9999 99999 99 9', NULL, 'utayan xxxxxx', NULL, NULL, NULL, NULL, 'utayan@gmail.com', '0958462541', '11/12/2525', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-7-22 8:58');
 /*!40000 ALTER TABLE `hr_profiles` ENABLE KEYS */;
 
@@ -10112,10 +10165,17 @@ CREATE TABLE IF NOT EXISTS `hr_proofs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `topic` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_proofs: ~0 rows (approximately)
+-- Dumping data for table jobksl_db.hr_proofs: ~5 rows (approximately)
 /*!40000 ALTER TABLE `hr_proofs` DISABLE KEYS */;
+REPLACE INTO `hr_proofs` (`id`, `topic`) VALUES
+	(15, 'สำเนาบัตรประชาชน 1 แผ่น'),
+	(16, 'รูปถ่ายขนาด 1 นิ้ว 2 แผ่น'),
+	(17, 'สำเนาทะเบียนบ้าน 1 แผ่น'),
+	(18, 'สำเนาวุฒิการศึกษา 1 แผ่น'),
+	(19, 'ใบผ่านเกณฑ์ทหาร สด.8 สด.43'),
+	(20, 'เอกสารอื่นๆ เช่นใบเปลี่ยนชื่อ');
 /*!40000 ALTER TABLE `hr_proofs` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_qualify
@@ -10123,10 +10183,20 @@ CREATE TABLE IF NOT EXISTS `hr_qualify` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `topic` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_qualify: ~0 rows (approximately)
+-- Dumping data for table jobksl_db.hr_qualify: ~8 rows (approximately)
 /*!40000 ALTER TABLE `hr_qualify` DISABLE KEYS */;
+REPLACE INTO `hr_qualify` (`id`, `topic`) VALUES
+	(1, 'อายุ 18 ปี บริบูรณ์'),
+	(2, 'สามารถทำงานล่วงเวลาได้'),
+	(3, 'ไม่เกี่ยวกับยาเสพติดทุกชนิด'),
+	(4, 'สำเร็จการศึกษาระดับ มัธยม-ปวส.'),
+	(5, 'สามารถกลึงอ่านแบบงานได้'),
+	(6, 'กลึงชิ้นงาน ตามแบบ ตามตัวอย่างได้'),
+	(7, 'สามารถทำงานเป็นกะได้'),
+	(8, 'สามารถทำงานล่วงเวลาได้'),
+	(9, 'มีความอดทน ขยันรับผิดชอบสูง');
 /*!40000 ALTER TABLE `hr_qualify` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_register
@@ -10141,12 +10211,21 @@ CREATE TABLE IF NOT EXISTS `hr_register` (
   `logintime` varchar(25) DEFAULT NULL,
   `regtime` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jobksl_db.hr_register: ~0 rows (approximately)
+-- Dumping data for table jobksl_db.hr_register: ~8 rows (approximately)
 /*!40000 ALTER TABLE `hr_register` DISABLE KEYS */;
 REPLACE INTO `hr_register` (`id`, `idcard`, `nameth`, `birthday`, `status`, `username`, `password`, `logintime`, `regtime`) VALUES
-	(1, '1 1111 11111 11 1', 'อุทยาน ภูกิ่งเงิน', '11/12/2525', 1, '1 1111 11111 11 1', '$2b$10$tLEU7odWTMzf8Wr6R6cyaOXh/GcRMwdRDoQN1bQ0rnZ/39kyOxzY6', NULL, '2020-7-21 9:13');
+	(1, '1 1111 11111 11 1', 'อุทยาน ภูกิ่งเงิน', '11/12/2525', 1, '1 1111 11111 11 1', '$2b$10$yqKFLrcFD56ILY1pXpG1lOfD7Kdf5KZXRET/M53fRENtHEAU10tx.', NULL, '2020-7-21 9:13'),
+	(2, '3 3515 21456 46 5', 'ทดสอบ ทดสอบ', '13/01/2563', 1, '3 3515 21456 46 5', '$2b$10$cxp.jSgRAtsT7DC7RwpeH.16kCdbF/G/ajlLWBmChkJPFghN4vLka', NULL, '2020-8-3 14:2'),
+	(3, '3 4101 00857 66 4', 'เอกพล นามลึก', '24/12/2524', 1, '3 4101 00857 66 4', '$2b$10$ubU01jXyKefluWsTpq/Xke1YIqB2qQNycSXkPADiiiPApwKPINHoO', NULL, '2020-8-3 14:17'),
+	(4, '2 2222 22222 22 2', 'xxxx xx', '10/10/2525', 1, '2 2222 22222 22 2', '$2b$10$SjCGzMq2nCgJhsoMbiGjzuO/H2.RcK08JBHfDpiZstiTOocozf3.y', NULL, '2020-8-3 14:20'),
+	(5, '4 4444 44444 44 4', '132132', '11/11/2000', 1, '4 4444 44444 44 4', '$2b$10$zYY0eAFLEtQGTbZDmIkEkeV3UHzJxtTbyE8Sz4kSSju2M0dFw.R1S', NULL, '2020-8-8 14:35'),
+	(6, '2 2222 22222 22 9', '1213213', '11/11/2000', 1, '2 2222 22222 22 9', '$2b$10$VtDFTgvOQtJQOohpX229Ze77StiCUvUHvGG8CFCtnUIY0rWB0rvbW', NULL, '2020-8-8 14:39'),
+	(7, '3 3333 33333 33 3', '123154654', '11/11/2000', 1, '3 3333 33333 33 3', '$2b$10$TIwJElTgHO2QxuM8VJgJWObCnH8YvihT/5GDP6pFhuhZ5btJhwMSW', NULL, '2020-8-8 14:43'),
+	(8, '2 2222 22222 22 1', 'xxxx', '11/11/2000', 1, '2 2222 22222 22 1', '$2b$10$Z05erjMAXneT.tmSGRxeS.ym9X6f.IguBS2Eob.Q53UOtuyBsV.H.', NULL, '2020-8-8 14:46'),
+	(9, '8 8888 88888 88 8', 'ทดสอบ', '11/11/2000', 1, '8 8888 88888 88 8', '$2b$10$2VILt2dYnLFl1RNwupZ5Lu1NKDlKprgpqhnra2Nr6ImK88NvdAAmW', NULL, '2020-8-8 14:51'),
+	(10, '5 8585 85858 58 5', 'boonyadol', '11/11/2000', 1, '5 8585 85858 58 5', '$2b$10$z29rb5hmAWrxk1w8X0Ein.7HhB.9CLSGpoJtS79SJhf5.ebr0iOnW', NULL, '2020-8-8 14:53');
 /*!40000 ALTER TABLE `hr_register` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_staff
@@ -10180,20 +10259,25 @@ CREATE TABLE IF NOT EXISTS `hr_status` (
 /*!40000 ALTER TABLE `hr_status` DISABLE KEYS */;
 /*!40000 ALTER TABLE `hr_status` ENABLE KEYS */;
 
--- Dumping structure for table jobksl_db.hr_traning
-CREATE TABLE IF NOT EXISTS `hr_traning` (
+-- Dumping structure for table jobksl_db.hr_training
+CREATE TABLE IF NOT EXISTS `hr_training` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `profileid` int(10) unsigned DEFAULT NULL,
+  `profileid` varchar(50) DEFAULT NULL,
   `course` varchar(150) DEFAULT NULL,
   `location` varchar(150) DEFAULT NULL,
   `duration` varchar(20) DEFAULT NULL,
   `tyear` varchar(9) DEFAULT NULL,
+  `trainno` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_traning: ~0 rows (approximately)
-/*!40000 ALTER TABLE `hr_traning` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hr_traning` ENABLE KEYS */;
+-- Dumping data for table jobksl_db.hr_training: ~2 rows (approximately)
+/*!40000 ALTER TABLE `hr_training` DISABLE KEYS */;
+REPLACE INTO `hr_training` (`id`, `profileid`, `course`, `location`, `duration`, `tyear`, `trainno`) VALUES
+	(1, '1 1111 11111 11 1', 'Java Application 1', 'มหาวิทยาลัยขอนแก่น ', NULL, '2543', 1),
+	(2, '1 1111 11111 11 1', 'C#.Net', 'มหาวิทยาลัยขอนแก่น ', NULL, '2543', 2),
+	(3, '1 1111 11111 11 1', '', '', NULL, '', 3);
+/*!40000 ALTER TABLE `hr_training` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_work
 CREATE TABLE IF NOT EXISTS `hr_work` (
@@ -10211,7 +10295,7 @@ CREATE TABLE IF NOT EXISTS `hr_work` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_work: ~0 rows (approximately)
+-- Dumping data for table jobksl_db.hr_work: ~2 rows (approximately)
 /*!40000 ALTER TABLE `hr_work` DISABLE KEYS */;
 REPLACE INTO `hr_work` (`id`, `workplace`, `position`, `salary`, `detail`, `begintime`, `endtime`, `note`, `flag`, `profileid`, `workno`) VALUES
 	(1, 'alphametric co.th / สระบุรี่', 'analyst programmer', '22000', 'พัฒนาโปรแกรม ', '2549', '2551', 'หางานใกล้บ้าน', '0', '1 1111 11111 11 1', 1),

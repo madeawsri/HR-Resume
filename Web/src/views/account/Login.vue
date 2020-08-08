@@ -67,7 +67,6 @@
                     <div class="form-row form-row-wide">
                         <div class="form-group">
                             <label for="email2">ชื่อ-สกุล
-
                                 <i class="ln ln-icon-Boy"></i>
                                 <input type="text" v-model="user.nameth" class="form-control input-text" :class="{ 'is-invalid': submitted && $v.user.nameth.$error  }" />
 
@@ -133,7 +132,7 @@ export default {
         }
     },
     mounted() {
-        setTimeout( ()=> {
+        setTimeout(() => {
             this.$refs.username.$el.focus();
         }, 300);
 
@@ -141,12 +140,11 @@ export default {
     methods: {
         handleSubmitLogin: async function () {
             console.log('Login doing')
-            //console.log(this.login)
-            this.$store.dispatch('user/retrieveToken', this.login).then(()=>{
-                if(this.$store.getters['user/isLogged'])
-                this.$router.push('/home')
-                else{
-this.alertLoginFail();
+            this.$store.dispatch('user/retrieveToken', this.login).then(() => {
+                if (this.$store.getters['user/isLogged'])
+                    this.$router.push('/home')
+                else {
+                    this.alertLoginFail();
                 }
             })
         },
@@ -160,16 +158,37 @@ this.alertLoginFail();
                 return;
             }
 
+           // console.log(' ---- register -----')
+           // console.log(this.user)
+
+            const dataUser = {
+                ...this.user
+            }
+            const dataLogin = {
+                username: dataUser.idcard,
+                password: dataUser.birthday.split("/").join("")
+            }
+
             await this.$http.post('api/login/register', this.user)
                 .then((response) => {
                     if (response.data.success == 0)
                         this.alertWarning(response.data.message)
-                    else
-                        this.alertSuccess()
+                    else {
 
+                        this.alertSuccess();
+
+                        this.$store.dispatch('user/retrieveToken', dataLogin).then(() => {
+                            if (this.$store.getters['user/isLogged'])
+                                this.$router.push('/profile')
+                            else {
+                                this.alertLoginFail();
+                            }
+                        })
+
+                    }
                     this.button.isLoading = false;
                 })
-                .catch((error) =>{
+                .catch((error) => {
                     console.log(error)
                     this.alertError()
                 });
@@ -194,7 +213,7 @@ this.alertLoginFail();
                 type: "success",
                 timer: 3000
             }).then(() => {
-                this.$refs.frmReg.reset();
+                //  this.$refs.frmReg.reset();
                 location.reload();
             });
         },

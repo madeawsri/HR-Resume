@@ -44,12 +44,17 @@
 </template>
 
 <script>
+//this.$store.getters['user/isLogged']
 export default {
     computed: {
         isLogged() {
             return this.$store.getters.isLogged
         }
-    }
+    },
+    mounted() {
+        let data = this.$store.getters['user/dataLogged']
+        console.log(JSON.parse(data))
+    },
 
 }
 </script>
