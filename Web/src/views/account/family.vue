@@ -6,6 +6,9 @@
             <!-- Titlebar -->
             <form id="frmData" ref="frmdata" @submit.prevent="saveData">
                 <div class="row">
+                    <p style="margin-left:18px">
+                        <button type="submit" class="button margin-top-0"> <i class="fa fa-save"></i> บันทึกข้อมูล</button>
+                    </p>
 
                     <div class="col-lg-4 col-md-12">
 
@@ -119,7 +122,7 @@
 
                                     <div class="form" style="width:100%">
                                         <h5>สถานะบิดา</h5>
-                                        <select data-placeholder="" class=""  v-model="formdata.flive" id="flive" ref="select" name="flive">
+                                        <select data-placeholder="" class="" v-model="formdata.flive" id="flive" ref="select" name="flive">
                                             <option value="0">- ไม่มีชีวิต - </option>
                                             <option value="1">- ยังมีชีวิต -</option>
                                         </select>
@@ -191,7 +194,6 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="button margin-top-15"> <i class="fa fa-save"></i> บันทึกข้อมูล</button>
                     </div>
 
                 </div>
@@ -213,9 +215,10 @@ export default {
         this.profileid = loginData.idcard
 
         this.getData()
-    },mounted() {
-        if(!this.$store.getters['user/isUser']) {
-          this.alertAccess();
+    },
+    mounted() {
+        if (!this.$store.getters['user/isUser']) {
+            this.alertAccess();
         }
     },
     data() {
@@ -255,14 +258,31 @@ export default {
         }
     },
     methods: {
-alertAccess: function () {
+        alertAccess: function () {
             this.$fire({
                 title: "ข้อมูลบิดาและมารดา",
                 text: "ไม่อนุญาติ",
                 type: "warning",
                 timer: 3000
-            }).then(()=>{
+            }).then(() => {
                 this.$router.push('/home')
+            })
+        }, alertSuccess: function () {
+            this.$fire({
+                title: "ข้อมูลบิดาและมารดา",
+                text: 'บันทึกเรียบร้อยแล้ว',
+                type: "success",
+                timer: 3000
+            }).then(()=>{
+                this.$router.push('/education')
+            })
+        },
+        alertLoginFail: function () {
+            this.$fire({
+                title: "ข้อมูลบิดาและมารดา",
+                text: 'ไม่สามารถเข้าใช้งานได้ ลองใหม่อีกครั้งครับ.',
+                type: "warning",
+                timer: 3000
             })
         },
         async saveData() {
@@ -278,9 +298,11 @@ alertAccess: function () {
                     }
                 })
                 console.log(data)
+                this.alertSuccess()
 
             } catch (err) {
                 console.log(err)
+                this.alertLoginFail()
             }
         },
         async getData() {
@@ -335,7 +357,4 @@ select {
     border: 1px solid #e0e0e0;
     opacity: 1;
 }
-
-
-
 </style>

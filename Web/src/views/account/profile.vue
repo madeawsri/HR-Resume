@@ -6,6 +6,9 @@
             <!-- Titlebar -->
             <form id="frmProfile" ref="frmdata" @submit.prevent="sendUpdateData" enctype="multipart/form-data">
                 <div class="row">
+                    <p style="margin-left:18px">
+                        <button type="submit" class="button margin-top-0"><i class="fa fa-save"></i> บันทึกข้อมูล</button>
+                    </p>
                     <!-- Profile -->
                     <div class="col-lg-4 col-md-12">
                         <div class="dashboard-list-box margin-top-0">
@@ -101,16 +104,11 @@
 
                                     <label>ที่อยู่ตามบัตรประชาชน</label>
                                     <textarea name="addr" id="notes" cols="30" rows="10" v-model="profileData.addr"></textarea>
-                                    <button type="submit" class="button margin-top-15">แก้ไขข้อมูล</button>
+
                                 </div>
 
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Copyrights -->
-                    <div class="col-md-12" v-show="0">
-                        <div class="copyrights">© 2019 JobKSL-NP. All Rights Reserved.</div>
                     </div>
 
                 </div>
@@ -137,9 +135,10 @@ export default {
 
         this.loadMyPicture()
 
-    },mounted() {
-        if(!this.$store.getters['user/isUser']) {
-          this.alertAccess();
+    },
+    mounted() {
+        if (!this.$store.getters['user/isUser']) {
+            this.alertAccess();
         }
     },
     data() {
@@ -176,13 +175,13 @@ export default {
     },
     methods: {
 
-alertAccess: function () {
+        alertAccess: function () {
             this.$fire({
                 title: "ข้อมูลส่วนตัว",
                 text: "ไม่อนุญาติ",
                 type: "warning",
                 timer: 3000
-            }).then(()=>{
+            }).then(() => {
                 this.$router.push('/home')
             })
         },
@@ -192,6 +191,9 @@ alertAccess: function () {
                 text: 'บันทึกเรียบร้อยแล้ว',
                 type: "success",
                 timer: 3000
+            }).then(() => {
+                this.$router.push('/family')
+
             })
         },
         alertLoginFail: function () {

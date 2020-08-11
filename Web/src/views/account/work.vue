@@ -6,7 +6,9 @@
             <!-- Titlebar -->
  <form id="frmData" ref="frmdata" @submit.prevent="saveData">
             <div class="row">
-
+ <p style="margin-left:15px">
+                            <button type="submit" class="button margin-top-0"> <i class="fa fa-save"></i> บันทึกข้อมูล</button>
+                        </p>
                 <div class="col-lg-4 col-md-12">
 
                     <div class="dashboard-list-box margin-top-0">
@@ -155,7 +157,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="button margin-top-15"> <i class="fa fa-save"></i> บันทึกข้อมูล</button>
+                   <!-- <button type="submit" class="button margin-top-15"> <i class="fa fa-save"></i> บันทึกข้อมูล</button>-->
 
                 </div>
 
@@ -239,6 +241,8 @@ alertAccess: function () {
                 text: 'บันทึกเรียบร้อยแล้ว',
                 type: "success",
                 timer: 3000
+            }).then(()=>{
+                this.$router.push('/training')
             })
         },
         alertLoginFail: function () {

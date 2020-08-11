@@ -1,6 +1,6 @@
 <template>
     <div class="five columns">
-        <h3 class="margin-bottom-5">Job Spotlight</h3>
+        <h3 class="margin-bottom-5">งานด่วน</h3>
 
         <!-- Navigation -->
         <div class="showbiz-navigation">

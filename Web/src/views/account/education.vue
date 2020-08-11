@@ -9,8 +9,10 @@
                 <form id="frmData" ref="frmdata" @submit.prevent="saveData">
                     <!-- Table-->
                     <div class="col-lg-12 col-md-12">
-
-                        <div class="dashboard-list-box margin-top-30">
+                        <p style="margin-left:5px">
+                            <button type="submit" class="button margin-top-0"> <i class="fa fa-save"></i> บันทึกข้อมูล</button>
+                        </p>
+                        <div class="dashboard-list-box margin-top-10">
                             <h4>ข้อมูลการศึกษา (ประถมศึกษา)</h4>
                             <div class="dashboard-list-box-content with-padding ">
 
@@ -196,9 +198,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <button type="submit" class="button margin-top-15"> <i class="fa fa-save"></i> บันทึกข้อมูล</button>
-
+<div>&nbsp;<br></div>
                     </div>
                 </form>
             </div>
@@ -220,9 +220,10 @@ export default {
         this.profileid = loginData.idcard
 
         this.getData()
-    },mounted() {
-        if(!this.$store.getters['user/isUser']) {
-          this.alertAccess();
+    },
+    mounted() {
+        if (!this.$store.getters['user/isUser']) {
+            this.alertAccess();
         }
     },
     data() {
@@ -270,13 +271,14 @@ export default {
             }
         }
     },
-    methods: { alertAccess: function () {
+    methods: {
+        alertAccess: function () {
             this.$fire({
                 title: "ประวัติการศึกษา",
                 text: "ไม่อนุญาติ",
                 type: "warning",
                 timer: 3000
-            }).then(()=>{
+            }).then(() => {
                 this.$router.push('/home')
             })
         },
@@ -286,6 +288,8 @@ export default {
                 text: 'บันทึกเรียบร้อยแล้ว',
                 type: "success",
                 timer: 3000
+            }).then(()=>{
+                this.$router.push('/work')
             })
         },
         alertLoginFail: function () {
@@ -318,7 +322,7 @@ export default {
                 const {
                     data
                 } = await this.$http.get(`api/education/profile/${this.profileid}/${levelid}`)
-                
+
                 if (data.success && data.data) {
                     return data;
                 } else {
@@ -332,19 +336,19 @@ export default {
         async getData() {
             try {
 
-              await  this.getDataEducation('1').then((data) => {
+                await this.getDataEducation('1').then((data) => {
                     this.level1 = data.data;
                 })
-              await  this.getDataEducation('2').then((data) => {
+                await this.getDataEducation('2').then((data) => {
                     this.level2 = data.data;
                 })
-              await  this.getDataEducation('3').then((data) => {
+                await this.getDataEducation('3').then((data) => {
                     this.level3 = data.data;
                 })
-              await  this.getDataEducation('4').then((data) => {
+                await this.getDataEducation('4').then((data) => {
                     this.level4 = data.data;
                 })
-              await  this.getDataEducation('5').then((data) => {
+                await this.getDataEducation('5').then((data) => {
                     this.level5 = data.data;
                 })
 
