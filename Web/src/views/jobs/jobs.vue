@@ -86,7 +86,9 @@ export default {
         //  moment
     },
     mounted() {
-
+        if(!this.$store.getters['user/isWebAdmin']) {
+          this.alertAccess();
+        }
     },
     async created() {
         await this.getLstDatas();
@@ -114,7 +116,7 @@ export default {
             dataForm: {
                 position: [],
                 num: 1,
-                regdate: ['2020-01-01', '2020-02-02'],
+                regdate: [this.$moment().format("YYYY-MM-DD"), this.$moment().add(60,'days').format("YYYY-MM-DD")],
                 jobattr: []
             },
             dataFormReset: {
@@ -129,6 +131,16 @@ export default {
     },
     methods: {
 
+        alertAccess: function () {
+            this.$fire({
+                title: this.headTitle,
+                text: "ไม่อนุญาติ",
+                type: "warning",
+                timer: 3000
+            }).then(()=>{
+                this.$router.push('/home')
+            })
+        },
         getLstDatas: async function () {
             try {
 

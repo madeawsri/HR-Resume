@@ -137,6 +137,10 @@ export default {
 
         this.loadMyPicture()
 
+    },mounted() {
+        if(!this.$store.getters['user/isUser']) {
+          this.alertAccess();
+        }
     },
     data() {
         return {
@@ -172,6 +176,16 @@ export default {
     },
     methods: {
 
+alertAccess: function () {
+            this.$fire({
+                title: "ข้อมูลส่วนตัว",
+                text: "ไม่อนุญาติ",
+                type: "warning",
+                timer: 3000
+            }).then(()=>{
+                this.$router.push('/home')
+            })
+        },
         alertSuccess: function () {
             this.$fire({
                 title: "ข้อมูลส่วนตัว",

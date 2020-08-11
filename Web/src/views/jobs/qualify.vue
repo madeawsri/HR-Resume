@@ -45,6 +45,8 @@
 
                     </table>
 
+<a href="#" class="button " style="margin:20px" @click="showMore" > แสดงเพิ่มเติม </a>
+
                 </div>
             </div>
 
@@ -64,6 +66,11 @@ export default {
     created() {
         this.showDataAll();
     },
+    mounted() {
+        if (!this.$store.getters['user/isWebAdmin']) {
+            this.alertAccess();
+        }
+    },
     data() {
         return {
             headtopic: 'คุณสมบัติผู้สมัคร',
@@ -76,10 +83,25 @@ export default {
             dataForm: {
                 topic: ""
             },
-            listDatas: []
+            listDatas: [],
+            numPage : 0
         }
     },
     methods: {
+        showMore: async function(){
+           this.numPage ++;
+           this.showDataAll(this.numPage)
+        },
+        alertAccess: function () {
+            this.$fire({
+                title: this.headTitle,
+                text: "ไม่อนุญาติ",
+                type: "warning",
+                timer: 3000
+            }).then(() => {
+                this.$router.push('/home')
+            })
+        },
         alertSuccess: function (msg = "บันทึกเรียบร้อยแล้ว") {
             this.$fire({
                 topic: this.headtopic,
@@ -171,15 +193,16 @@ export default {
             }
 
         },
-        async showDataAll() {
+        async showDataAll(xnum=0) {
             try {
                 const {
                     data
-                } = await this.$http.get(`api/qualify`)
+                } = await this.$http.get(`/api/qualify/page/${xnum}`)
 
                 if (data.success == 1) {
-
-                    this.listDatas = data.data
+                    if(data.data)
+                       this.listDatas.push(...data.data)
+                    else return
 
                 } else {
                     this.alertFail()
@@ -187,7 +210,6 @@ export default {
 
             } catch (e) {
                 console.log(e)
-
             }
 
         },

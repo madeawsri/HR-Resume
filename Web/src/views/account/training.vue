@@ -148,6 +148,10 @@ export default {
         this.profileid = loginData.idcard
 
         this.getData()
+    },mounted() {
+        if(!this.$store.getters['user/isUser']) {
+          this.alertAccess();
+        }
     },
     data() {
         return {
@@ -173,6 +177,18 @@ export default {
         }
     }, 
     methods : {
+
+alertAccess: function () {
+            this.$fire({
+                title: "ประวัติการฝึกอบรม",
+                text: "ไม่อนุญาติ",
+                type: "warning",
+                timer: 3000
+            }).then(()=>{
+                this.$router.push('/home')
+            })
+        },
+
           alertSuccess: function () {
             this.$fire({
                 title: "ประวัติการฝึกอบรม",

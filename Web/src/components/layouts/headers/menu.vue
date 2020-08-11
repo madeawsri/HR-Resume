@@ -1,6 +1,6 @@
 <template>
 <nav id="navigation" class="menu">
-    <ul id="responsive" v-show="0">
+    <ul id="responsive" v-if="0">
         <li>
             <a id="current" href="index-2.html">Home</a>
             <ul>
@@ -61,8 +61,11 @@
         <li v-if="!isLogged">
             <a href="/login"> <i class="fa fa-user"></i> ฝากประวัติ </a>
         </li>
-        <li v-if="isLogged">
+        <li v-if="isUser">
             <a href="/profile"><i class="fa fa-user"></i> บัญชีของฉัน</a>
+        </li>
+        <li v-if="isWebAdmin">
+            <a href="/jobs"><i class="fa fa-user"></i> บัญชีของฉัน</a>
         </li>
         <li v-if="isLogged">
             <a href="/logout"><i class="fa fa-lock"></i> ออกจากระบบ</a>
@@ -76,6 +79,12 @@ export default {
     computed: {
         isLogged() {
             return this.$store.getters['user/isLogged']
+        },
+        isUser() {
+            return  (this.$store.getters['user/isLogged']) ? this.$store.getters['user/isUser'] :  false
+        },
+        isWebAdmin() {
+            return  (this.$store.getters['user/isLogged']) ? this.$store.getters['user/isWebAdmin'] :  false
         }
     }
 }

@@ -19,33 +19,16 @@
 
                             <div class="form">
                                 <h5> เลือกคุณสมบัติผู้สมัคร </h5>
-                                <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " 
-                                label="topic" 
-                                track-by="topic"
-                                v-model="dataForm.benefits" 
-                                :options="lstBenefits" 
-                                :multiple="true" 
-                                :close-on-select="false" 
-                                :hide-selected="true" 
-                                :show-labels="false" 
-                                ></v-multiselect>
+                                <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " label="topic" track-by="topic" v-model="dataForm.benefits" :options="lstBenefits" :multiple="true" :close-on-select="false" :hide-selected="true" :show-labels="false"></v-multiselect>
 
                             </div>
                             <div class="form">
                                 <h5> เลือกหลักฐานผู้สมัคร </h5>
-                                <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " 
-                                label="topic" 
-                                track-by="topic"
-                                v-model="dataForm.qualifys" 
-                                :options="lstQualifys" 
-                                :multiple="true" 
-                                :close-on-select="false"  
-                                :hide-selected="true" 
-                                :show-labels="false" />
+                                <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " label="topic" track-by="topic" v-model="dataForm.qualifys" :options="lstQualifys" :multiple="true" :close-on-select="false" :hide-selected="true" :show-labels="false" />
                             </div>
                             <div class="form">
                                 <h5> เลือกสวัสดิการและผลประโยชน์ </h5>
-                                <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " track-by="topic" label="topic" v-model="dataForm.proofs" :options="lstProofs" :multiple="true" :close-on-select="false"  :hide-selected="true" :show-labels="false" />
+                                <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " track-by="topic" label="topic" v-model="dataForm.proofs" :options="lstProofs" :multiple="true" :close-on-select="false" :hide-selected="true" :show-labels="false" />
                             </div>
 
                             <button type="submit" class="button margin-bottom-30 float-xl-right "> {{editForm.modeTitle}} <i class="fa fa-arrow-circle-right"></i></button>
@@ -93,6 +76,10 @@ import memberLayout from '@/components/member-layouts/index'
 export default {
     components: {
         memberLayout
+    },mounted() {
+        if(!this.$store.getters['user/isWebAdmin']) {
+          this.alertAccess();
+        }
     },
     async created() {
         await this.getLstDatas();
@@ -131,7 +118,16 @@ export default {
         }
     },
     methods: {
-
+        alertAccess: function () {
+            this.$fire({
+                title: this.headTitle,
+                text: "ไม่อนุญาติ",
+                type: "warning",
+                timer: 3000
+            }).then(() => {
+                this.$router.push('/home')
+            })
+        },
         getLstDatas: async function () {
             try {
 
@@ -238,8 +234,8 @@ export default {
                 this.alertFail()
             }
         },
-      async  delData(index,keyDB) {
-            
+        async delData(index, keyDB) {
+
             try {
                 const {
                     data
@@ -257,7 +253,7 @@ export default {
 
             }
         },
-       async preEditData(index, keyDB) {
+        async preEditData(index, keyDB) {
 
             this.editForm.keydb = keyDB
             this.editForm.index = index
@@ -271,12 +267,11 @@ export default {
 
                 if (data.success == 1) {
 
-                     data.data.benefits = JSON.parse(data.data.benefits)
-                     data.data.qualifys = JSON.parse(data.data.qualifys)
-                     data.data.proofs = JSON.parse(data.data.proofs)
-                    
+                    data.data.benefits = JSON.parse(data.data.benefits)
+                    data.data.qualifys = JSON.parse(data.data.qualifys)
+                    data.data.proofs = JSON.parse(data.data.proofs)
+
                     this.dataForm = data.data
-                    
 
                 } else {
                     this.alertFail()
@@ -345,6 +340,4 @@ export default {
     background: #ff6a6a;
     color: slategrey;
 }
-
-
 </style>

@@ -60,6 +60,10 @@ import memberLayout from '@/components/member-layouts/index'
 export default {
     components: {
         memberLayout
+    },mounted() {
+        if(!this.$store.getters['user/isWebAdmin']) {
+          this.alertAccess();
+        }
     },
     created() {
         this.showDataAll();
@@ -80,6 +84,16 @@ export default {
         }
     },
     methods: {
+        alertAccess: function () {
+            this.$fire({
+                title: this.headTitle,
+                text: "ไม่อนุญาติ",
+                type: "warning",
+                timer: 3000
+            }).then(() => {
+                this.$router.push('/home')
+            })
+        },
         alertSuccess: function (msg = "บันทึกเรียบร้อยแล้ว") {
             this.$fire({
                 topic: this.headtopic,

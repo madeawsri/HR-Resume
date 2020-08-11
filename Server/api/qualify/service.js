@@ -89,6 +89,24 @@ module.exports = {
     },
 
 
+    showPage: (data, callBack) => {
+
+        let id = data.id
+        let max = 3
+        id = (id * max)
+
+        pool.query(
+            `select * from ${tableName} order by id desc limit ${max} offset ${id}  `,
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+
+    },
+
 
 
 

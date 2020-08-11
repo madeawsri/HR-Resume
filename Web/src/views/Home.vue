@@ -5,13 +5,13 @@
      <headerLayout />
     <!-- Banner
 ================================================== -->
-    <findLayout />
+    <findLayout  />
 
     <!-- Content
 ================================================== -->
 
     <!-- Categories -->
-    <catagoryLayout />
+    <catagoryLayout v-if="0" />
 
     <div class="container">
       <!-- Recent Jobs -->

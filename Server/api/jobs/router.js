@@ -4,14 +4,16 @@ const {
     createData,
     findByID,
     deleteByID,
-    findAll
+    findAll,
+    showByPage
 
 } = require("./controller");
 
 router.post("/", createData);
 router.post("/:id", createData);
 router.get("/", findAll);
-router.get('/:id', findByID)
+router.get('/:id(\\d+)', findByID)
+router.get('/page/:id(\\d+)?', showByPage)
 
 router.delete('/:id', deleteByID)
 

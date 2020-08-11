@@ -16,10 +16,43 @@ const getters = {
         return state.data
     },
     isAdmin: (state) => {
-        return state.status === 3
+        try {
+            let objectData = state.data
+            if ((typeof state.data) !== "object") {
+                objectData = JSON.parse(state.data ? state.data : null)
+            }
+            return 3 === objectData.status && (state.token !== null)
+        } catch (e) {
+            console.log(e)
+            return false;
+        }
+
     },
     isWebAdmin: (state) => {
-        return state.status === 2
+        try {
+            let objectData = state.data
+            if ((typeof state.data) !== "object") {
+                objectData = JSON.parse(state.data ? state.data : null)
+            }
+            return 2 === objectData.status && (state.token !== null)
+        } catch (e) {
+            console.log(e)
+            return false;
+        }
+
+    },
+    isUser: (state) => {
+        try {
+            let objectData = state.data
+            if ((typeof state.data) !== "object") {
+                objectData = JSON.parse(state.data ? state.data : null)
+            }
+            return 1 === objectData.status && (state.token !== null)
+        } catch (e) {
+            console.log(e)
+            return false;
+        }
+
     }
 }
 

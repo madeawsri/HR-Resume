@@ -14,16 +14,8 @@ Vue.use(VueSimpleAlert, { reverseButtons: true });
 import Multiselect from 'vue-multiselect'
 Vue.component('v-multiselect', Multiselect)
 
-//import vSelect from 'vue-select'
-//Vue.component('v-select', vSelect)
 import DatePicker from 'vue2-datepicker';
 Vue.component('v-date', DatePicker)
-
-//import moment from 'moment'
-//import 'moment/locale/th'
-//moment.locale("th")
-
-//Vue.use(require('vue-moment'));
 
 const moment = require('moment')
 require('moment/locale/th')
@@ -54,7 +46,6 @@ router.beforeEach((to, from, next) => {
             console.log('check login!!')
             next({
                 name: 'Login',
-                //query: { redirect: to.fullPath }
             })
         } else {
             next()
@@ -72,8 +63,10 @@ Vue.directive('focus', {
 })
 
 Vue.filter('stringToJson', function(value) {
-    let x = JSON.parse(value)
-        //console.log(x)
+    let x = { id: '', topic: '' }
+    if (value !== undefined) {
+        x = JSON.parse(value)
+    }
     return x.topic
 })
 

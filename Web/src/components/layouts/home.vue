@@ -1,5 +1,5 @@
 <template>
-    <div id="home">
+    <div id="home" v-if="0">
 
 
         <!-- Header

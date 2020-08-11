@@ -21,6 +21,8 @@ import Jobattr from '../views/jobs/jobsattr.vue';
 
 Vue.use(VueRouter);
 
+
+
 const routes = [{
         path: '/',
         redirect: '/home'
@@ -30,7 +32,7 @@ const routes = [{
         name: 'qualify',
         component: Qualify,
         meta: {
-            requiresAuth: true
+            requiresVisitor: true
         }
     },
     {
@@ -38,7 +40,7 @@ const routes = [{
         name: 'jobattr',
         component: Jobattr,
         meta: {
-            requiresAuth: true
+            requiresVisitor: true
         }
     },
     {
@@ -46,7 +48,7 @@ const routes = [{
         name: 'proof',
         component: Proof,
         meta: {
-            requiresAuth: true
+            requiresVisitor: true
         }
     },
     {
@@ -54,7 +56,7 @@ const routes = [{
         name: 'benefits',
         component: Benefits,
         meta: {
-            requiresAuth: true
+            requiresVisitor: true
         }
     },
     {
@@ -62,7 +64,7 @@ const routes = [{
         name: 'position',
         component: Position,
         meta: {
-            requiresAuth: true
+            requiresVisitor: true
         }
     },
     {
@@ -70,8 +72,7 @@ const routes = [{
         name: 'jobs',
         component: Jobs,
         meta: {
-            requiresAuth: true,
-
+            requiresVisitor: true
         }
     },
     {
@@ -132,10 +133,21 @@ const routes = [{
         meta: {
             requiresAuth: true
         }
-    }, {
+    },
+
+    {
         path: '/home',
         name: 'Home',
         component: Home,
+    },
+    {
+        path: '/about',
+        name: 'About',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/About.vue'),
     },
     { path: '*', redirect: '/' }
 ];

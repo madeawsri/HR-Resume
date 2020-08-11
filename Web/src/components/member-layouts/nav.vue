@@ -7,10 +7,11 @@
 
             <ul data-submenu-title="" v-show="0">
                 <li class="active"><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/messages">ข้อความ <span class="nav-tag"> 2 </span></a></li>
+                <li vs><a href="/messages">ผู้สมัคร <span class="nav-tag"> 2 </span></a></li>
+                <li><a href="/messages">เปิดรับสมัคร <span class="nav-tag"> 2 </span></a></li>
             </ul>
 
-            <ul data-submenu-title="บัญชีผู้ใช้">
+            <ul data-submenu-title="บัญชีผู้ใช้" v-show="isUser ">
                 <li><a href="/profile">ข้อมูลส่วนตัว</a></li>
                 <li><a href="/family">ข้อมูลครอบครัว</a></li>
                 <li><a href="/education">ข้อมูลการศึกษา</a></li>
@@ -20,7 +21,7 @@
                 <li><a href="/logout" style="color:red;font-weight: bold;">ออกจากระบบ</a></li>
             </ul>
 
-            <ul data-submenu-title="เจ้าหน้าที่">
+            <ul data-submenu-title="เจ้าหน้าที่" v-show="isWebAdmin">
                 <li><a href="/qualify">ข้อมูลคุณสมบัติผู้สมัคร</a></li>
                 <li><a href="/proof">ข้อมูลหลักฐานการสมัคร</a></li>
                 <li><a href="/benefits">ข้อมูลสวัสดิการและสิทธิประโยชน์</a></li>
@@ -51,10 +52,22 @@ export default {
             return this.$store.getters.isLogged
         }
     },
-    mounted() {
-        let data = this.$store.getters['user/dataLogged']
-        console.log(JSON.parse(data))
+    created() {
+        this.isWebAdmin = this.$store.getters['user/isWebAdmin']
+        this.isAdmin = this.$store.getters['user/isAdmin']
+        this.isUser = !(this.isWebAdmin) && !(this.isAdmin)
     },
+    mounted() {
+        console.log('check status isWebAdmin')
+        console.log(this.isUser)
+    },
+    data(){
+        return{
+            isAdmin:false,
+            isWebAdmin:false,
+            isUser:false
+        }
+    }
 
 }
 </script>

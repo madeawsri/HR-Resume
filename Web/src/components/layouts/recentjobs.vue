@@ -1,120 +1,97 @@
 <template>
-     <div class="eleven columns">
-        <div class="padding-right">
-          <h3 class="margin-bottom-25">Recent Jobs</h3>
-          <div class="listings-container">
-            <!-- Listing -->
-            <a href="job-page-alt.html" class="listing full-time">
-              <div class="listing-logo">
-                <img src="images/job-list-logo-01.png" alt="" />
-              </div>
-              <div class="listing-title">
-                <h4>
-                  Marketing Coordinator - SEO / SEM Experience
-                  <span class="listing-type">Full-Time</span>
-                </h4>
-                <ul class="listing-icons">
-                  <li><i class="ln ln-icon-Management"></i> King</li>
-                  <li>
-                    <i class="ln ln-icon-Map2"></i> 7th Avenue, New York, NY,
-                    United States
-                  </li>
-                  <li><i class="ln ln-icon-Money-2"></i> $5000 - $7000</li>
-                  <li>
-                    <div class="listing-date new">new</div>
-                  </li>
-                </ul>
-              </div>
-            </a>
+<div class="eleven columns">
+    <div class="padding-right">
+        <h3 class="margin-bottom-25">งานล่าสุด</h3>
+        <div class="listings-container">
+            <div v-for="(item, index) in listDatas" :key="index">
 
-            <!-- Listing -->
-            <a href="job-page.html" class="listing part-time">
-              <div class="listing-logo">
-                <img src="images/job-list-logo-02.png" alt="" />
-              </div>
-              <div class="listing-title">
-                <h4>
-                  Core PHP Developer for Site Maintenance
-                  <span class="listing-type">Part-Time</span>
-                </h4>
-                <ul class="listing-icons">
-                  <li><i class="ln ln-icon-Management"></i> Cubico</li>
-                  <li><i class="ln ln-icon-Map2"></i> Sydney</li>
-                  <li><i class="ln ln-icon-Money-2"></i> $125 / hour</li>
-                  <li>
-                    <div class="listing-date">3d ago</div>
-                  </li>
-                </ul>
-              </div>
-            </a>
+                <a href="job-page-alt.html" class="listing full-time">
+                    <div class="listing-title">
+                        <h4>
+                            {{item.topic}} / {{item.num}} ตำแหน่ง
+                            <span class="listing-type" v-if="0">Part-Time</span>
+                        </h4>
+                        <ul class="listing-icons">
+                            <li><i class="ln ln-icon-Timer-2"></i> รับสมัคร {{item.datein | moment("DD MMM YYYY ")}} ถึง {{item.dateout|moment("DD MMM YYYY")}}</li>
+                            <li v-if="0">
+                                <i class="ln ln-icon-Map2"></i> 7th Avenue, New York, NY,
+                                United States
+                            </li>
+                            <li><i class="ln ln-icon-Money-2"></i> ตามโครงสร้างของษริษัท</li>
+                            <li v-if="0">
+                                <div class="listing-date">3d ago</div>
+                                <div class="listing-date new">new</div>
+                            </li>
+                        </ul>
+                    </div>
+                </a>
 
-            <!-- Listing -->
-            <a href="job-page-alt.html" class="listing full-time">
-              <div class="listing-logo">
-                <img src="images/job-list-logo-01.png" alt="" />
-              </div>
-              <div class="listing-title">
-                <h4>
-                  Restaurant Team Member - Crew
-                  <span class="listing-type">Full-Time</span>
-                </h4>
-                <ul class="listing-icons">
-                  <li><i class="ln ln-icon-Management"></i> King</li>
-                  <li><i class="ln ln-icon-Map2"></i> Sydney</li>
-                  <li>
-                    <div class="listing-date">3d ago</div>
-                  </li>
-                </ul>
-              </div>
-            </a>
+            </div>
 
-            <!-- Listing -->
-            <a href="job-page.html" class="listing internship">
-              <div class="listing-logo">
-                <img src="images/job-list-logo-04.png" alt="" />
-              </div>
-              <div class="listing-title">
-                <h4>
-                  Power Systems User Experience Designer
-                  <span class="listing-type">Internship</span>
-                </h4>
-                <ul class="listing-icons">
-                  <li><i class="ln ln-icon-Management"></i> Hexagon</li>
-                  <li><i class="ln ln-icon-Map2"></i> London</li>
-                  <li><i class="ln ln-icon-Money-2"></i> $55 / hour</li>
-                  <li>
-                    <div class="listing-date">4d ago</div>
-                  </li>
-                </ul>
-              </div>
-            </a>
-
-            <!-- Listing -->
-            <a href="job-page.html" class="listing freelance">
-              <div class="listing-logo">
-                <img src="images/job-list-logo-05.png" alt="" />
-              </div>
-              <div class="listing-title">
-                <h4>
-                  iPhone / Android Music App Development
-                  <span class="listing-type">Freelance</span>
-                </h4>
-                <ul class="listing-icons">
-                  <li><i class="ln ln-icon-Management"></i> Hexagon</li>
-                  <li><i class="ln ln-icon-Map2"></i> London</li>
-                  <li><i class="ln ln-icon-Money-2"></i> $85 / hour</li>
-                  <li>
-                    <div class="listing-date">4d ago</div>
-                  </li>
-                </ul>
-              </div>
-            </a>
-          </div>
-
-          <a href="browse-jobs.html" class="button centered"
-            ><i class="fa fa-plus-circle"></i> Show More Jobs</a
-          >
-          <div class="margin-bottom-55"></div>
         </div>
-      </div>
+
+        <a href="#" class="button centered" @click="showMoreData"><i class="fa fa-plus-circle"></i> แสดงงานเพิ่มเติม</a>
+        <div class="margin-bottom-55"></div>
+    </div>
+</div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            page: 0,
+            listDatas: []
+        }
+    },
+    created() {
+        this.showDataAll();
+    },
+    methods: {
+      
+        showMoreData : async function(){
+          console.log('click show more data!!!')
+             this.page++
+            await this.showDataAll(this.page)
+        },
+        async showDataAll(page = 0) {
+            try {
+                const {
+                    data
+                } = await this.$http.get(`/api/jobs/page/${page}`)
+
+                if (data.success == 1) {
+
+                    if (data.data)
+                        this.listDatas.push(...data.data)
+                    else return
+
+                } else {
+                    this.alertFail()
+                }
+
+            } catch (e) {
+                console.log(e)
+
+            }
+
+        },
+    },
+}
+</script>
+
+
+<style >
+.search-container {
+    display: block;
+    width: 100%;
+    position: relative;
+    padding: 50px 0;
+    margin-top: -10px;
+}
+
+#banner.with-transparent-header .search-container {
+    padding: 45px 0;
+    margin-top: 0px;
+}
+</style>

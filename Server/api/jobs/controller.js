@@ -3,8 +3,8 @@ const {
     update,
     getByID,
     del,
-    getAll
-
+    getAll,
+    showPage
 
 } = require("./service");
 
@@ -137,6 +137,35 @@ module.exports = {
                 //type: 'all'
             });
         })
+
+    },
+
+
+    showByPage: (req, res) => {
+        let id = req.params.id
+        if (id === undefined)
+            id = 0
+
+        const fdata = {
+            id: id
+        }
+
+        showPage(fdata, async(err, uresults) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    success: 0,
+                    message: "** ไม่สามารถติดต่อฐานข้อมูลได้ **"
+                });
+            }
+            let data = uresults ? uresults : null
+            return res.status(200).json({
+                success: 1,
+                data: data,
+
+            });
+        })
+
 
     },
 
