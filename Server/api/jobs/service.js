@@ -86,9 +86,16 @@ module.exports = {
     },
 
     getByID: (data, callBack) => {
-
+        /*
+        SELECT   x.* , y.*   FROM hr_jobs AS x , hr_jobattr AS y 
+        WHERE x.id = 8 
+        AND y.id = (SUBSTRING(x.jobattrid,LOCATE(':',x.jobattrid)+1, LOCATE(',',x.jobattrid)-LOCATE(':',x.jobattrid)-1 ))
+        */
+        //select * from ${tableName} where id = ?
         pool.query(
-            `select * from ${tableName} where id = ? `, [data.id],
+            `SELECT  x.id as xid, x.* , y.id as yid,  y.*   FROM hr_jobs AS x , hr_jobattr AS y 
+            WHERE x.id = ? 
+            AND y.id = (SUBSTRING(x.jobattrid,LOCATE(':',x.jobattrid)+1, LOCATE(',',x.jobattrid)-LOCATE(':',x.jobattrid)-1 ))`, [data.id],
             (error, results, fields) => {
                 if (error) {
                     callBack(error);
