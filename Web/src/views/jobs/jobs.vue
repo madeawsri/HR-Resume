@@ -3,12 +3,13 @@
     <div slot="content">
 
         <div class="col-lg-12 col-md-12">
+            <form @submit.prevent="sendData">
+                <div class="dashboard-list-box margin-top-0">
+                    <h4>{{headTitle}}
+                        <button type="submit" class="button margin-bottom-0  float-xl-right pull-right "> {{editForm.modeTitle}} <i class="fa fa-arrow-circle-right"></i></button>
+                    </h4>
 
-            <div class="dashboard-list-box margin-top-0">
-                <h4>{{headTitle}}</h4>
-
-                <div class="dashboard-list-box-content">
-                    <form @submit.prevent="sendData">
+                    <div class="dashboard-list-box-content">
 
                         <div class="submit-page">
 
@@ -24,7 +25,7 @@
                             </div>
 
                             <div class="form">
-                                <h5> เลือกคุณลักษณะผู้สมัคร </h5>
+                                <h5> คุณสมบัติประจำตำแหน่ง </h5>
                                 <v-multiselect placeholder=" คุณลักษณะผู้สมัคร " label="topic" track-by="topic" v-model="dataForm.jobattr" :options="lstJobattrs" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" />
                             </div>
                             <div class="form">
@@ -32,13 +33,20 @@
                                 <v-date v-model="dataForm.regdate" class="datetime-picker" value-type="format" format="YYYY-MM-DD" :lang="dateFormatThai" type="date" range placeholder="Select date range"></v-date>
                             </div>
 
-                            <button type="submit" class="button margin-bottom-30  float-xl-right "> {{editForm.modeTitle}} <i class="fa fa-arrow-circle-right"></i></button>
+                            <div class="form3 col-lg-6 col-sm-8 col-xs-12">
+                                <h5> ประเภทตำแหน่งงาน </h5>
+                                <v-multiselect placeholder="  " label="topic" track-by="topic" v-model="dataForm.ptype" :options="lstPtypes" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" />
+                            </div>
+                            <div class="form3 col-lg-6 col-sm-8 col-xs-12">
+                                <h5> ความสำคัญของประกาศ </h5>
+                                <v-multiselect placeholder="  " label="topic" track-by="topic" v-model="dataForm.stype" :options="lstStypes" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" />
+                            </div>
 
                         </div>
-                    </form>
-                </div>
-            </div>
 
+                    </div>
+                </div>
+            </form>
             <div class="dashboard-list-box margin-top-30">
                 <div class="dashboard-list-box-content">
 
@@ -86,13 +94,17 @@ export default {
         //  moment
     },
     mounted() {
-        if(!this.$store.getters['user/isWebAdmin']) {
-          this.alertAccess();
+        if (!this.$store.getters['user/isWebAdmin']) {
+            this.alertAccess();
         }
     },
     async created() {
+
         await this.getLstDatas();
         await this.showDataAll();
+
+
+        console.log(this.lstPtypes)
     },
     data() {
         return {
@@ -116,14 +128,18 @@ export default {
             dataForm: {
                 position: [],
                 num: 1,
-                regdate: [this.$moment().format("YYYY-MM-DD"), this.$moment().add(60,'days').format("YYYY-MM-DD")],
-                jobattr: []
+                regdate: [], // this.$moment().format("YYYY-MM-DD"), this.$moment().add(60, 'days').format("YYYY-MM-DD")
+                jobattr: [],
+                ptype: [],
+                stype: [],
             },
             dataFormReset: {
                 ...this.dataForm
             },
             lstPositions: [],
             lstJobattrs: [],
+            lstPtypes: this.$store.state.jobs.ptype,
+            lstStypes: this.$store.state.jobs.stype,
 
             listDatas: [] // data in table
 
@@ -137,8 +153,9 @@ export default {
                 text: "ไม่อนุญาติ",
                 type: "warning",
                 timer: 3000
-            }).then(()=>{
-                this.$router.push('/home')
+            }).then(() => {
+                //this.$router.push('/home')
+                window.location.href = '/home';
             })
         },
         getLstDatas: async function () {
@@ -186,7 +203,6 @@ export default {
                     const dataForm2 = {
                         ...this.dataForm
                     }
-                    //console.log(dataForm2.position)
                     dataForm2.topic = dataForm2.position.topic
                     dataForm2.position = JSON.stringify(dataForm2.position)
                     dataForm2.jobattr = JSON.stringify({
@@ -196,6 +212,15 @@ export default {
                     dataForm2.datein = dataForm2.regdate[0]
                     dataForm2.dateout = dataForm2.regdate[1]
 
+                    dataForm2.ptype = JSON.stringify({
+                        id: this.dataForm.ptype.id,
+                        topic: this.dataForm.ptype.topic
+                    })
+                    dataForm2.stype = JSON.stringify({
+                        id: this.dataForm.stype.id,
+                        topic: this.dataForm.stype.topic
+                    })
+
                     const {
                         data
                     } = await this.$http.post(`api/jobs`, dataForm2)
@@ -203,11 +228,20 @@ export default {
                     console.log(data)
 
                     if (data.success == 1) {
+
                         this.listDatas.push({
-                            id: data.data.insertId,
+                            id:data.data.insertId,
                             topic: dataForm2.topic,
+                            jobattrid: JSON.stringify({
+                                id: this.dataForm.jobattr.id,
+                                topic: this.dataForm.jobattr.topic
+                            }),
+                            datein: dataForm2.datein,
+                            dateout: dataForm2.dateout,
+                            num: dataForm2.num,
 
                         })
+
                         this.dataForm = {
                             ...this.dataFormReset
                         }
@@ -223,6 +257,7 @@ export default {
                         ...this.dataForm
                     }
                     dataForm2.position = JSON.stringify(dataForm2.position)
+                    
                     dataForm2.jobattr = JSON.stringify({
                         id: this.dataForm.jobattr.id,
                         topic: this.dataForm.jobattr.topic
@@ -230,12 +265,22 @@ export default {
                     dataForm2.datein = dataForm2.regdate[0]
                     dataForm2.dateout = dataForm2.regdate[1]
 
+                     dataForm2.ptype = JSON.stringify({
+                        id: this.dataForm.ptype.id,
+                        topic: this.dataForm.ptype.topic
+                    })
+                    dataForm2.stype = JSON.stringify({
+                        id: this.dataForm.stype.id,
+                        topic: this.dataForm.stype.topic
+                    })
+
                     const {
                         data
                     } = await this.$http.post(`api/jobs/${this.editForm.keydb}`, dataForm2)
 
                     if (data.success == 1) {
 
+   
                         this.listDatas[this.editForm.index].topic = this.dataForm.topic
                         this.listDatas[this.editForm.index].jobattrid = JSON.stringify({
                             id: this.dataForm.jobattr.id,
@@ -249,8 +294,9 @@ export default {
                         this.dataForm = {
                             ...this.dataFormReset
                         }
+
                         this.editForm.mode = "save"
-                        this.editForm.modetopic = "บันทึกข้อมูล"
+                        this.editForm.modeTitle = "บันทึกข้อมูล"
 
                     } else {
 
@@ -302,7 +348,9 @@ export default {
                         position: JSON.parse(data.data.positionid),
                         jobattr: JSON.parse(data.data.jobattrid),
                         num: data.data.num,
-                        regdate: [data.data.datein, data.data.dateout]
+                        regdate: [data.data.datein, data.data.dateout],
+                        ptype:JSON.parse(data.data.ptype),
+                        stype:JSON.parse(data.data.stype),
                     }
 
                 } else {
@@ -383,5 +431,11 @@ export default {
 
 .mx-input {
     height: 48px;
+}
+</style><style scoped>
+.form3 {
+    margin: 0;
+    padding: 0 10px;
+    margin-bottom: 25px;
 }
 </style>

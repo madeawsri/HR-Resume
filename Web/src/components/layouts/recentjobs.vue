@@ -5,11 +5,11 @@
         <div class="listings-container">
             <div v-for="(item, index) in listDatas" :key="index">
 
-                <a href="job-page-alt.html" class="listing full-time">
+                <a href="job-page-alt.html" class="listing " :class="getPtypeClass(item.ptype)" >
                     <div class="listing-title">
                         <h4>
                             {{item.topic}} / {{item.num}} ตำแหน่ง
-                            <span class="listing-type" v-if="0">Part-Time</span>
+                            <span class="listing-type ">{{$store.getters.strtojson(item.ptype,'topic')}}</span>
                         </h4>
                         <ul class="listing-icons">
                             <li><i class="ln ln-icon-Timer-2"></i> รับสมัคร {{item.datein | moment("DD MMM YYYY ")}} ถึง {{item.dateout|moment("DD MMM YYYY")}}</li>
@@ -46,12 +46,17 @@ export default {
     },
     created() {
         this.showDataAll();
+
     },
     methods: {
-      
-        showMoreData : async function(){
-          console.log('click show more data!!!')
-             this.page++
+        
+        getPtypeClass: function (value) {
+            let obj = this.$store.getters.strtojson(value,'id')
+            return this.$store.getters.getptype(obj).class
+        },
+        showMoreData: async function () {
+            console.log('click show more data!!!')
+            this.page++
             await this.showDataAll(this.page)
         },
         async showDataAll(page = 0) {
@@ -62,9 +67,12 @@ export default {
 
                 if (data.success == 1) {
 
-                    if (data.data)
+                    if (data.data) {
+
+                        //  console.log([...data.data])
+                        //  console.log('++++++++++++++++++++++++')
                         this.listDatas.push(...data.data)
-                    else return
+                    } else return
 
                 } else {
                     this.alertFail()
@@ -80,8 +88,7 @@ export default {
 }
 </script>
 
-
-<style >
+<style>
 .search-container {
     display: block;
     width: 100%;

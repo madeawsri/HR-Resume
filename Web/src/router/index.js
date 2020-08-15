@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+import Home from '../views/home/index.vue';
+
+
 
 import Profile from '../views/account/profile.vue';
 import Family from '../views/account/family.vue';
@@ -19,11 +21,20 @@ import Position from '../views/jobs/position.vue';
 import Jobs from '../views/jobs/jobs.vue';
 import Jobattr from '../views/jobs/jobsattr.vue';
 
+
+import Jobdetail from '../views/home/jobdetail.vue';
+
 Vue.use(VueRouter);
 
 const routes = [{
         path: '/',
         redirect: '/home'
+    },
+    {
+        path: '/jobdetail',
+        name: 'Jobdetail',
+        component: Jobdetail,
+
     },
     {
         path: '/qualify',

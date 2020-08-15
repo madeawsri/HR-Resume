@@ -13,21 +13,21 @@
                         <div class="submit-page">
 
                             <div class="form">
-                                <h5> ตั้งชื่อคุณลักษณะผู้สมัคร </h5>
-                                <input type="text" ref="topic" placeholder="ตั้งชื่อคุณลักษณะผู้สมัคร " v-model="dataForm.topic" v-focus required />
+                                <h5> ชื่อคุณสมบัติประจำตำแหน่ง </h5>
+                                <input type="text" ref="topic" placeholder="ชื่อคุณสมบัติประจำตำแหน่ง " v-model="dataForm.topic" v-focus required />
                             </div>
 
                             <div class="form">
-                                <h5> เลือกคุณสมบัติผู้สมัคร </h5>
+                                <h5> เลือกสวัสดิการและผลประโยชน์ </h5>
                                 <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " label="topic" track-by="topic" v-model="dataForm.benefits" :options="lstBenefits" :multiple="true" :close-on-select="false" :hide-selected="true" :show-labels="false"></v-multiselect>
 
                             </div>
                             <div class="form">
-                                <h5> เลือกหลักฐานผู้สมัคร </h5>
+                                <h5> เลือกคุณสมบัติผู้สมัคร </h5>
                                 <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " label="topic" track-by="topic" v-model="dataForm.qualifys" :options="lstQualifys" :multiple="true" :close-on-select="false" :hide-selected="true" :show-labels="false" />
                             </div>
                             <div class="form">
-                                <h5> เลือกสวัสดิการและผลประโยชน์ </h5>
+                                <h5> เลือกหลักฐานผู้สมัคร </h5>
                                 <v-multiselect placeholder="กรุณาเลือกได้มากกว่า 1 " track-by="topic" label="topic" v-model="dataForm.proofs" :options="lstProofs" :multiple="true" :close-on-select="false" :hide-selected="true" :show-labels="false" />
                             </div>
 
@@ -54,7 +54,7 @@
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> <i class="fa fa-check"></i> {{item.topic}}</td>
                             <td style="padding: 5px 5px;">
                                 <a href="#" @click="preEditData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-pencil"></i> แก้ไข</a>
-                                <a href="#" @click="delData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-remove"></i> ลบ </a>
+                                <a v-if="!item.cjob" href="#" @click="delData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-remove"></i> ลบ </a>
                             </td>
                         </tr>
 
@@ -89,7 +89,7 @@ export default {
         return {
 
             isLoading: false,
-            headTitle: 'คุณลักษณะผู้สมัคร',
+            headTitle: 'คุณสมบัติประจำตำแหน่ง',
             editForm: {
                 keydb: 0,
                 index: 0,
@@ -125,7 +125,8 @@ export default {
                 type: "warning",
                 timer: 3000
             }).then(() => {
-                this.$router.push('/home')
+                //this.$router.push('/home')
+                window.location.href = '/home';
             })
         },
         getLstDatas: async function () {

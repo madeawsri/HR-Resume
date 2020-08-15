@@ -231,7 +231,8 @@ alertAccess: function () {
                 type: "warning",
                 timer: 3000
             }).then(()=>{
-                this.$router.push('/home')
+                //this.$router.push('/home')
+                window.location.href = '/home';
             })
         },
 
@@ -242,7 +243,8 @@ alertAccess: function () {
                 type: "success",
                 timer: 3000
             }).then(()=>{
-                this.$router.push('/training')
+                //this.$router.push('/training')
+                this.$vLink('training')
             })
         },
         alertLoginFail: function () {

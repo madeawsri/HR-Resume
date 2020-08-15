@@ -62,17 +62,23 @@ Vue.directive('focus', {
     }
 })
 
-Vue.filter('stringToJson', function(value) {
+Vue.filter('stringToJson', function(value, key = 'topic') {
     let x = { id: '', topic: '' }
     if (value !== undefined) {
         x = JSON.parse(value)
     }
-    return x.topic
+    return x[key]
 })
+
+Vue.prototype.$vLink = function(target = 'home') {
+    window.location.href = "/" + target
+};
+
 
 
 new Vue({
     router,
     store,
     render: h => h(App),
+
 }).$mount('#app');

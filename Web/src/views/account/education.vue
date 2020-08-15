@@ -279,7 +279,7 @@ export default {
                 type: "warning",
                 timer: 3000
             }).then(() => {
-                this.$router.push('/home')
+                window.location.href = '/home';//this.$router.push('/home')
             })
         },
         alertSuccess: function () {
@@ -289,7 +289,8 @@ export default {
                 type: "success",
                 timer: 3000
             }).then(()=>{
-                this.$router.push('/work')
+                //this.$router.push('/work')
+                this.$vLink('work')
             })
         },
         alertLoginFail: function () {

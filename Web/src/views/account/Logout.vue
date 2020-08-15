@@ -6,7 +6,8 @@
 export default {
   async created(){
        await this.$store.dispatch('user/destroyToken').then(()=>{
-            this.$router.push('/home')
+            //this.$router.push('/home')
+            window.location.href = '/home';
        })
    }
 }

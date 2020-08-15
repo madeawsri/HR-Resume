@@ -89,7 +89,10 @@ module.exports = {
     getAll: (data, callBack) => {
 
         pool.query(
-            `select * from ${tableName} `,
+            `select x.*,(SELECT COUNT(*) 
+            FROM hr_jobs 
+           WHERE jobattrid 
+            LIKE CONCAT('%"id":',x.id,'%')) AS cjob  from ${tableName} as x `,
             (error, results, fields) => {
                 if (error) {
                     callBack(error);

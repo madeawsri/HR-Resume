@@ -1,18 +1,13 @@
 <template>
 <nav id="navigation" class="menu">
-    <ul id="responsive" v-if="0">
+    <ul id="responsive" >
+    
         <li>
-            <a id="current" href="index-2.html">Home</a>
-            <ul>
-                <li><a href="index-2.html">Home #1</a></li>
-                <li><a href="index-3.html">Home #2</a></li>
-                <li><a href="index-4.html">Home #3</a></li>
-                <li><a href="index-5.html">Home #4</a></li>
-                <li><a href="index-6.html">Home #5</a></li>
-            </ul>
+            <a id="current" href="/home">หน้าแรก</a>
+            
         </li>
 
-        <li>
+        <li v-if="0">
             <a href="#">Pages</a>
             <ul>
                 <li><a href="job-page.html">Job Page</a></li>
@@ -26,7 +21,7 @@
             </ul>
         </li>
 
-        <li>
+        <li v-if="0">
             <a href="#">Browse Listings</a>
             <ul>
                 <li><a href="browse-jobs.html">Browse Jobs</a></li>
@@ -37,7 +32,7 @@
             </ul>
         </li>
 
-        <li>
+        <li v-if="0">
             <a href="#">Dashboard</a>
             <ul>
                 <li><a href="dashboard.html">Dashboard</a></li>
@@ -59,7 +54,8 @@
 
     <ul class="float-right">
         <li v-if="!isLogged">
-            <a href="/login"> <i class="fa fa-user"></i> ฝากประวัติ </a>
+            <a href="login" > <i class="fa fa-user"></i> ฝากประวัติ </a> 
+            <!--<router-link to="login" > <i class="fa fa-user"></i> ฝากประวัติ </router-link> -->
         </li>
         <li v-if="isUser">
             <a href="/profile"><i class="fa fa-user"></i> บัญชีของฉัน</a>
@@ -86,6 +82,7 @@ export default {
         isWebAdmin() {
             return  (this.$store.getters['user/isLogged']) ? this.$store.getters['user/isWebAdmin'] :  false
         }
-    }
+    },
+    
 }
 </script>

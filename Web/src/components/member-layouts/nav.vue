@@ -1,38 +1,37 @@
 <template lang="">
 <div>
-    <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i>เมนู</a>
+   <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i>เมนู</a>
 
     <div class="dashboard-nav">
         <div class="dashboard-nav-inner">
 
-            <ul data-submenu-title="" v-show="0">
-                <li class="active"><a href="/dashboard">Dashboard</a></li>
-                <li vs><a href="/messages">ผู้สมัคร <span class="nav-tag"> 2 </span></a></li>
-                <li><a href="/messages">เปิดรับสมัคร <span class="nav-tag"> 2 </span></a></li>
+            <ul data-submenu-title="บัญชีผู้ใช้" v-if="isUser ">
+                <li  class="active-submenu"><a>ข้อมูลเบื้องต้น</a>
+                    <ul>
+                        <li><router-link  :to="'profile'">ข้อมูลส่วนตัว</router-link></li>
+                        <li><router-link  :to="'family'">ข้อมูลครอบครัว</router-link></li>
+                        <li><router-link  :to="'education'">ข้อมูลการศึกษา</router-link></li>
+                        <li><router-link  :to="'work'">ข้อมูลการทำงาน</router-link></li>
+                        <li><router-link  :to="'training'">ข้อมูลการฝึกอบรม</router-link></li>
+                        <li><router-link  :to="'knowledge'">ข้อมูลความสามารถพิเศษ</router-link></li>
+                    </ul>
+                </li>
+                <li><router-link  :to="'logout'" style="color:red;font-weight: bold;">ออกจากระบบ</router-link></li>
             </ul>
 
-            <ul data-submenu-title="บัญชีผู้ใช้" v-show="isUser ">
-                <li><a href="/profile">ข้อมูลส่วนตัว</a></li>
-                <li><a href="/family">ข้อมูลครอบครัว</a></li>
-                <li><a href="/education">ข้อมูลการศึกษา</a></li>
-                <li><a href="/work">ข้อมูลการทำงาน</a></li>
-                <li><a href="/training">ข้อมูลการฝึกอบรม</a></li>
-                <li><a href="/knowledge">ข้อมูลความสามารถพิเศษ</a></li>
-                <li><a href="/logout" style="color:red;font-weight: bold;">ออกจากระบบ</a></li>
-            </ul>
-
-            <ul data-submenu-title="เจ้าหน้าที่" v-show="isWebAdmin">
-                <li><a href="/qualify">ข้อมูลคุณสมบัติผู้สมัคร</a></li>
-                <li><a href="/proof">ข้อมูลหลักฐานการสมัคร</a></li>
-                <li><a href="/benefits">ข้อมูลสวัสดิการและสิทธิประโยชน์</a></li>
-                <li><a href="/position">ข้อมูลตำแหน่งสมัครงาน</a></li>
-                <li><a href="/jobattr" style="font-weight: bold;">กำหนดคุณลักษณ์ของผู้สมัคร</a></li>
-                <li><a href="/jobs" style="font-weight: bold;">ข้อมูลประกาศรับสมัครงาน</a></li>
-                
+            <ul data-submenu-title="เจ้าหน้าที่" v-if="isWebAdmin">
+                <li class="active-submenu"><a>ข้อมูลเบื้องต้น</a>
+                    <ul>
+                        <li><router-link  :to="'qualify'" >ข้อมูลคุณสมบัติผู้สมัคร</router-link></li>
+                        <li><router-link  :to="{name:'proof'}">ข้อมูลหลักฐานการสมัคร</router-link></li>
+                        <li><router-link  :to="{name:'benefits'}">ข้อมูลสวัสดิการและสิทธิประโยชน์</router-link></li>
+                        <li><router-link  :to="{name:'position'}">ข้อมูลตำแหน่ง</router-link></li>
+                    </ul>
+                </li>
+                <li><router-link  :to="{name:'jobattr'}" style="font-weight: bold;">คุณสมบัติประจำตำแหน่ง</router-link></li>
+                <li><router-link  :to="{name:'jobs'}" style="font-weight: bold;">ข้อมูลประกาศรับสมัครงาน</router-link></li>
                 <li><a href="#" style="color:#000099;font-weight: bold;">นำข้อมูลออก Resume</a></li>
-
-                <li><a href="/logout" style="color:red;font-weight: bold;">ออกจากระบบ</a></li>
-
+                <li><router-link  :to="{name:'Logout'}" style="color:red;font-weight: bold;">ออกจากระบบ</router-link></li>
             </ul>
 
             <div id="footer">
@@ -61,11 +60,11 @@ export default {
         console.log('check status isWebAdmin')
         console.log(this.isUser)
     },
-    data(){
-        return{
-            isAdmin:false,
-            isWebAdmin:false,
-            isUser:false
+    data() {
+        return {
+            isAdmin: false,
+            isWebAdmin: false,
+            isUser: false
         }
     }
 

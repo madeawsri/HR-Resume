@@ -94,6 +94,9 @@ import {
     minLength
 } from "vuelidate/lib/validators";
 export default {
+    created() {
+        //this.$vLink();
+    },
     data() {
         return {
             login: {
@@ -142,7 +145,8 @@ export default {
             console.log('Login doing')
             this.$store.dispatch('user/retrieveToken', this.login).then(() => {
                 if (this.$store.getters['user/isLogged'])
-                    this.$router.push('/home')
+                    //this.$router.push('/home')
+                    window.location.href = '/home';
                 else {
                     this.alertLoginFail();
                 }
@@ -158,8 +162,8 @@ export default {
                 return;
             }
 
-           // console.log(' ---- register -----')
-           // console.log(this.user)
+            // console.log(' ---- register -----')
+            // console.log(this.user)
 
             const dataUser = {
                 ...this.user
@@ -178,8 +182,9 @@ export default {
                         this.alertSuccess();
 
                         this.$store.dispatch('user/retrieveToken', dataLogin).then(() => {
-                            if (this.$store.getters['user/isLogged'])
-                                this.$router.push('/profile')
+                            if (this.$store.getters['user/isLogged']){
+                                //this.$router.push('/profile')
+                                window.location.href = '/profile';}
                             else {
                                 this.alertLoginFail();
                             }

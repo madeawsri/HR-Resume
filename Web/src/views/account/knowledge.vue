@@ -263,7 +263,8 @@ export default {
                 type: "warning",
                 timer: 3000
             }).then(() => {
-                this.$router.push('/home')
+               // this.$router.push('/home')
+               window.location.href = '/home';
             })
         },
 

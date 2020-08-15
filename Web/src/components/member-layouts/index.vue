@@ -18,8 +18,6 @@
 	<!-- Navigation
 	================================================== -->
     <navLayout />
-	
-
 
 	<!-- Content
 	================================================== -->
@@ -43,7 +41,6 @@
 <script>
 import headerLayout from '@/components/member-layouts/header.vue'
 import navLayout from '@/components/member-layouts/nav.vue'
-//import contentLayout from '@/components/member-layouts/content.vue'
 
 export default {
     components: {

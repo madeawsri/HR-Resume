@@ -17,11 +17,16 @@ const getters = {
     },
     isAdmin: (state) => {
         try {
+
             let objectData = state.data
             if ((typeof state.data) !== "object") {
                 objectData = JSON.parse(state.data ? state.data : null)
+                return 3 === objectData.status && (state.token !== null)
+            } else {
+                return false;
             }
-            return 3 === objectData.status && (state.token !== null)
+
+
         } catch (e) {
             console.log(e)
             return false;
@@ -33,8 +38,11 @@ const getters = {
             let objectData = state.data
             if ((typeof state.data) !== "object") {
                 objectData = JSON.parse(state.data ? state.data : null)
+                return 2 === objectData.status && (state.token !== null)
+            } else {
+                return false;
             }
-            return 2 === objectData.status && (state.token !== null)
+
         } catch (e) {
             console.log(e)
             return false;
@@ -46,8 +54,11 @@ const getters = {
             let objectData = state.data
             if ((typeof state.data) !== "object") {
                 objectData = JSON.parse(state.data ? state.data : null)
+                return 1 === objectData.status && (state.token !== null)
+            } else {
+                return false;
             }
-            return 1 === objectData.status && (state.token !== null)
+
         } catch (e) {
             console.log(e)
             return false;

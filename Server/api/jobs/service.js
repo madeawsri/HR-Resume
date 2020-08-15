@@ -16,15 +16,19 @@ module.exports = {
                 dateout,
                 jobattrid,
                 positionid,
-                num
+                num,
+                ptype,
+                stype
             ) 
-                values( ?,?,?,?,?,?)`, [
+                values( ?,?,?,?,?,?,?,?)`, [
                 data.topic,
                 data.datein,
                 data.dateout,
                 data.jobattr,
                 data.position,
-                data.num
+                data.num,
+                data.ptype,
+                data.stype
             ],
             (error, results, fields) => {
                 if (error) {
@@ -43,7 +47,9 @@ module.exports = {
             dateout=?,
             jobattrid=?,
             positionid=?,
-            num=?
+            num=?,
+            ptype=?,
+            stype=?
 
             WHERE  id=? `, [
                 data.topic,
@@ -52,6 +58,8 @@ module.exports = {
                 data.jobattr,
                 data.position,
                 data.num,
+                data.ptype,
+                data.stype,
                 data.id
             ],
             (error, results, fields) => {
