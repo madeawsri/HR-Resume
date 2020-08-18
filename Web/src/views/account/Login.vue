@@ -94,6 +94,7 @@ import {
     minLength
 } from "vuelidate/lib/validators";
 export default {
+
     created() {
         //this.$vLink();
     },
@@ -139,6 +140,36 @@ export default {
             this.$refs.username.$el.focus();
         }, 300);
 
+        this.$nextTick(() => {
+
+            const $ = require('jquery')
+            window.$ = $;
+
+            var $tabsNav = $('.tabs-nav'),
+                $tabsNavLis = $tabsNav.children('li');
+            $tabsNav.each(function () {
+                var $this = $(this);
+                $this.next().children('.tab-content').stop(true, true).hide().first().show();
+                $this.children('li').first().addClass('active').stop(true, true).show();
+            });
+            $tabsNavLis.on('click', function (e) {
+                
+                var $this = $(this);
+                $this.siblings().removeClass('active').end().addClass('active');
+                $this.parent().next().children('.tab-content').stop(true, true).hide().siblings($this.find('a').attr('href')).fadeIn();
+                e.preventDefault();
+            });
+            var hash = window.location.hash;
+            var anchor = $('.tabs-nav a[href="' + hash + '"]');
+            if (anchor.length === 0) {
+                $(".tabs-nav li:first").addClass("active").show();
+                $(".tab-content:first").show();
+            } else {
+                console.log(anchor);
+                anchor.parent('li').click();
+            }
+        }) 
+
     },
     methods: {
         handleSubmitLogin: async function () {
@@ -182,10 +213,10 @@ export default {
                         this.alertSuccess();
 
                         this.$store.dispatch('user/retrieveToken', dataLogin).then(() => {
-                            if (this.$store.getters['user/isLogged']){
+                            if (this.$store.getters['user/isLogged']) {
                                 //this.$router.push('/profile')
-                                window.location.href = '/profile';}
-                            else {
+                                window.location.href = '/profile';
+                            } else {
                                 this.alertLoginFail();
                             }
                         })

@@ -38,6 +38,10 @@ console.log('url:' + process.env.VUE_APP_API_ENDPOINT)
 Vue.prototype.$http = axios
 Vue.config.productionTip = false;
 
+// In main.js
+//import LoadScript from 'vue-plugin-load-script';
+//Vue.use(LoadScript);
+
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
@@ -70,8 +74,20 @@ Vue.filter('stringToJson', function(value, key = 'topic') {
     return x[key]
 })
 
+
 Vue.prototype.$vLink = function(target = 'home') {
     window.location.href = "/" + target
+};
+
+Vue.prototype.$vStrToJson = function(str) {
+    try {
+        str = (typeof str !== 'undefined') ? str : "{}"
+        return JSON.parse(str)
+    } catch (e) {
+        console.log(e)
+            //alert(error)
+    }
+
 };
 
 

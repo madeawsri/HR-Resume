@@ -1,5 +1,6 @@
 <template>
 <div class="five columns">
+
     <h3 class="margin-bottom-5">งานด่วน</h3>
 
     <!-- Navigation -->
@@ -31,7 +32,7 @@
                             <p>
 
                             </p>
-                            <router-link  :to="{ name: 'Jobdetail', params: { jobid: item.id }}"  class="button"> รายละเอียด </router-link>
+                            <router-link :to="{ name: 'Jobdetail', params: { jobid: item.id }}" class="button"> รายละเอียด </router-link>
                         </div>
                     </li>
 
@@ -45,17 +46,20 @@
 </template>
 
 <script>
+//import {showbizpro} from '../../../../../public/scripts/jquery.themepunch.showbizpro.min'
 export default {
     data() {
         return {
             page: 0,
-            listDatas: []
+            listDatas: [],
+            //is_script_loading: false
         }
     },
-   async created() {
-       await this.showDataAll();
+    async created() {
+        await this.showDataAll();
+       
     },
-     methods: {
+    methods: {
         getPtypeClass: function (value) {
             let obj = this.$store.getters.strtojson(value, 'id')
             return this.$store.getters.getptype(obj).class
@@ -91,6 +95,59 @@ export default {
             }
 
         },
+    },
+
+    async mounted() {
+        console.log("job list")
+     //   this.$nextTick(async () => {
+/*
+            try {
+                await this.load_script();
+                    const $ = require('jquery')
+                    window.$ = $;
+                    $('#job-spotlight').showbizpro({
+                        dragAndScroll: "off",
+                        visibleElementsArray: [1, 1, 1, 1],
+                        carousel: "off",
+                        entrySizeOffset: 0,
+                        allEntryAtOnce: "off",
+                        rewindFromEnd: "off",
+                        autoPlay: "off",
+                        delay: 2000,
+                        speed: 400,
+                        easing: 'easeOut'
+                    });
+                // .. do what you want after script has loaded
+            } catch (err) {
+                console.log("Error")
+                console.log(err)
+            }
+            */
+
+            //      const $ = require('jquery')
+            //     window.$ = $;
+            /*
+                       Promise.all([
+                            this.$loadScript("http://10.7.10.26:8082/scripts/jquery.themepunch.tools.min.js"),
+                            this.$loadScript("http://10.7.10.26:8082/scripts/jquery.themepunch.revolution.min.js"),
+                            this.$loadScript("http://10.7.10.26:8082/scripts/jquery.themepunch.showbizpro.min.js")
+                        ]).then( async () => {
+ $('#job-spotlight').showbizpro({
+            dragAndScroll: "off",
+            visibleElementsArray: [1, 1, 1, 1],
+            carousel: "off",
+            entrySizeOffset: 0,
+            allEntryAtOnce: "off",
+            rewindFromEnd: "off",
+            autoPlay: "off",
+            delay: 2000,
+            speed: 400,
+            easing: 'easeOut'
+        });
+                        })
+                        */
+
+       // })
     },
 }
 </script>

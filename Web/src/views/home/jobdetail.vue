@@ -2,133 +2,94 @@
 <homeLayout>
     <div slot="homecontent">
 
-	<!-- Recent Jobs -->
-	<div class="eleven columns">
-	<div class="padding-right">
-		
-		<!-- Company Info -->
-		<div class="company-info">
-			<img src="images/company-logo.png" alt="" v-if="0">
-			<div class="content">
-				<h4>{{dataDetail.topic}}</h4>
-				<span v-if="0"><a href="#"><i class="fa fa-link"></i> Website</a></span>
-				<span><a href="#"><i class="fa fa-twitter"></i> @admin</a></span>
-			</div>
-			<div class="clearfix"></div>
-		</div>
+        <!-- Recent Jobs -->
+        <div class="eleven columns">
+            <div class="padding-right">
 
-		<p class="margin-reset" v-if="0">
-			The Food Service Specialist ensures outstanding customer service is provided to food customers and that all food offerings meet the required stock levels and presentation standards. Beginning your career as a Food Steward will give you a strong foundation in Speedway’s food segment that can make you a vital member of the front line team!
-		</p>
+                <!-- Company Info -->
+                <div class="company-info">
+                    <img src="images/company-logo.png" alt="" v-if="0">
+                    <div class="content">
+                        <h4>{{dataDetail.xtopic}} <strong>{{dataDetail.num}}</strong> ตำแหน่ง </h4>
+                        <span v-if="0"><a href="#"><i class="fa fa-link"></i> Website</a></span>
+                        <span><a href="#"><i class="fa fa-twitter"></i> @admin</a></span>
+                        <span style=""><i class="ln ln-icon-Affiliate"></i> {{$vStrToJson(dataDetail.stype).topic}}</span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
 
-		<br>
-		<p>The <strong>Food Service Specialist</strong> will have responsibilities that include:</p>
+                <p class="margin-reset" v-if="0">
+                    The Food Service Specialist ensures outstanding customer service is provided to food customers and that all food offerings meet the required stock levels and presentation standards. Beginning your career as a Food Steward will give you a strong foundation in Speedway’s food segment that can make you a vital member of the front line team!
+                </p>
 
-		<ul class="list-1">
-			<li>Executing the Food Service program, including preparing and presenting our wonderful food offerings
-			to hungry customers on the go!
-			</li>
-			<li>Greeting customers in a friendly manner and suggestive selling and sampling items to help increase sales.</li>
-			<li>Keeping our Store food area looking terrific and ready for our valued customers by managing product 
-			inventory, stocking, cleaning, etc.</li>
-			<li>We’re looking for associates who enjoy interacting with people and working in a fast-paced environment!</li>
-		</ul>
-		
-		<br>
+                <p><strong>คุณสมบัติผู้สมัคร</strong> </p>
+                <ul class="list-1" v-for="(item, index) in $vStrToJson(dataDetail.qualifys)" :key="'a'+index">
+                    <li>{{item.topic}}</li>
+                </ul>
 
-		<h4 class="margin-bottom-10">Job Requirment</h4>
+                <p><strong>หลักฐานการสมัคร</strong> </p>
+                <ul class="list-1" v-for="(item,index) in $vStrToJson(dataDetail.proofs)" :key="'b'+index">
+                    <li>{{item.topic}}</li>
+                </ul>
 
-		<ul class="list-1">
-			<li>Excellent customer service skills, communication skills, and a happy, smiling attitude are essential.</li>
-			<li>Must be available to work required shifts including weekends, evenings and holidays.</li>
-			<li>Must be able to perform repeated bending, standing and reaching.</li>
-			<li> Must be able to occasionally lift up to 50 pounds</li>
-		</ul>
+                <p><strong>สวัสดิการและผลประโยชน์ตอบแทน</strong> </p>
+                <ul class="list-1" v-for="(item,index) in $vStrToJson(dataDetail.benefits)" :key="'c'+index">
+                    <li>{{item.topic}}</li>
+                </ul>
 
-	</div>
-	</div>
+            </div>
+        </div>
 
+        <!-- Widgets -->
+        <div class="five columns">
 
-	<!-- Widgets -->
-	<div class="five columns">
+            <!-- Sort by -->
+            <div class="widget">
 
-		<!-- Sort by -->
-		<div class="widget">
-			<h4>Overview</h4>
+                <div class="job-overview">
 
-			<div class="job-overview">
-				
-				<ul>
-					<li>
-						<i class="fa fa-map-marker"></i>
-						<div>
-							<strong>Location:</strong>
-							<span>20180 Outer Dr Dearborn, MI 48124</span>
-						</div>
-					</li>
-					<li>
-						<i class="fa fa-user"></i>
-						<div>
-							<strong>Job Title:</strong>
-							<span>Food Service Specialist</span>
-						</div>
-					</li>
-					<li>
-						<i class="fa fa-clock-o"></i>
-						<div>
-							<strong>Hours:</strong>
-							<span>40h / week</span>
-						</div>
-					</li>
-					<li>
-						<i class="fa fa-money"></i>
-						<div>
-							<strong>Rate:</strong>
-							<span>$9.50 - $12.50 / hour</span>
-						</div>
-					</li>
-				</ul>
+                    <ul>
+                        <li>
+                            <i class="fa fa-map-marker"></i>
+                            <div>
+                                <strong>กรอกใบสมัครด้วยต้นเองได้</strong>
+                                <span>ชั้น 1: แผนกบุคคล โทร.043-432-902-6 ต่อ 7053</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-user"></i>
+                            <div>
+                                <strong>ลักษณะงาน:</strong>
+                                <span>{{$vStrToJson(dataDetail.ptype).topic}}</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-clock-o"></i>
+                            <div>
+                                <strong>ระยะเวลาเปิดรับสมัคร:</strong>
+                                <span> {{dataDetail.datein | moment("DD MMM YYYY ")}} ถึง {{dataDetail.dateout|moment("DD MMM YYYY")}} </span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-money"></i>
+                            <div>
+                                <strong>อัตราค่าจ้าง:</strong>
+                                <span>ขึ้นอยู่กับโครงสร้างของบริษัท</span>
+                            </div>
+                        </li>
+                    </ul>
 
+                    <a href="#" class="popup-with-zoom-anim button" v-if="isLogged" > ส่งใบสมัครงาน </a> 
+                    <a class=" button disabled" v-if="isSent" > <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </a>
+					<router-link class="button" to="login" v-if="!isLogged"> ส่งใบสมัครงาน </router-link> 
 
-				<a href="#small-dialog" class="popup-with-zoom-anim button">Apply For This Job</a>
+                </div>
 
-				<div id="small-dialog" class="zoom-anim-dialog mfp-hide apply-popup">
-					<div class="small-dialog-headline">
-						<h2>Apply For This Job</h2>
-					</div>
+            </div>
 
-					<div class="small-dialog-content">
-						<form action="#" method="get" >
-							<input type="text" placeholder="Full Name" value=""/>
-							<input type="text" placeholder="Email Address" value=""/>
-							<textarea placeholder="Your message / cover letter sent to the employer"></textarea>
+        </div>
+        <!-- Widgets / End -->
 
-							<!-- Upload CV -->
-							<div class="upload-info"><strong>Upload your CV (optional)</strong> <span>Max. file size: 5MB</span></div>
-							<div class="clearfix"></div>
-
-							<label class="upload-btn">
-							    <input type="file" multiple />
-							    <i class="fa fa-upload"></i> Browse
-							</label>
-							<span class="fake-input">No file selected</span>
-
-							<div class="divider"></div>
-
-							<button class="send">Send Application</button>
-						</form>
-					</div>
-					
-				</div>
-
-			</div>
-
-		</div>
-
-	</div>
-	<!-- Widgets / End -->
-
-        
     </div>
 </homeLayout>
 </template>
@@ -137,12 +98,22 @@
 import homeLayout from '../../components/layouts/index'
 
 export default {
-
+ computed: {
+        isLogged() {
+            return this.$store.getters['user/isLogged']
+        },
+		isSent(){
+			return !this.$store.getters['user/isLogged']
+		}
+    },
     async created() {
         if (this.jobid === undefined) {
             this.alertFail();
         } else {
             await this.showDetail();
+
+            //console.log(this.$vStrToJson(this.dataDetail.qualifys))
+
         }
     },
     data() {
@@ -164,11 +135,14 @@ export default {
                 timer: 3000
             }).then(() => {
                 //this.$router.push('/home')
-                this.$router.push({
+                /*this.$router.push({
                     name: 'Home',
                     force: true,
                     refresh: true
                 });
+				*/
+				this.$vLink('home')
+
             })
         },
         async showDetail() {
@@ -178,9 +152,11 @@ export default {
                 } = await this.$http.get(`/api/jobs/${this.jobid}`)
 
                 if (data.success == 1) {
-                    
+
                     const xdata = data.data
-                    this.dataDetail = {...xdata}
+                    this.dataDetail = {
+                        ...xdata
+                    }
                     console.log(this.dataDetail)
                     /*
                     if (data.data) {
@@ -203,12 +179,18 @@ export default {
 }
 </script>
 
-
-<style >
+<style>
 .company-info {
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 33px;
-    margin-bottom: 0px; 
+    margin-bottom: 0px;
 }
+</style>
 
+<style lang="postcss" scoped>
+.disabled {
+  cursor: not-allowed;
+  color: gray;
+  background-color:lightgrey;
+}
 </style>

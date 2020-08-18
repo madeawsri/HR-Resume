@@ -5,6 +5,7 @@
         <li>
             <a id="current" href="/home">หน้าแรก</a>
             
+            
         </li>
 
         <li v-if="0">
@@ -54,8 +55,7 @@
 
     <ul class="float-right">
         <li v-if="!isLogged">
-            <a href="login" > <i class="fa fa-user"></i> ฝากประวัติ </a> 
-            <!--<router-link to="login" > <i class="fa fa-user"></i> ฝากประวัติ </router-link> -->
+            <router-link to="login" > <i class="fa fa-user"></i> ฝากประวัติ </router-link>
         </li>
         <li v-if="isUser">
             <a href="/profile"><i class="fa fa-user"></i> บัญชีของฉัน</a>

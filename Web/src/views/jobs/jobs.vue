@@ -256,6 +256,11 @@ export default {
                     const dataForm2 = {
                         ...this.dataForm
                     }
+                    console.log('update')
+                    
+                    
+                    dataForm2.topic = {...dataForm2.position}.topic
+                    
                     dataForm2.position = JSON.stringify(dataForm2.position)
                     
                     dataForm2.jobattr = JSON.stringify({
@@ -274,6 +279,8 @@ export default {
                         topic: this.dataForm.stype.topic
                     })
 
+                    console.log(dataForm2)
+
                     const {
                         data
                     } = await this.$http.post(`api/jobs/${this.editForm.keydb}`, dataForm2)
@@ -281,7 +288,7 @@ export default {
                     if (data.success == 1) {
 
    
-                        this.listDatas[this.editForm.index].topic = this.dataForm.topic
+                        this.listDatas[this.editForm.index].topic = dataForm2.topic
                         this.listDatas[this.editForm.index].jobattrid = JSON.stringify({
                             id: this.dataForm.jobattr.id,
                             topic: this.dataForm.jobattr.topic
@@ -351,6 +358,7 @@ export default {
                         regdate: [data.data.datein, data.data.dateout],
                         ptype:JSON.parse(data.data.ptype),
                         stype:JSON.parse(data.data.stype),
+                        topic: JSON.parse(data.data.positionid).topic
                     }
 
                 } else {

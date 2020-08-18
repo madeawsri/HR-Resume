@@ -92,10 +92,11 @@ module.exports = {
         AND y.id = (SUBSTRING(x.jobattrid,LOCATE(':',x.jobattrid)+1, LOCATE(',',x.jobattrid)-LOCATE(':',x.jobattrid)-1 ))
         */
         //select * from ${tableName} where id = ?
+        if (data.id === undefined) data.id = 0
         pool.query(
-            `SELECT  x.id as xid, x.* , y.id as yid,  y.*   FROM hr_jobs AS x , hr_jobattr AS y 
-            WHERE x.id = ? 
-            AND y.id = (SUBSTRING(x.jobattrid,LOCATE(':',x.jobattrid)+1, LOCATE(',',x.jobattrid)-LOCATE(':',x.jobattrid)-1 ))`, [data.id],
+            `SELECT  x.id as xid, x.topic as xtopic, x.* , y.id as yid,  y.*   FROM hr_jobs AS x , hr_jobattr AS y 
+            WHERE x.id = ${data.id}
+            AND y.id = (SUBSTRING(x.jobattrid,LOCATE(':',x.jobattrid)+1, LOCATE(',',x.jobattrid)-LOCATE(':',x.jobattrid)-1 ))`,
             (error, results, fields) => {
                 if (error) {
                     callBack(error);

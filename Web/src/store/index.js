@@ -24,7 +24,8 @@ export default new Vuex.Store({
             let x = {}
             if (value !== undefined) x = JSON.parse(value)
             return x[key]
-        }
+        },
+
     },
     mutations: {},
     actions: {},

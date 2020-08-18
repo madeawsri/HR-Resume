@@ -5,7 +5,8 @@
         <div class="listings-container">
             <div v-for="(item, index) in listDatas" :key="index">
 
-                <a href="job-page-alt.html" class="listing " :class="getPtypeClass(item.ptype)" >
+              <!--  <a href=""  > -->
+                <router-link class="listing " :class="getPtypeClass(item.ptype)" :to="{ name: 'Jobdetail', params: { jobid: item.id }}" >  
                     <div class="listing-title">
                         <h4>
                             {{item.topic}} / {{item.num}} ตำแหน่ง
@@ -24,13 +25,13 @@
                             </li>
                         </ul>
                     </div>
-                </a>
+                </router-link>
 
             </div>
 
         </div>
 
-        <a href="#" class="button centered" @click="showMoreData"><i class="fa fa-plus-circle"></i> แสดงงานเพิ่มเติม</a>
+        <a href="#" class="button centered" @click="showMoreData" ><i class="fa fa-plus-circle"></i> แสดงงานเพิ่มเติม</a>
         <div class="margin-bottom-55"></div>
     </div>
 </div>

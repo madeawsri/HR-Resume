@@ -16,7 +16,7 @@ const qualifyRouter = require('./api/qualify/router')
 
 app.use(express.json());
 //app.options('*', cors())
-app.use(cors({ origin: 'http://192.168.2.2:8080' }))
+app.use(cors({ origin: 'http://10.7.10.26:8082' }))
 
 app.use("/api/login", loginRouter);
 app.use("/api/profile", profileRouter);
