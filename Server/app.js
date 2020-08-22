@@ -16,7 +16,7 @@ const qualifyRouter = require('./api/qualify/router')
 
 app.use(express.json());
 //app.options('*', cors())
-app.use(cors({ origin: 'http://10.7.10.26:8082' }))
+app.use(cors({ origin: 'http://10.7.10.26:8081' }))
 
 app.use("/api/login", loginRouter);
 app.use("/api/profile", profileRouter);
@@ -32,6 +32,8 @@ app.use('/api/position', require('./api/position/router'))
 app.use('/api/benefits', require('./api/benefits/router'))
 app.use('/api/jobattr', require('./api/jobattr/router'))
 app.use('/api/jobs', require('./api/jobs/router'))
+app.use('/api/jobinterest', require('./api/jobinterest/router'))
+app.use('/api/register', require('./api/register/router'))
 
 
 app.get('/user/:id(\\d+)', function(req, res) {

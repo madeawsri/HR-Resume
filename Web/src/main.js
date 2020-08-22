@@ -75,6 +75,17 @@ Vue.filter('stringToJson', function(value, key = 'topic') {
 })
 
 
+Vue.filter('getArray', function(value, i = 0) {
+    try {
+        if (value === undefined)
+            return "-"
+        else return value[i]
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+
 Vue.prototype.$vLink = function(target = 'home') {
     window.location.href = "/" + target
 };

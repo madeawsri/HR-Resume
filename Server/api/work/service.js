@@ -74,16 +74,26 @@ module.exports = {
     },
 
     getByID: (data, callBack) => {
-
-        pool.query(
-            `select * from ${tableName} where profileid = ? and workno=?`, [data.profileid, data.workno],
-            (error, results, fields) => {
-                if (error) {
-                    callBack(error);
+        if (data.workno != undefined)
+            pool.query(
+                `select * from ${tableName} where profileid = ? and workno=? and workplace <> ""`, [data.profileid, data.workno],
+                (error, results, fields) => {
+                    if (error) {
+                        callBack(error);
+                    }
+                    return callBack(null, results[0]);
                 }
-                return callBack(null, results[0]);
-            }
-        );
+            );
+        else
+            pool.query(
+                `select * from ${tableName} where profileid = ? and workplace <> ""`, [data.profileid],
+                (error, results, fields) => {
+                    if (error) {
+                        callBack(error);
+                    }
+                    return callBack(null, results);
+                }
+            );
     },
 
 

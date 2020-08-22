@@ -9930,7 +9930,7 @@ CREATE TABLE IF NOT EXISTS `hr_benefits` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_benefits: ~12 rows (approximately)
+-- Dumping data for table jobksl_db.hr_benefits: ~11 rows (approximately)
 /*!40000 ALTER TABLE `hr_benefits` DISABLE KEYS */;
 REPLACE INTO `hr_benefits` (`id`, `topic`) VALUES
 	(1, 'โบนัสประจำปี'),
@@ -9938,7 +9938,7 @@ REPLACE INTO `hr_benefits` (`id`, `topic`) VALUES
 	(3, 'เบี้ยขยันประจำสัปดาห์'),
 	(4, 'เงินกองทุนสำรองเลี้ยงชีพ'),
 	(5, 'ปรับค่าจ้างประจำปี'),
-	(6, 'ปรับตำแนห่ง / ปรับระดับ ประจำปี'),
+	(6, 'ปรับตำแหน่ง / ปรับระดับ ประจำปี'),
 	(7, 'เงินช่วยเหลืองานพิธีต่างๆ '),
 	(8, 'เครื่องแบบพนักงาน'),
 	(9, 'ทุนการศึกษาบุตรพนักงาน'),
@@ -9972,7 +9972,7 @@ CREATE TABLE IF NOT EXISTS `hr_education` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_education: ~15 rows (approximately)
+-- Dumping data for table jobksl_db.hr_education: ~13 rows (approximately)
 /*!40000 ALTER TABLE `hr_education` DISABLE KEYS */;
 REPLACE INTO `hr_education` (`id`, `profileid`, `levelid`, `institution`, `subject`, `begintime`, `endtime`, `gpa`, `flag`) VALUES
 	(2, '1 1111 11111 11 1', 1, 'โรงเรียนชุมชนบ้านหนองโก', 'วิทย-คณิตฯ', '2530', '2537', '3.55', NULL),
@@ -9988,7 +9988,7 @@ REPLACE INTO `hr_education` (`id`, `profileid`, `levelid`, `institution`, `subje
 	(12, '3 4101 00857 66 4', 1, '', '', '0', '0', '0', NULL),
 	(13, '3 4101 00857 66 4', 2, '', '', '0', '0', '0', NULL),
 	(14, '3 4101 00857 66 4', 3, '', '', '0', '0', '0', NULL),
-	(15, '3 4101 00857 66 4', 4, '', '', '0', '0', '0', NULL),
+	(15, '3 4101 00857 66 4', 4, 'xxxxxxxxxxxxx', 'eeeeee', '2525', '2560', '4.00', NULL),
 	(16, '3 4101 00857 66 4', 5, '', '', '0', '0', '0', NULL);
 /*!40000 ALTER TABLE `hr_education` ENABLE KEYS */;
 
@@ -9999,7 +9999,7 @@ CREATE TABLE IF NOT EXISTS `hr_education_level` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_education_level: ~5 rows (approximately)
+-- Dumping data for table jobksl_db.hr_education_level: ~4 rows (approximately)
 /*!40000 ALTER TABLE `hr_education_level` DISABLE KEYS */;
 REPLACE INTO `hr_education_level` (`id`, `topic`) VALUES
 	(1, 'ประถมศึกษา'),
@@ -10067,13 +10067,44 @@ CREATE TABLE IF NOT EXISTS `hr_jobattr` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jobksl_db.hr_jobattr: ~3 rows (approximately)
+-- Dumping data for table jobksl_db.hr_jobattr: ~2 rows (approximately)
 /*!40000 ALTER TABLE `hr_jobattr` DISABLE KEYS */;
 REPLACE INTO `hr_jobattr` (`id`, `topic`, `qualifys`, `proofs`, `benefits`) VALUES
-	(2, 'แผนกโรงกลึง', '[{"id":1,"topic":"อายุ 18 ปี บริบูรณ์"}]', '[{"id":16,"topic":"รูปถ่ายขนาด 1 นิ้ว 2 แผ่น"}]', '[{"id":1,"topic":"โบนัสประจำปี"},{"id":2,"topic":"ค่าวิชาชีพ"},{"id":3,"topic":"เบี้ยขยันประจำสัปดาห์"}]'),
-	(4, 'วิเคราะห์-ประจำปี', '[{"id":1,"topic":"อายุ 18 ปี บริบูรณ์"},{"id":2,"topic":"สามารถทำงานล่วงเวลาได้"},{"id":3,"topic":"ไม่เกี่ยวกับยาเสพติดทุกชนิด"},{"id":4,"topic":"สำเร็จการศึกษาระดับ มัธยม-ปวส."}]', '[{"id":15,"topic":"สำเนาบัตรประชาชน 1 แผ่น"},{"id":16,"topic":"รูปถ่ายขนาด 1 นิ้ว 2 แผ่น"},{"id":17,"topic":"สำเนาทะเบียนบ้าน 1 แผ่น"},{"id":18,"topic":"สำเนาวุฒิการศึกษา 1 แผ่น"}]', '[{"id":1,"topic":"โบนัสประจำปี"},{"id":2,"topic":"ค่าวิชาชีพ"},{"id":3,"topic":"เบี้ยขยันประจำสัปดาห์"},{"id":4,"topic":"เงินกองทุนสำรองเลี้ยงชีพ"},{"id":5,"topic":"ปรับค่าจ้างประจำปี"},{"id":6,"topic":"ปรับตำแนห่ง / ปรับระดับ ประจำปี"},{"id":7,"topic":"เงินช่วยเหลืองานพิธีต่างๆ "}]'),
-	(5, 'ฝ่ายไร่ - รายวัน', '[{"id":1,"topic":"อายุ 18 ปี บริบูรณ์"},{"id":2,"topic":"สามารถทำงานล่วงเวลาได้"},{"id":3,"topic":"ไม่เกี่ยวกับยาเสพติดทุกชนิด"}]', '[{"id":15,"topic":"สำเนาบัตรประชาชน 1 แผ่น"},{"id":16,"topic":"รูปถ่ายขนาด 1 นิ้ว 2 แผ่น"}]', '[{"id":1,"topic":"โบนัสประจำปี"},{"id":2,"topic":"ค่าวิชาชีพ"},{"id":3,"topic":"เบี้ยขยันประจำสัปดาห์"},{"id":4,"topic":"เงินกองทุนสำรองเลี้ยงชีพ"}]');
+	(2, 'พนักงานประจำ-รายวัน-สำนักงาน', '[{"id":1,"topic":"อายุ 18 ปี บริบูรณ์"},{"id":7,"topic":"สามารถทำงานเป็นกะได้"},{"id":8,"topic":"สามารถทำงานล่วงเวลาได้"},{"id":9,"topic":"มีความอดทน ขยันรับผิดชอบสูง"},{"id":12,"topic":"สำเร็จการศึกษาระดับมัธยมปลาย (ม.6) หรือ ระดับ ปวส. สาขาที่เกี่ยวข้องกับตำแหน่งงาน"}]', '[{"id":15,"topic":"สำเนาบัตรประชาชน 1 แผ่น"},{"id":16,"topic":"รูปถ่ายขนาด 1 นิ้ว 2 แผ่น"},{"id":17,"topic":"สำเนาทะเบียนบ้าน 1 แผ่น"},{"id":18,"topic":"สำเนาวุฒิการศึกษา 1 แผ่น"},{"id":19,"topic":"ใบผ่านเกณฑ์ทหาร สด.8 สด.43"},{"id":20,"topic":"เอกสารอื่นๆ เช่นใบเปลี่ยนชื่อ"}]', '[{"id":1,"topic":"โบนัสประจำปี"},{"id":3,"topic":"เบี้ยขยันประจำสัปดาห์"},{"id":5,"topic":"ปรับค่าจ้างประจำปี"},{"id":6,"topic":"ปรับตำแหน่ง / ปรับระดับ ประจำปี"},{"id":4,"topic":"เงินกองทุนสำรองเลี้ยงชีพ"},{"id":8,"topic":"เครื่องแบบพนักงาน"},{"id":9,"topic":"ทุนการศึกษาบุตรพนักงาน"},{"id":10,"topic":"บ้านพักสวัสดิการ"},{"id":11,"topic":"ตรวจสุขภาพประจำปี / ประกันชีวิต"},{"id":12,"topic":"งานเลี้ยงสังสรรค์ประจำปี"},{"id":7,"topic":"เงินช่วยเหลืองานพิธีต่างๆ "}]'),
+	(4, 'พนักงานประจำ-รายเดือน-สำนักงาน', '[{"id":1,"topic":"อายุ 18 ปี บริบูรณ์"},{"id":9,"topic":"มีความอดทน ขยันรับผิดชอบสูง"},{"id":10,"topic":" สำเร็จการศึกษาระดับปริญาตรี สาขาที่เกี่ยวของกับตำแหน่งงาน"}]', '[{"id":15,"topic":"สำเนาบัตรประชาชน 1 แผ่น"},{"id":16,"topic":"รูปถ่ายขนาด 1 นิ้ว 2 แผ่น"},{"id":17,"topic":"สำเนาทะเบียนบ้าน 1 แผ่น"},{"id":18,"topic":"สำเนาวุฒิการศึกษา 1 แผ่น"}]', '[{"id":1,"topic":"โบนัสประจำปี"},{"id":2,"topic":"ค่าวิชาชีพ"},{"id":3,"topic":"เบี้ยขยันประจำสัปดาห์"},{"id":4,"topic":"เงินกองทุนสำรองเลี้ยงชีพ"},{"id":5,"topic":"ปรับค่าจ้างประจำปี"},{"id":7,"topic":"เงินช่วยเหลืองานพิธีต่างๆ "},{"id":6,"topic":"ปรับตำแหน่ง / ปรับระดับ ประจำปี"}]'),
+	(5, 'ฝ่ายไร่ - รายวัน', '[{"id":1,"topic":"อายุ 18 ปี บริบูรณ์"},{"id":8,"topic":"สามารถทำงานล่วงเวลาได้"},{"id":10,"topic":" สำเร็จการศึกษาระดับปริญาตรี สาขาที่เกี่ยวของกับตำแหน่งงาน"},{"id":9,"topic":"มีความอดทน ขยันรับผิดชอบสูง"}]', '[{"id":15,"topic":"สำเนาบัตรประชาชน 1 แผ่น"},{"id":16,"topic":"รูปถ่ายขนาด 1 นิ้ว 2 แผ่น"},{"id":17,"topic":"สำเนาทะเบียนบ้าน 1 แผ่น"},{"id":18,"topic":"สำเนาวุฒิการศึกษา 1 แผ่น"},{"id":19,"topic":"ใบผ่านเกณฑ์ทหาร สด.8 สด.43"},{"id":20,"topic":"เอกสารอื่นๆ เช่นใบเปลี่ยนชื่อ"}]', '[{"id":1,"topic":"โบนัสประจำปี"},{"id":3,"topic":"เบี้ยขยันประจำสัปดาห์"},{"id":5,"topic":"ปรับค่าจ้างประจำปี"},{"id":6,"topic":"ปรับตำแหน่ง / ปรับระดับ ประจำปี"},{"id":7,"topic":"เงินช่วยเหลืองานพิธีต่างๆ "},{"id":8,"topic":"เครื่องแบบพนักงาน"},{"id":9,"topic":"ทุนการศึกษาบุตรพนักงาน"},{"id":10,"topic":"บ้านพักสวัสดิการ"},{"id":11,"topic":"ตรวจสุขภาพประจำปี / ประกันชีวิต"},{"id":12,"topic":"งานเลี้ยงสังสรรค์ประจำปี"},{"id":4,"topic":"เงินกองทุนสำรองเลี้ยงชีพ"}]');
 /*!40000 ALTER TABLE `hr_jobattr` ENABLE KEYS */;
+
+-- Dumping structure for table jobksl_db.hr_jobinterest
+CREATE TABLE IF NOT EXISTS `hr_jobinterest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idcard` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `jobid` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `salary` varchar(8) CHARACTER SET utf8 DEFAULT NULL,
+  `regdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `note` mediumtext CHARACTER SET utf8,
+  `status` tinyint(4) DEFAULT '0',
+  `lastedit` varchar(30) DEFAULT NULL,
+  `topic` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `nuddate` date DEFAULT NULL COMMENT 'วันนัดสัมภาษณ์',
+  `nuduser` varchar(150) CHARACTER SET utf8 DEFAULT NULL COMMENT 'กรรมการสัมภาษณ์',
+  `regstatus` tinyint(4) DEFAULT '0' COMMENT 'สมัครเอง, เลือกจากประวัติ',
+  `nudnode` varchar(150) CHARACTER SET utf8 DEFAULT NULL COMMENT 'แจ้งผลสัมภาษณ์',
+  `pmdate` date DEFAULT NULL COMMENT 'วันที่นัดทำสัญญา',
+  `workdate` date DEFAULT NULL COMMENT 'วันที่เริ่มงาน',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table jobksl_db.hr_jobinterest: ~4 rows (approximately)
+/*!40000 ALTER TABLE `hr_jobinterest` DISABLE KEYS */;
+REPLACE INTO `hr_jobinterest` (`id`, `idcard`, `jobid`, `salary`, `regdate`, `note`, `status`, `lastedit`, `topic`, `nuddate`, `nuduser`, `regstatus`, `nudnode`, `pmdate`, `workdate`) VALUES
+	(1, '2 2222 22222 22 2', '12', NULL, '2020-08-18 15:35:28', NULL, 0, '2020-08-22 15:54:45', NULL, NULL, NULL, 0, NULL, NULL, NULL),
+	(2, '2 2222 22222 22 2', '13', NULL, '2020-08-18 16:24:12', NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL),
+	(3, '1 1111 11111 11 1', '12', NULL, '2020-08-18 16:24:51', NULL, 0, '2020-08-22 15:55:03', NULL, NULL, NULL, 0, NULL, NULL, NULL),
+	(4, '3 4101 00857 66 4', '12', NULL, '2020-08-19 09:45:21', NULL, 0, '2020-08-22 15:54:50', NULL, NULL, NULL, 0, NULL, NULL, NULL),
+	(5, '1 1111 11111 11 1', '13', NULL, '2020-08-22 15:16:29', NULL, 0, '2020-08-22 15:18:34', NULL, NULL, NULL, 1, NULL, NULL, NULL),
+	(6, '5 5555 55555 55 5', '12', NULL, '2020-08-22 15:54:57', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL);
+/*!40000 ALTER TABLE `hr_jobinterest` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_jobs
 CREATE TABLE IF NOT EXISTS `hr_jobs` (
@@ -10088,16 +10119,15 @@ CREATE TABLE IF NOT EXISTS `hr_jobs` (
   `datein` varchar(50) DEFAULT NULL,
   `stype` varchar(200) DEFAULT NULL,
   `ptype` varchar(200) DEFAULT NULL,
+  `ostatus` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_jobs: ~4 rows (approximately)
+-- Dumping data for table jobksl_db.hr_jobs: ~2 rows (approximately)
 /*!40000 ALTER TABLE `hr_jobs` DISABLE KEYS */;
-REPLACE INTO `hr_jobs` (`id`, `topic`, `regdate`, `jobattrid`, `positionid`, `num`, `flag`, `dateout`, `datein`, `stype`, `ptype`) VALUES
-	(8, 'เจ้าหน้าที่วิเคราะห์และประมวลผล', NULL, '{"id":2,"topic":"แผนกโรงกลึง"}', '{"id":1,"topic":"เจ้าหน้าที่วิเคราะห์และประมวลผล"}', 3, 1, '2020-10-13', '2020-08-14', '{"id":1,"topic":"งานด่วน"}', '{"id":1,"topic":"ชั่วคราว"}'),
-	(9, 'ช่างกลึง', NULL, '{"id":2,"topic":"แผนกโรงกลึง"}', '{"id":2,"topic":"ช่างกลึง"}', 2, 1, '2020-09-30', '2020-08-01', '{"id":2,"topic":"ปกติ"}', '{"id":3,"topic":"ประจำ (รายเดือน)"}'),
-	(10, 'เจ้าหน้าที่วิเคราะห์และประมวลผล', NULL, '{"id":2,"topic":"แผนกโรงกลึง"}', '{"id":1,"topic":"เจ้าหน้าที่วิเคราะห์และประมวลผล"}', 1, 1, '2020-10-13', '2020-08-14', '{"id":1,"topic":"งานด่วน"}', '{"id":1,"topic":"ชั่วคราว"}'),
-	(11, 'ช่างกลึง', '2020-08-14 13:36:01', '{"id":2,"topic":"แผนกโรงกลึง"}', '{"id":2,"topic":"ช่างกลึง"}', 1, 1, '2020-10-13', '2020-08-14', '{"id":2,"topic":"ปกติ"}', '{"id":1,"topic":"ชั่วคราว"}');
+REPLACE INTO `hr_jobs` (`id`, `topic`, `regdate`, `jobattrid`, `positionid`, `num`, `flag`, `dateout`, `datein`, `stype`, `ptype`, `ostatus`) VALUES
+	(12, 'เจ้าหน้าที่วิเคราะห์และประมวลผล', '2020-08-17 11:34:22', '{"id":4,"topic":"พนักงานประจำ-รายเดือน-สำนักงาน"}', '{"id":1,"topic":"เจ้าหน้าที่วิเคราะห์และประมวลผล"}', 1, 1, '2020-11-30', '2020-08-01', '{"id":1,"topic":"งานด่วน"}', '{"id":3,"topic":"ประจำ (รายเดือน)"}', 1),
+	(13, 'เจ้าหน้าที่บุคคล', '2020-08-17 16:29:23', '{"id":4,"topic":"พนักงานประจำ-รายเดือน-สำนักงาน"}', '{"id":2,"topic":"เจ้าหน้าที่บุคคล"}', 10, 1, '2020-09-30', '2020-08-01', '{"id":2,"topic":"ปกติ"}', '{"id":3,"topic":"ประจำ (รายเดือน)"}', 1);
 /*!40000 ALTER TABLE `hr_jobs` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_knowledge
@@ -10145,7 +10175,7 @@ CREATE TABLE IF NOT EXISTS `hr_position` (
 /*!40000 ALTER TABLE `hr_position` DISABLE KEYS */;
 REPLACE INTO `hr_position` (`id`, `topic`) VALUES
 	(1, 'เจ้าหน้าที่วิเคราะห์และประมวลผล'),
-	(2, 'ช่างกลึง');
+	(2, 'เจ้าหน้าที่บุคคล');
 /*!40000 ALTER TABLE `hr_position` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_profiles
@@ -10170,18 +10200,19 @@ CREATE TABLE IF NOT EXISTS `hr_profiles` (
   `placecard` varchar(100) DEFAULT NULL,
   `expiredcard` varchar(50) DEFAULT NULL,
   `regtime` varchar(50) DEFAULT NULL,
+  `wtype` tinyint(4) DEFAULT '0' COMMENT 'สถานะว่างงาน/ไม่',
   PRIMARY KEY (`profileid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table jobksl_db.hr_profiles: ~6 rows (approximately)
 /*!40000 ALTER TABLE `hr_profiles` DISABLE KEYS */;
-REPLACE INTO `hr_profiles` (`profileid`, `nameth`, `nameen`, `addr`, `addrcur`, `flagaddr`, `lineid`, `email`, `phone`, `birthday`, `age`, `height`, `weight`, `nation`, `origin`, `religion`, `idcard`, `placecard`, `expiredcard`, `regtime`) VALUES
-	('1 1111 11111 11 1', 'อุทยาน ภูกิ่งเงิน', 'uttanyan xxxxx', '43 หมู่ 10 ถ.น้ำพอง-กระนวน\r\nอ.น้ำพอง ต.น้ำพอง \r\nจ.ขอนแก่น 40140', NULL, NULL, NULL, 'ีutaan@gmail.com', '0855124512', '11/12/2525', 37, 188, 110, 'ไทย', 'ไทย', 'พุทธ', NULL, '11/12/2525', '11/12/2525', '2020-8-3 14:21'),
-	('2 2222 22222 22 2', 'xxxx xx', 'xxxxxxxxxxc', '', NULL, NULL, NULL, '', '', '10/10/2525', 37, 175, 95, '', '', '', NULL, '', '', '2020-8-15 16:6'),
-	('3 3515 21456 46 5', 'ทดสอบ ทดสอบ', 'test test', '', NULL, NULL, NULL, '', '', '13/01/2563', 0, 0, 0, '', '', '', NULL, '', '', '2020-8-3 14:41'),
-	('3 4101 00857 66 4', 'เอกพล นามลึก', '', '', NULL, NULL, NULL, '', '', '24/12/2524', 38, 0, 0, '', '', '', NULL, '', '', '2020-8-15 11:13'),
-	('5 5555 55555 55 5', '5555555', 'หกหดหหหกดหกด', '', NULL, NULL, NULL, '', '', '05/05/2525', 38, 0, 0, '', '', '', NULL, '', '', '2020-8-15 15:50'),
-	('9 9999 99999 99 9', NULL, 'utayan xxxxxx', NULL, NULL, NULL, NULL, 'utayan@gmail.com', '0958462541', '11/12/2525', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-7-22 8:58');
+REPLACE INTO `hr_profiles` (`profileid`, `nameth`, `nameen`, `addr`, `addrcur`, `flagaddr`, `lineid`, `email`, `phone`, `birthday`, `age`, `height`, `weight`, `nation`, `origin`, `religion`, `idcard`, `placecard`, `expiredcard`, `regtime`, `wtype`) VALUES
+	('1 1111 11111 11 1', 'อุทยาน ภูกิ่งเงิน', 'uttanyan xxxxx', '43 หมู่ 10 ถ.น้ำพอง-กระนวน\r\nอ.น้ำพอง ต.น้ำพอง \r\nจ.ขอนแก่น 40140', NULL, NULL, NULL, 'ีutaan@gmail.com', '0855124512', '11/12/2525', 37, 188, 110, 'ไทย', 'ไทย', 'พุทธ', NULL, '11/12/2525', '11/12/2525', '2020-8-3 14:21', 0),
+	('2 2222 22222 22 2', 'นายอุทยาน ภูกิ่งเงิน', 'xxxxxxxxxxc', '', NULL, NULL, NULL, 'uttayan.k@google.com', '0956599668', '10/10/2525', 37, 175, 95, '', '', '', NULL, '', '', '2020-8-19 16:30', 0),
+	('3 3515 21456 46 5', 'ทดสอบ ทดสอบ', 'test test', '', NULL, NULL, NULL, '', '', '13/01/2563', 0, 0, 0, '', '', '', NULL, '', '', '2020-8-3 14:41', 0),
+	('3 4101 00857 66 4', 'เอกพล นามลึก', '', '', NULL, NULL, NULL, '', '', '24/12/2524', 38, 0, 0, '', '', '', NULL, '', '', '2020-8-15 11:13', 0),
+	('5 5555 55555 55 5', '5555555', 'หกหดหหหกดหกด', '', NULL, NULL, NULL, '', '', '05/05/2525', 38, 0, 0, '', '', '', NULL, '', '', '2020-8-15 15:50', 0),
+	('9 9999 99999 99 9', NULL, 'utayan xxxxxx', NULL, NULL, NULL, NULL, 'utayan@gmail.com', '0958462541', '11/12/2525', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-7-22 8:58', 0);
 /*!40000 ALTER TABLE `hr_profiles` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_proofs
@@ -10191,7 +10222,7 @@ CREATE TABLE IF NOT EXISTS `hr_proofs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_proofs: ~6 rows (approximately)
+-- Dumping data for table jobksl_db.hr_proofs: ~5 rows (approximately)
 /*!40000 ALTER TABLE `hr_proofs` DISABLE KEYS */;
 REPLACE INTO `hr_proofs` (`id`, `topic`) VALUES
 	(15, 'สำเนาบัตรประชาชน 1 แผ่น'),
@@ -10207,20 +10238,20 @@ CREATE TABLE IF NOT EXISTS `hr_qualify` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `topic` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table jobksl_db.hr_qualify: ~9 rows (approximately)
 /*!40000 ALTER TABLE `hr_qualify` DISABLE KEYS */;
 REPLACE INTO `hr_qualify` (`id`, `topic`) VALUES
 	(1, 'อายุ 18 ปี บริบูรณ์'),
-	(2, 'สามารถทำงานล่วงเวลาได้'),
 	(3, 'ไม่เกี่ยวกับยาเสพติดทุกชนิด'),
-	(4, 'สำเร็จการศึกษาระดับ มัธยม-ปวส.'),
-	(5, 'สามารถกลึงอ่านแบบงานได้'),
-	(6, 'กลึงชิ้นงาน ตามแบบ ตามตัวอย่างได้'),
 	(7, 'สามารถทำงานเป็นกะได้'),
 	(8, 'สามารถทำงานล่วงเวลาได้'),
-	(9, 'มีความอดทน ขยันรับผิดชอบสูง');
+	(9, 'มีความอดทน ขยันรับผิดชอบสูง'),
+	(10, ' สำเร็จการศึกษาระดับปริญาตรี สาขาที่เกี่ยวของกับตำแหน่งงาน'),
+	(11, ' สำเร็จการศึกษาระดับปริญญาโท สาขาที่เกี่ยวข้องกับตำแหน่งงาน'),
+	(12, 'สำเร็จการศึกษาระดับมัธยมปลาย (ม.6) หรือ ระดับ ปวส. สาขาที่เกี่ยวข้องกับตำแหน่งงาน'),
+	(13, ' สำเร็จการศึกษาระดับมัธยมต้น (ม.3) หรือ ระดับ ปวช. สาขาที่เกี่ยวข้องกับตำแหน่งงาน');
 /*!40000 ALTER TABLE `hr_qualify` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_register
@@ -10237,13 +10268,13 @@ CREATE TABLE IF NOT EXISTS `hr_register` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jobksl_db.hr_register: ~11 rows (approximately)
+-- Dumping data for table jobksl_db.hr_register: ~8 rows (approximately)
 /*!40000 ALTER TABLE `hr_register` DISABLE KEYS */;
 REPLACE INTO `hr_register` (`id`, `idcard`, `nameth`, `birthday`, `status`, `username`, `password`, `logintime`, `regtime`) VALUES
 	(1, '1 1111 11111 11 1', 'อุทยาน ภูกิ่งเงิน', '11/12/2525', 2, '1 1111 11111 11 1', '$2b$10$yqKFLrcFD56ILY1pXpG1lOfD7Kdf5KZXRET/M53fRENtHEAU10tx.', NULL, '2020-7-21 9:13'),
 	(2, '3 3515 21456 46 5', 'ทดสอบ ทดสอบ', '13/01/2563', 1, '3 3515 21456 46 5', '$2b$10$cxp.jSgRAtsT7DC7RwpeH.16kCdbF/G/ajlLWBmChkJPFghN4vLka', NULL, '2020-8-3 14:2'),
 	(3, '3 4101 00857 66 4', 'เอกพล นามลึก', '24/12/2524', 2, '3 4101 00857 66 4', '$2b$10$YW/8OTPcZwxAtC1Ca6j1.Oj8aVrNIj0WZkNfnQskpuDGUeUo36lCW', NULL, '2020-8-3 14:17'),
-	(4, '2 2222 22222 22 2', 'xxxx xx', '10/10/2525', 1, '2 2222 22222 22 2', '$2b$10$ycTIUQcUe34qXOe7tRyVC.AdFlWzvktHuMuMtx.pbQI/NSiAUeBqW', NULL, '2020-8-3 14:20'),
+	(4, '2 2222 22222 22 2', 'นายอุทยาน ภูกิ่งเงิน', '10/10/2525', 1, '2 2222 22222 22 2', '$2b$10$0pg46SbCMEevplZo/wIW/uAWsSC.TCvGGcyv1LxICHCkX5RBql6bK', NULL, '2020-8-3 14:20'),
 	(5, '4 4444 44444 44 4', '132132', '11/11/2000', 1, '4 4444 44444 44 4', '$2b$10$zYY0eAFLEtQGTbZDmIkEkeV3UHzJxtTbyE8Sz4kSSju2M0dFw.R1S', NULL, '2020-8-8 14:35'),
 	(6, '2 2222 22222 22 9', '1213213', '11/11/2000', 1, '2 2222 22222 22 9', '$2b$10$VtDFTgvOQtJQOohpX229Ze77StiCUvUHvGG8CFCtnUIY0rWB0rvbW', NULL, '2020-8-8 14:39'),
 	(7, '3 3333 33333 33 3', '123154654', '11/11/2000', 1, '3 3333 33333 33 3', '$2b$10$TIwJElTgHO2QxuM8VJgJWObCnH8YvihT/5GDP6pFhuhZ5btJhwMSW', NULL, '2020-8-8 14:43'),
@@ -10330,9 +10361,9 @@ CREATE TABLE IF NOT EXISTS `hr_work` (
 /*!40000 ALTER TABLE `hr_work` DISABLE KEYS */;
 REPLACE INTO `hr_work` (`id`, `workplace`, `position`, `salary`, `detail`, `begintime`, `endtime`, `note`, `flag`, `profileid`, `workno`) VALUES
 	(1, 'alphametric co.th / สระบุรี่', 'analyst programmer', '22000', 'พัฒนาโปรแกรม ', '2549', '2551', 'หางานใกล้บ้าน', '0', '1 1111 11111 11 1', 1),
-	(2, 'IT-ThaiSoftMate / ในเมืองขอนแก่น', 'programmer', '15000', 'พัฒนาโปรแกรม ', '2552', '2552', 'หางานใกล้บ้าน', '0', '1 1111 11111 11 1', 2),
-	(3, 'มหาวิทยาลัยมหารสารคาม', 'นักวิชาการคอมพิวเตอร์', '12000', 'พัฒนาโปรแกรม ', '2553', '2553', 'หางานใกล้บ้าน', '0', '1 1111 11111 11 1', 3),
-	(4, 'alphametric co.thc', '', '', '', '', '', '', '0', '2 2222 22222 22 2', 1),
+	(2, 'IT-ThaiSoftMate / ในเมืองขอนแก่น', 'programmer', '15000', 'พัฒนาโปรแกรม ', '2551', '2552', 'หางานใกล้บ้าน', '0', '1 1111 11111 11 1', 2),
+	(3, 'มหาวิทยาลัยมหารสารคาม', 'นักวิชาการคอมพิวเตอร์', '12000', 'พัฒนาโปรแกรม ', '2552', '2553', 'หางานใกล้บ้าน', '0', '1 1111 11111 11 1', 3),
+	(4, 'alphametric co.thc', 'analysis programmer', '22000', 'debug & develop project', '2553', '2560', 'ต้องการหางานใกล้บ้าน', '0', '2 2222 22222 22 2', 1),
 	(5, '', '', '', '', '', '', '', '0', '2 2222 22222 22 2', 2),
 	(6, '', '', '', '', '', '', '', '0', '2 2222 22222 22 2', 3),
 	(7, '', '', '', '', '', '', '', '0', '3 4101 00857 66 4', 1),

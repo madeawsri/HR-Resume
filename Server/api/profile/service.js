@@ -147,7 +147,61 @@ module.exports = {
         );
     },
 
+    /**
+     SELECT DISTINCT 
+   p.profileid,
+	p.nameth,
+	p.email,
+	p.phone	,
+	p.age,
+	p.birthday,
+	p.height,
+	p.weight,
+  (SELECT CONCAT(e.levelid,'|',e.institution,'|',e.subject,'|',e.endtime,'|',e.gpa) FROM hr_education AS e WHERE e.profileid = p.profileid AND e.institution <> "" ORDER BY e.levelid DESC LIMIT 1 ) AS edu
+ FROM 
+  (SELECT profileid,nameth,email,phone,age,birthday,height,weight FROM hr_profiles) AS p  
+LEFT JOIN (SELECT profileid,workplace,'position',salary,begintime FROM hr_work) AS w  ON w.profileid = p.profileid
+     */
 
+    getData: (idcard, callBack) => {
+        pool.query(
+            ` SELECT DISTINCT 
+            concat((left(STR_TO_DATE(p.birthday,'%d/%m/%Y'),4)-543),(right(STR_TO_DATE(p.birthday,'%d/%m/%Y'),6))) AS cbirthday,
+            (SELECT k.certcarid FROM hr_knowledge AS k WHERE k.profileid = p.profileid) AS carid,
+            p.*,
+           (SELECT CONCAT(e.levelid,'|',e.institution,'|',e.subject,'|',e.endtime,'|',e.gpa) FROM hr_education AS e WHERE e.profileid = p.profileid AND e.institution <> "" ORDER BY e.levelid DESC LIMIT 1 ) AS edu
+          FROM hr_profiles AS p  
+         LEFT JOIN (SELECT profileid,workplace,'position',salary,begintime FROM hr_work) AS w  ON w.profileid = p.profileid
+             where p.profileid = ?`, [idcard],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results[0]);
+            }
+        );
+    },
+
+
+    getDataAll: (callBack) => {
+        pool.query(
+            ` SELECT DISTINCT 
+            concat((left(STR_TO_DATE(p.birthday,'%d/%m/%Y'),4)-543),(right(STR_TO_DATE(p.birthday,'%d/%m/%Y'),6))) AS cbirthday,
+            (SELECT k.certcarid FROM hr_knowledge AS k WHERE k.profileid = p.profileid) AS carid,
+            p.*,
+           (SELECT CONCAT(e.levelid,'|',e.institution,'|',e.subject,'|',e.endtime,'|',e.gpa) FROM hr_education AS e WHERE e.profileid = p.profileid AND e.institution <> "" ORDER BY e.levelid DESC LIMIT 1 ) AS edu
+          FROM hr_profiles AS p  
+         LEFT JOIN (SELECT profileid,workplace,'position',salary,begintime FROM hr_work) AS w  ON w.profileid = p.profileid
+         
+             `,
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
 
 
 };

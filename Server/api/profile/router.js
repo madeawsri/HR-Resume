@@ -10,7 +10,9 @@ const {
 //const upload = multer();
 router.post("/:id", createProfile);
 router.get('/img/:id', myPicture)
-router.get('/:id', findProfileByIDCard)
+router.get('/:id?', findProfileByIDCard)
+    //router.get('/data/:id', findProfileByIDCard)
+
 
 
 module.exports = router;

@@ -21,6 +21,8 @@ import Position from '../views/jobs/position.vue';
 import Jobs from '../views/jobs/jobs.vue';
 import Jobattr from '../views/jobs/jobsattr.vue';
 
+import Ajobinterest from '../views/jobs/jobinterest.vue';
+
 
 import Jobdetail from '../views/home/jobdetail.vue';
 
@@ -34,6 +36,12 @@ const routes = [{
         path: '/jobdetail',
         name: 'Jobdetail',
         component: Jobdetail,
+
+    },
+    {
+        path: '/ajobinterest',
+        name: 'ajobinterest',
+        component: Ajobinterest,
 
     },
     {

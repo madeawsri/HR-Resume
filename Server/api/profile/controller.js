@@ -3,6 +3,8 @@ const {
     update,
     getUserByCardid,
     updateRegister,
+    getData,
+    getDataAll,
 } = require("./service");
 
 const { hashSync, genSaltSync } = require("bcrypt");
@@ -140,6 +142,40 @@ module.exports = {
 
     },
     findProfileByIDCard: (req, res) => {
+        if (req.params.id === undefined)
+            getDataAll(async(err, uresults) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).json({
+                        success: 0,
+                        message: "** ไม่สามารถติดต่อฐานข้อมูลได้ **"
+                    });
+                }
+                let data = uresults ? uresults : null
+                return res.status(200).json({
+                    success: 1,
+                    data: data
+                });
+
+            })
+        else
+            getData(req.params.id, async(err, uresults) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).json({
+                        success: 0,
+                        message: "** ไม่สามารถติดต่อฐานข้อมูลได้ **"
+                    });
+                }
+                let data = uresults ? uresults : null
+                return res.status(200).json({
+                    success: 1,
+                    data: data
+                });
+
+            })
+    },
+    findProfileDataByIDCard: (req, res) => {
         getUserByCardid(req.params.id, async(err, uresults) => {
             if (err) {
                 console.log(err);
@@ -156,5 +192,7 @@ module.exports = {
 
         })
     },
+
+
 
 };

@@ -123,15 +123,30 @@ module.exports = {
     },
 
 
+    getList: (data, callBack) => {
+
+        pool.query(
+            `select * from ${tableName} where ostatus = 1 order by id desc `,
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+
+    },
+
+
 
     showPage: (data, callBack) => {
 
         let id = data.id
-        let max = 3
+        let max = 10
         id = (id * max)
 
         pool.query(
-            `select * from ${tableName} order by id desc limit ${max} offset ${id}  `,
+            `select * from ${tableName}  order by id desc limit ${max} offset ${id}  `,
             (error, results, fields) => {
                 if (error) {
                     callBack(error);

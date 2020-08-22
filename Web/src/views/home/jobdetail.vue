@@ -79,15 +79,16 @@
                         </li>
                     </ul>
 
-                    <a href="#" class="popup-with-zoom-anim button" v-if="isLogged" > ส่งใบสมัครงาน </a> 
-                    <a class=" button disabled" v-if="isSent" > <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </a>
-					<router-link class="button" to="login" v-if="!isLogged"> ส่งใบสมัครงาน </router-link> 
+                    <a href="#" @click="sentData" class="popup-with-zoom-anim button" v-show="isLogged && !isApplyJod"> ส่งใบสมัครงาน </a>
+                    <a class=" button disabled" v-show="isApplyJod"> <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </a>
+
+                    <router-link class="button" to="login" v-show="this.idcard==null"> ส่งใบสมัครงาน </router-link>
 
                 </div>
 
             </div>
 
-        </div>
+        </div> 
         <!-- Widgets / End -->
 
     </div>
@@ -98,28 +99,33 @@
 import homeLayout from '../../components/layouts/index'
 
 export default {
- computed: {
+    computed: {
         isLogged() {
             return this.$store.getters['user/isLogged']
         },
-		isSent(){
-			return !this.$store.getters['user/isLogged']
+        getIDCard(){
+			return this.$vStrToJson(this.$store.state.user.data)?this.$vStrToJson(this.$store.state.user.data).idcard:null;
 		}
+    },
+    async mounted() {
+		this.idcard = this.getIDCard
+        this.isSent();
+		 
     },
     async created() {
         if (this.jobid === undefined) {
             this.alertFail();
         } else {
             await this.showDetail();
-
-            //console.log(this.$vStrToJson(this.dataDetail.qualifys))
-
         }
+		
     },
     data() {
         return {
             jobid: this.$route.params.jobid,
-            dataDetail: []
+            dataDetail: [],
+            isApplyJod: false,
+            idcard: this.getIDCard
         }
     },
     components: {
@@ -127,6 +133,55 @@ export default {
 
     },
     methods: {
+        async isSent() {
+
+            try {
+//console.log(this.idcard + "xxx")
+                if (this.idcard != null) {
+                    const {
+                        data
+                    } = await this.$http.get(`api/jobinterest/${this.idcard}/${this.jobid}`)
+                    console.log(data)
+                    this.isApplyJod = (data.success && data.data)
+
+                } else {
+                    this.isApplyJod = false
+                }
+
+                //  
+            } catch (e) {
+                console.log(e)
+            }
+
+        },
+        sentData: async function () {
+
+            try {
+                const {
+                    data
+                } = await this.$http.post(`api/jobinterest/${this.idcard}/${this.jobid}`)
+                console.log(data)
+                if (data.success) {
+                    this.isApplyJod = true;
+                    this.alertAccess();
+                }
+                //  
+            } catch (e) {
+                console.log(e)
+            }
+
+        },
+        alertAccess: function () {
+            this.$fire({
+                title: "ส่งใบสมัครงาน",
+                text: "เรียบร้อยแล้ว.",
+                type: "success",
+                timer: 3000
+            }).then(() => {
+                //this.$router.push('/home')
+                window.location.href = '/home';
+            })
+        },
         alertFail: function () {
             this.$fire({
                 title: "รายละเอียดงาน",
@@ -134,15 +189,7 @@ export default {
                 type: "warning",
                 timer: 3000
             }).then(() => {
-                //this.$router.push('/home')
-                /*this.$router.push({
-                    name: 'Home',
-                    force: true,
-                    refresh: true
-                });
-				*/
-				this.$vLink('home')
-
+                this.$vLink('home')
             })
         },
         async showDetail() {
@@ -185,12 +232,10 @@ export default {
     padding-bottom: 33px;
     margin-bottom: 0px;
 }
-</style>
-
-<style lang="postcss" scoped>
+</style><style lang="postcss" scoped>
 .disabled {
-  cursor: not-allowed;
-  color: gray;
-  background-color:lightgrey;
+    cursor: not-allowed;
+    color: gray;
+    background-color: lightgrey;
 }
 </style>

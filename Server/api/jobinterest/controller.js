@@ -4,8 +4,7 @@ const {
     getByID,
     del,
     getAll,
-    showPage,
-    getList
+    showPage
 
 } = require("./service");
 
@@ -27,11 +26,16 @@ module.exports = {
             // insert & update data  from "FormData"
             // **********************
             const body = req.body;
-            body.id = req.params.id
+
+            console.log(body)
 
             const fdata = {
-                id: req.params.id,
+                idcard: req.params.id,
+                jobid: req.params.jobid
             }
+
+            body.idcard = fdata.idcard
+            body.jobid = fdata.jobid
 
             getByID(fdata, async(err, uresults) => {
                 if (err) {
@@ -42,12 +46,13 @@ module.exports = {
                     });
                 }
                 let data = uresults ? uresults : null
+                console.log("get by id ")
                 console.log(data)
 
 
                 if (data === null) {
                     // new insert
-                    console.log('insert table family')
+                    //console.log('insert table family')
                     await create(body, (err, results) => {
                         if (err) {
                             console.log(err);
@@ -96,9 +101,10 @@ module.exports = {
     findByID: (req, res) => {
 
         const fdata = {
-            id: req.params.id,
+            idcard: req.params.id,
+            jobid: req.params.jobid
         }
-
+        console.log(fdata)
         getByID(fdata, async(err, uresults) => {
             if (err) {
                 console.log(err);
@@ -125,31 +131,6 @@ module.exports = {
         }
 
         getAll(fdata, async(err, uresults) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).json({
-                    success: 0,
-                    message: "** ไม่สามารถติดต่อฐานข้อมูลได้ **"
-                });
-            }
-            let data = uresults ? uresults : null
-            return res.status(200).json({
-                success: 1,
-                data: data,
-                //type: 'all'
-            });
-        })
-
-    },
-
-
-    findList: (req, res) => {
-
-        const fdata = {
-            id: null,
-        }
-
-        getList(fdata, async(err, uresults) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({
@@ -199,7 +180,8 @@ module.exports = {
     deleteByID: (req, res) => {
 
         const fdata = {
-            id: req.params.id,
+            idcard: req.params.id,
+            jobid: req.params.jobid
         }
 
         del(fdata, async(err, uresults) => {
