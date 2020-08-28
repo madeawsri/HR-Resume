@@ -19,13 +19,13 @@
 
         <li><a href="/home"><i class="fa fa-home"></i> หน้าแรก</a></li>
 
-        <li v-if="isWebAdmin"><a href="/message"><i class="fa fa-envelope"></i> ผู้สมัคร <span class="nav-tag text-green"> 0 </span> </a> </li>
-        <li v-if="isUser"><a href="/message" style="color: blue  "><i class="fa fa-envelope"></i> ตำแหน่งว่าง <span class="nav-tag text-red"> 0 </span> </a> </li>
+        <!--<li v-if="isWebAdmin"><a href="/message"><i class="fa fa-envelope"></i> ผู้สมัคร <span class="nav-tag text-green"> 0 </span> </a> </li>
+        <li v-if="isUser"><a href="/message" style="color: blue  "><i class="fa fa-envelope"></i> ตำแหน่งว่าง <span class="nav-tag text-red"> 0 </span> </a> </li> -->
 
-        <li><router-link :to="'logout'"><i class="fa fa-lock"></i> ออกจากระบบ</router-link></li>
+        <li>
+            <router-link :to="'logout'"><i class="fa fa-lock"></i> ออกจากระบบ</router-link>
+        </li>
     </ul>
-
-  
 
 </nav>
 </template>

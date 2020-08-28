@@ -22,6 +22,9 @@ import Jobs from '../views/jobs/jobs.vue';
 import Jobattr from '../views/jobs/jobsattr.vue';
 
 import Ajobinterest from '../views/jobs/jobinterest.vue';
+import Interview from '../views/jobs/interview.vue';
+import InterviewReport from '../views/jobs/rpinterview.vue';
+import InterviewSummary from '../views/jobs/sinterview.vue';
 
 
 import Jobdetail from '../views/home/jobdetail.vue';
@@ -33,9 +36,25 @@ const routes = [{
         redirect: '/home'
     },
     {
-        path: '/jobdetail',
+        path: '/jobdetail/:jobid?',
         name: 'Jobdetail',
         component: Jobdetail,
+    },
+    {
+        path: '/jobclosed',
+        name: 'InterviewSummary',
+        component: InterviewSummary,
+    },
+    {
+        path: '/interview',
+        name: 'interview',
+        component: Interview,
+
+    },
+    {
+        path: '/interview-report',
+        name: 'interviewReport',
+        component: InterviewReport,
 
     },
     {

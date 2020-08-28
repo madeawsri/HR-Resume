@@ -1,9 +1,11 @@
 const pool = require("../../config/mysql")
-let curFolderName = __dirname.split("\\")
-let lenCurFolderName = curFolderName.length - 1
-curFolderName = curFolderName[lenCurFolderName]
 
-const tableName = `hr_${curFolderName}`
+//let curFolderName = __dirname.split("\\")
+//let lenCurFolderName = curFolderName.length - 1
+//curFolderName = curFolderName[lenCurFolderName]
+
+//const tableName = `hr_${curFolderName}`
+const tableName = "hr_jobinterest";
 
 module.exports = {
 
@@ -69,37 +71,19 @@ module.exports = {
     getByID: (data, callBack) => {
         let sql = '';
         let flegAll = false;
-
-        switch (data.idcard) {
-            case "interview":
-                sql = `SELECT r.nuddate,group_concat(p.nameth) AS fname
-                FROM hr_jobinterest AS r , hr_profiles AS p 
-                WHERE r.jobid = ${data.jobid}
-                AND r.idcard = p.profileid
-                AND r.nuddate IS NOT NULL 
-                GROUP BY r.nuddate
-                ORDER BY nuddate`
-                flegAll = true
-                break;
-
-            case "jobid":
-                sql = `SELECT * ,(select j.topic from hr_jobs as j where j.id = x.jobid ) as pname from ${tableName}  as x
-                WHERE x.jobid = '${data.jobid}'`
-                flegAll = true
-                break;
-
-            default:
-                if (data.idcard && data.jobid) {
-                    sql = `SELECT *,(select j.topic from hr_jobs as j where j.id = x.jobid ) as pname from ${tableName}  as x
-                    WHERE x.idcard = '${data.idcard}' and x.jobid = ${data.jobid}`
-                    flegAll = false
-                } else {
-                    sql = `SELECT * ,(select j.topic from hr_jobs as j where j.id = x.jobid ) as pname from ${tableName}  as x
-                WHERE x.idcard = '${data.idcard}'`
-                    flegAll = true
-                }
-                break;
+        if (data.idcard && data.jobid) {
+            sql = `SELECT *,(select j.topic from hr_jobs as j where j.id = x.jobid ) as pname from ${tableName}  as x
+            WHERE x.idcard = '${data.idcard}' and x.jobid = ${data.jobid}`
+            flegAll = false
+        } else {
+            sql = `SELECT * ,(select j.topic from hr_jobs as j where j.id = x.jobid ) as pname from ${tableName}  as x
+        WHERE x.idcard = '${data.idcard}'`
+            flegAll = true
         }
+        //console.log("TEST")
+        //console.log(data)
+        //console.log(sql)
+
         pool.query(
             sql,
             (error, results, fields) => {
@@ -117,16 +101,50 @@ module.exports = {
 
 
     getAll: (data, callBack) => {
+        console.log(data)
+        if (data.id === undefined) {
+            if (data.pid === undefined) {
+                pool.query(
+                    `select * from ${tableName} `,
+                    (error, results, fields) => {
+                        if (error) {
+                            callBack(error);
+                        }
+                        return callBack(null, results);
+                    }
+                )
+            } else {
+                pool.query(
+                    `SELECT p.profileid,p.nameth,p.phone,i.* from hr_jobinterest AS i 
+                    LEFT OUTER JOIN hr_profiles AS p ON i.idcard = p.profileid
+                    WHERE i.idcard = '${data.id}'`,
+                    (error, results, fields) => {
+                        if (error) {
+                            callBack(error);
+                        }
+                        return callBack(null, results);
+                    }
+                )
 
-        pool.query(
-            `select * from ${tableName} `,
-            (error, results, fields) => {
-                if (error) {
-                    callBack(error);
-                }
-                return callBack(null, results);
             }
-        );
+
+        } else {
+
+            pool.query(
+                `SELECT p.profileid,p.nameth,p.phone,i.* from hr_jobinterest AS i 
+                LEFT OUTER JOIN hr_profiles AS p ON i.idcard = p.profileid
+                WHERE i.jobid = '${data.id}'`,
+                (error, results, fields) => {
+                    if (error) {
+                        callBack(error);
+                    }
+                    return callBack(null, results);
+                }
+            )
+
+
+
+        }
 
     },
 
@@ -152,6 +170,8 @@ module.exports = {
 
 
     interview: (data, callBack) => {
+
+
         pool.query(
             `select * from ${tableName} order by id desc limit ${max} offset ${id}  `,
             (error, results, fields) => {
@@ -169,33 +189,13 @@ module.exports = {
         pool.query(
             `UPDATE  ${tableName} SET 
             nuddate=?,
-            nudnote=?,
-            nuduser=?
+            nudnote=?
             WHERE  idcard=? and jobid=? `, [
                 data.nuddate,
                 data.nudnote,
-                data.nuduser,
                 data.idcard,
                 data.jobid
             ],
-            (error, results, fields) => {
-                if (error) {
-                    callBack(error);
-                }
-                return callBack(null, results);
-            }
-        );
-    },
-
-    updatepmdate: (data, callBack) => {
-        console.log(data)
-        let sql = `UPDATE  ${tableName} SET  pmdate='${data.pmdate}'  WHERE  id in (${data.id}) `
-        if (data.pmdate === null)
-            sql = `UPDATE  ${tableName} SET  pmdate=null  WHERE  id in (${data.id}) `
-
-        console.log(sql)
-        pool.query(
-            sql,
             (error, results, fields) => {
                 if (error) {
                     callBack(error);

@@ -5,8 +5,7 @@ const {
     del,
     getAll,
     showPage,
-    updatenud,
-    updatepmdate
+    updatenud
 
 } = require("./service");
 
@@ -14,26 +13,6 @@ const {
 
 
 module.exports = {
-    async updatePmdate(req, res) {
-        let body = req.body
-        console.log(body)
-
-        await updatepmdate(body, async(err, results) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).json({
-                    success: 0,
-                    message: "** ไม่สามารถติดต่อฐานข้อมูลได้ **"
-                });
-            }
-            return res.status(200).json({
-                success: 1,
-                message: "อัพเดชข้อมูลเรียบร้อย."
-            });
-        });
-
-
-    },
     async updateNud(req, res) {
         let body = req.body
         console.log(body)
@@ -167,7 +146,8 @@ module.exports = {
     findAll: (req, res) => {
 
         const fdata = {
-            id: null,
+            id: req.params.id,
+            pid: req.params.pid
         }
 
         getAll(fdata, async(err, uresults) => {

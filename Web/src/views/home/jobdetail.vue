@@ -10,10 +10,10 @@
                 <div class="company-info">
                     <img src="images/company-logo.png" alt="" v-if="0">
                     <div class="content">
-                        <h4>{{dataDetail.xtopic}} <strong>{{dataDetail.num}}</strong> ตำแหน่ง </h4>
+                        <h4 style="background-color: hsla(14, 100%, 53%, 0.3);border-radius: 5px;"><strong style="margin-left:10px;margin-right:10px;"> {{dataDetail.xtopic}} <span style="color:green;">{{dataDetail.num}}</span>ตำแหน่ง </strong> </h4>
                         <span v-if="0"><a href="#"><i class="fa fa-link"></i> Website</a></span>
-                        <span><a href="#"><i class="fa fa-twitter"></i> @admin</a></span>
-                        <span style=""><i class="ln ln-icon-Affiliate"></i> {{$vStrToJson(dataDetail.stype).topic}}</span>
+                        <span v-if="0"><a href="#"><i class="fa fa-twitter"></i> @admin</a></span>
+                        <span style="" v-if="0"><i class="ln ln-icon-Affiliate"></i> {{$vStrToJson(dataDetail.stype).topic}}</span>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -22,20 +22,60 @@
                     The Food Service Specialist ensures outstanding customer service is provided to food customers and that all food offerings meet the required stock levels and presentation standards. Beginning your career as a Food Steward will give you a strong foundation in Speedway’s food segment that can make you a vital member of the front line team!
                 </p>
 
-                <p><strong>คุณสมบัติผู้สมัคร</strong> </p>
+                <p class="margin-bottom-0"><strong>คุณสมบัติผู้สมัคร</strong> </p>
                 <ul class="list-1" v-for="(item, index) in $vStrToJson(dataDetail.qualifys)" :key="'a'+index">
                     <li>{{item.topic}}</li>
                 </ul>
 
-                <p><strong>หลักฐานการสมัคร</strong> </p>
+                <p class="margin-bottom-0"><strong>หลักฐานการสมัคร</strong> </p>
                 <ul class="list-1" v-for="(item,index) in $vStrToJson(dataDetail.proofs)" :key="'b'+index">
                     <li>{{item.topic}}</li>
                 </ul>
 
-                <p><strong>สวัสดิการและผลประโยชน์ตอบแทน</strong> </p>
+                <p class="margin-bottom-0"><strong>สวัสดิการและผลประโยชน์ตอบแทน</strong> </p>
                 <ul class="list-1" v-for="(item,index) in $vStrToJson(dataDetail.benefits)" :key="'c'+index">
                     <li>{{item.topic}}</li>
                 </ul>
+
+                <!-- Company Info -->
+                <div class="company-info">
+                    <div class="content">
+                        <h4 style="background:hsla(147, 100%, 50%, 0.3);;border-radius: 5px;">
+                            <strong style="margin-left:10px;margin-right:10px;">รายชื่อนัดสัมภาษณ์</strong>
+                        </h4>
+                        <span v-if="0"><a href="#"><i class="fa fa-link"></i> Website</a></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <p class="margin-reset" v-if="1">
+                    ให้ผู้สมัครมาสอบสัมภาษณ์ในเวลาทำการเท่านั้น
+                </p>
+                <div v-for="(item, index) in lstInterviews" :key="'i'+index">
+                    <p class="margin-bottom-0"><strong>วันที่ {{item.nuddate|moment('DD MMMM YYYY')}}</strong> </p>
+                    <ul class="list-1" v-for="(itemx, index) in item.fname.split(',') " :key="'ai'+index">
+                        <li>{{itemx}}</li>
+                    </ul>
+                </div>
+
+                <!-- Company Info -->
+                <div class="company-info">
+                    <div class="content">
+                        <h4 style="background:hsla(50, 100%, 50%, 0.3);;border-radius: 5px;">
+                            <strong style="margin-left:10px;margin-right:10px;">รายชื่อที่ผ่านสัมภาษณ์</strong>
+                        </h4>
+                        <span v-if="0"><a href="#"><i class="fa fa-link"></i> Website</a></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <p class="margin-reset" v-if="1">
+                    ให้ผู้สมัครมาสอบสัมภาษณ์ในเวลาทำการเท่านั้น
+                </p>
+                <div v-for="(item, index) in lstInterviews" :key="'ii'+index">
+                    <p class="margin-bottom-0"><strong>วันที่ {{item.nuddate|moment('DD MMMM YYYY')}}</strong> </p>
+                    <ul class="list-1" v-for="(itemx, index) in item.fname.split(',') " :key="'aii'+index">
+                        <li>{{itemx}}</li>
+                    </ul>
+                </div>
 
             </div>
         </div>
@@ -86,9 +126,16 @@
 
                 </div>
 
+                <div class="dashboard-list-box margin-top-5" v-if="0">
+                    <h4 style="padding: 5px 10px;"> ตำแหน่งงานอื่นๆ </h4>
+                    <ul v-for="(item,index) in $vStrToJson(dataDetail.proofs)" :key="'b'+index">
+                        <li style="padding: 5px 10px;"><i class="ln ln-icon-Check"></i> <a href="#">เจ้าหน้าที่จัดสวน / 10 ตำแหน่ง </a></li>
+                    </ul>
+                </div>
+
             </div>
 
-        </div> 
+        </div>
         <!-- Widgets / End -->
 
     </div>
@@ -103,14 +150,15 @@ export default {
         isLogged() {
             return this.$store.getters['user/isLogged']
         },
-        getIDCard(){
-			return this.$vStrToJson(this.$store.state.user.data)?this.$vStrToJson(this.$store.state.user.data).idcard:null;
-		}
+        getIDCard() {
+            return this.$vStrToJson(this.$store.state.user.data) ? this.$vStrToJson(this.$store.state.user.data).idcard : null;
+        }
     },
     async mounted() {
-		this.idcard = this.getIDCard
+        this.idcard = this.getIDCard
         this.isSent();
-		 
+        await this.getInterviews();
+
     },
     async created() {
         if (this.jobid === undefined) {
@@ -118,14 +166,15 @@ export default {
         } else {
             await this.showDetail();
         }
-		
+
     },
     data() {
         return {
             jobid: this.$route.params.jobid,
             dataDetail: [],
             isApplyJod: false,
-            idcard: this.getIDCard
+            idcard: this.getIDCard,
+            lstInterviews: []
         }
     },
     components: {
@@ -133,14 +182,32 @@ export default {
 
     },
     methods: {
-        async isSent() {
-
+        async getInterviews() {
             try {
-//console.log(this.idcard + "xxx")
+
+                const {
+                    data
+                } = await this.$http.get(`/api/jobinterest/interview/${this.jobid}`)
+
+                if (data.success) {
+                    this.lstInterviews = [...data.data]
+                }
+
+                //  
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        async isSent() {
+            console.log(this.idcard + "," + this.jobid)
+            try {
+
                 if (this.idcard != null) {
+
                     const {
                         data
-                    } = await this.$http.get(`api/jobinterest/${this.idcard}/${this.jobid}`)
+                    } = await this.$http.get(`/api/jobinterest/${this.idcard}/${this.jobid}`)
+                    console.log("isSent")
                     console.log(data)
                     this.isApplyJod = (data.success && data.data)
 
@@ -159,7 +226,7 @@ export default {
             try {
                 const {
                     data
-                } = await this.$http.post(`api/jobinterest/${this.idcard}/${this.jobid}`)
+                } = await this.$http.post(`/api/jobinterest/${this.idcard}/${this.jobid}`)
                 console.log(data)
                 if (data.success) {
                     this.isApplyJod = true;
@@ -229,7 +296,7 @@ export default {
 <style>
 .company-info {
     border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 33px;
+    padding-bottom: 5px;
     margin-bottom: 0px;
 }
 </style><style lang="postcss" scoped>

@@ -1,25 +1,29 @@
-<template>
+<template lang="dateFormatThai">
 <memberLayout>
     <div slot="content">
 
         <div class="col-lg-12 col-md-12">
             <form @submit.prevent="sendData">
                 <div class="dashboard-list-box margin-top-0">
-                    <h4>{{headTitle}}
-                        <button type="button" class="button margin-bottom-0  float-xl-right pull-right " @click="findMember"> ค้นหา <i class="fa fa-search"></i></button>
+                    <h4>{{headTitle}} <br><small style="font-weight:none;">(** เจ้าหน้าที่ต้องดำเนินการติดต่อกับผู้สมัครเรียบร้อยก่อนบันทึกข้อมูล)</small>
+                        <!--<button type="button" v-show="isSelectJob" style="margin-right:10px;" class="button margin-bottom-0 margin-right-10 float-xl-right pull-right " @click="alertLineNotify"> แจ้งผลสัมภาษณ์ LineNotify </button>-->
+                        <!--<button type="button" v-show="isSelectJob" style="margin-right:10px;" class="button margin-bottom-0 margin-right-10 float-xl-right pull-right " @click="sendData"> บันทึกนัดทำสัญญา </button>-->
                     </h4>
 
                     <div class="dashboard-list-box-content">
 
                         <div class="submit-page">
-                            <div class="form">
-                                <h5> ตำแหน่งเปิดรับสมัครแล้ว (<span style="font-weight:bold;color:green;">{{countJob}}</span>) คน</h5>
+                            <div class="form" style="width:35%">
+                                <h5> ตำแหน่งเปิดรับสมัคร </h5>
                                 <v-multiselect placeholder="รายชื่อผู้สมัคร " label="topic" track-by="topic" v-model="dataForm.job" :options="lstJobs" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" @select="selectJob"></v-multiselect>
                             </div>
-
-                            <div class="form">
-                                <h5> คำค้นหา : {{dataForm.topic}}</h5>
-                                <input type="text" v-model="dataForm.keyword" class="form-control input-text" />
+                            <div class="form" style="width:30%">
+                                <h5> วันที่นัดทำสัญญา </h5>
+                                <v-date v-model="dataForm.pmdate" class="datetime-picker" value-type="format" format="YYYY-MM-DD" :lang="dateFormatThai" type="date" placeholder="วันที่นัดทำสัญญา"></v-date>
+                            </div>
+                            <div class="form" style="width:35%" v-if="0">
+                                <h5> ข้อความถึงผู้สมัคร </h5>
+                                <input type="text" v-model="dataForm.nudnote" class="form-control input-text" />
                             </div>
 
                         </div>
@@ -31,34 +35,33 @@
                 <div class="dashboard-list-box-content">
 
                     <!-- Table <i class="fa fa-check"></i>-->
-
                     <table class="manage-table responsive-table">
 
                         <tr>
                             <th style="width:15%"><i class="fa fa-tasks"></i>บัตรประชาชน</th>
                             <th><i class="fa fa-file-text"></i> ชื่อ-สกุล</th>
-                            <th><i class="fa fa-file-text"></i> วุฒิการศึกษาสูงสุด</th>
-                            <th><i class="fa fa-file-text"></i> สถานะ</th>
+                            <th><i class="fa fa-file-text"></i> เบอร์โทร</th>
+                            <th><i class="fa fa-file-text"></i> วันที่นัดทำสัญญา </th>
+
                             <th></th>
 
                         </tr>
 
-                        <tr style="padding: 5px 5px;" v-for="(item, index) in lstProfile" :key="index">
-                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.profileid}}</td>
-                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{ item.nameth}}</td>
-                            <td style="padding: 5px 5px;font-weight:bold;" class="title">
+                        <tr style="padding: 2px 2px;" v-for="(item, index) in lstProfile" :key="index">
+                            <td style="padding: 2px 2px;font-weight:bold;" class="title"> {{item.profileid}}</td>
+                            <td style="padding: 2px 2px;font-weight:bold;" class="title"> {{ item.nameth}}</td>
+                            <td style="padding: 2px 2px;font-weight:bold;" class="title"> {{ item.phone || " - "}}</td>
+                            <td style="padding: 2px 2px;font-weight:bold;" class="title"> {{item.pmdate | moment('DD MMMM YYYY')}}</td>
 
-                                <strong>วุฒิการศึกษาสูงสุด</strong>: {{getValue(item.edu,0) }} <br>
-                                <strong>สาขา</strong>: {{getValue(item.edu,1) }}<br>
-                                <strong>ปีที่จบ</strong>: {{getValue(item.edu,3) }}<br>
-                                <strong>เกรดเฉลี่ย</strong>: {{getValue(item.edu,4) }}
+                            <td style="padding: 2px 2px;">
+                                <!-- <button @click="dialogInfo(item.profileid)" v-show="isSelectJob" class="button" style="margin-right:5px;"> เลือกผู้ที่ผ่านสัมภาษณ์</button> -->
 
-                            </td>
-                            <td>
-                                {{item.jobids}}
-                            </td>
-                            <td style="padding: 5px 5px;">
-                                <a href="#" @click="dialogInfo(item.profileid)" v-show="isSelectJob" class="button" style="margin-right:5px;"> รายละเอียด / รับสมัครงาน</a>
+                                <ul class="checkboxes">
+                                    <li v-show="dataForm.pmdate || item.pmdate">
+                                        <input :id="'chk'+index" :value="item.id" v-model="checkPass" type="checkbox" name="check" @click="onCheckboxPM($event,item.id)">
+                                        <label :for="'chk'+index"> รับเอกสารทำสัญญา </label>
+                                    </li>
+                                </ul>
 
                             </td>
                         </tr>
@@ -111,6 +114,8 @@
                         <div class="message-by">
                             <div class="message-by-headline">
                                 <h5>ตำแหน่งที่รับสมัคร <i style="font-size:18px;">{{selectJobTopic || "คุณยังไม่เลือกงานที่สมัคร "}}</i></h5>
+                                <h5>วันที่รายงานผลสัมภาษณ์ <i style="font-size:18px;">{{dataForm.nuddate | moment('DD MMMM YYYY') }}</i></h5>
+                                <h5>ข้อความถึงผู้สมัคร <i style="font-size:18px;">{{dataForm.nudnote || " - "}}</i></h5>
                             </div>
 
                         </div>
@@ -137,37 +142,28 @@ export default {
         if (!this.$store.getters['user/isWebAdmin']) {
             this.alertAccess();
         }
-        /*
-                let output = ttt.filter(a => aaa.findIndex(b => b.id == a.id) < 0);
-                console.log(output)                
-                */
-
     },
     async created() {
         await this.getLstDatas();
-        //await this.showDataAll();
-        await this.getProfile();
         this.lstProfileCopy = [...this.lstProfile]
-        // console.log(this.lstProfile)
-
-        //console.log(this.lstProfile.filter(x => (x.edux).indexOf("7") !== -1))
-        /*let keyword = "ท"
-        console.log(this.lstProfile.filter(x => (String(x.edux).includes(keyword) ||
-            String(x.profileid).includes(keyword) ||
-            String(x.nameth).includes(keyword))))*/
-
-        //console.log("ปริญญาตรี|มหาวิทยาลัยมหาสารคาม|สารสนเทศเพื่อการจัดการ|2549|2.57".includes("7"))
 
     },
     data() {
         return {
-
+            dateFormatThai: {
+                'days': ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'],
+                'months': ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+                'pickers': ['7 วันถัดไป', '30 วันถัดไป', '7 ที่ผ่านมา', '30 วันที่ผ่านมา'],
+                'placeholder': {
+                    'date': 'เลือกวันที่',
+                    'dateRange': 'เลือกช่วงวันที่'
+                }
+            },
             isLoading: false,
             isSelectJob: false,
             selectJobTopic: "",
             selectJobId: "",
-            countJob: 0,
-            headTitle: 'จัดการผู้สมัคร',
+            headTitle: 'รายงานผลสัมภาษณ์ / นัดทำสัญญา',
             editForm: {
                 keydb: 0,
                 index: 0,
@@ -176,9 +172,11 @@ export default {
             },
             dataForm: {
                 topic: '',
+                nudnote: "มาสัมภาษณ์ภายในวันและเวลาทำการ",
                 job: [],
                 member: [],
-                keyword: ""
+                keyword: "",
+                pmdate: null
 
             },
             dataFormReset: {
@@ -197,50 +195,90 @@ export default {
             listDatas: [{
                 id: 1,
                 topic: 'xxx'
-            }] // data in table
+            }], // data in table,
+            selectPass: "ln ln-icon-Yes",
+            checkPass: []
 
         }
     },
+    computed: {
+
+    },
     methods: {
-        applyJob: async function (idcard) {
-            let saveData = {
-                idcard: idcard,
-                jobid: this.selectJobId,
-                regstatus: 1
+        onCheckboxPM: async function (e, index) {
+            let dataSave = {
+                pmdate: this.dataForm.pmdate,
+                id: index
+            }
+            if (!e.target.checked) {
+                dataSave.pmdate = null
+            }
+            try {
+                await this.sendData(dataSave)
+            } catch (err) {
+                console.log(err)
             }
 
-            this.$http.post(`api/jobinterest/${idcard}/${this.selectJobId}`, saveData).then((data) => {
+        },
+
+        alertLineNotify: async function () {
+
+            let msgFormat = `
+ตรวจสอบรายชื่อนัดสัมภาษณ์ 
+ตำแหน่ง : ${this.selectJobTopic} 
+ตามลิงค์นี้ http://10.7.10.26:8081/jobdetail/${this.selectJobId}
+            `;
+            //let newData = [...this.lstProfile.filter(x => x.nuddate !== null)]
+            //console.log(msgFormat)
+            try {
+                const {
+                    data
+                } = await this.$http.post(`api/linenotify`, {
+                    message: msgFormat
+                })
+                if (data.success == 1) {
+                    console.log('sent message in linenotify is succes')
+                }
+            } catch (e) {
+                console.log(e)
+            }
+
+        },
+        applyJob: async function (idcard) {
+            let saveData = {
+
+                nudnote: this.dataForm.nudnote,
+                nuddate: this.dataForm.nuddate,
+                idcard: idcard,
+                jobid: this.selectJobId
+
+            }
+
+            this.$http.put(`api/interview/${idcard}/${this.selectJobId}`, saveData).then((data) => {
                 let obj = data.data
+
                 if (obj.success) {
-                    if (obj.data === undefined) {
-                        this.$fire({
-                            title: "รับสมัครงาน",
-                            text: "ได้มีการรับสมัครงานอยู่แล้ว.",
-                            type: "warning",
-                            timer: 3000
-                        })
-                    } else {
-                        this.$fire({
-                            title: "รับสมัครงาน",
-                            text: "เรียบร้อยแล้ว.",
-                            type: "success",
-                            timer: 3000
-                        })
-                    }
+
+                    this.$fire({
+                        title: "รายงานผลสัมภาษณ์",
+                        text: "เรียบร้อยแล้ว.",
+                        type: "success",
+                        timer: 3000
+                    })
 
                 } else {
                     this.$fire({
-                        title: "รับสมัครงาน",
+                        title: "รายงานผลสัมภาษณ์",
                         text: "ระบบมีปัญหา กรุณาติดต่อเจ้าหน้าที่.",
                         type: "error",
                         timer: 3000
                     })
                 }
-                console.log(data.data.data)
+                //console.log(obj)
             }).catch(e => {
                 console.log(e)
                 this.$fire({
-                    title: "รับสมัครงาน",
+                    title: "รายงานผลสัมภาษณ์",
                     text: "ระบบมีปัญหา กรุณาติดต่อเจ้าหน้าที่.",
                     type: "error",
                     timer: 3000
@@ -251,32 +289,45 @@ export default {
 
         },
         dialogInfo: async function (idcard) {
+
             console.log(this.$refs.info)
-            await this.getMemberInfo(idcard);
-            await this.loadMyPicture(idcard);
-            await this.getWork(idcard)
-            this.$fire({
-                title: '<span style="text-align:left;">รายละเอียดผู้สมัคร</span>',
-                html: this.$refs.info,
-                width: 800,
-                showCloseButton: false,
-                cancelButtonText: 'ยกเลิก',
-                focusConfirm: false,
-                showCancelButton: true,
-                confirmButtonText: 'รับสมัครงาน',
-                showLoaderOnConfirm: true,
-            }).then(async (result) => {
-                if (result.value) {
-                    try {
-                        await this.applyJob(idcard);
 
-                    } catch (e) {
+            if (this.dataForm.nuddate && this.dataForm.nudnote) {
 
-                        console.log(e)
+                await this.getMemberInfo(idcard);
+                await this.loadMyPicture(idcard);
+                await this.getWork(idcard)
+                this.$fire({
+                    title: '<span style="text-align:left;">รายละเอียดผู้สมัคร</span>',
+                    html: this.$refs.info,
+                    width: 800,
+                    showCloseButton: false,
+                    cancelButtonText: 'ยกเลิก',
+                    focusConfirm: false,
+                    showCancelButton: true,
+                    confirmButtonText: 'รายงานผลสัมภาษณ์',
+                    showLoaderOnConfirm: true,
+                }).then(async (result) => {
 
+                    if (result.value) {
+                        try {
+                            await this.applyJob(idcard);
+
+                        } catch (e) {
+
+                            console.log(e)
+
+                        }
                     }
-                }
-            })
+                })
+            } else {
+                this.$fire({
+                    title: "รายงานผลสัมภาษณ์",
+                    text: "กรอกข้อมูลให้ครบ.",
+                    type: "warning",
+                    timer: 3000
+                })
+            }
 
         },
         getMemberInfo: async function (idcard) {
@@ -320,10 +371,9 @@ export default {
             let keyword = this.dataForm.keyword
 
             if (keyword !== "")
-                this.lstProfile = [...this.lstProfileCopy.filter(x => ((String(x.edux).includes(keyword) ||
-                        String(x.profileid).split(' ').join('').includes(keyword) ||
-                        String(x.nameth).includes(keyword)) ||
-                    String(x.worknote).includes(keyword)))]
+                this.lstProfile = [...this.lstProfileCopy.filter(x => (String(x.edux).includes(keyword) ||
+                    String(x.profileid).split(' ').join('').includes(keyword) ||
+                    String(x.nameth).includes(keyword)))]
             else
                 this.lstProfile = [...this.lstProfileCopy]
 
@@ -375,10 +425,10 @@ export default {
                 if (data.success == 1) {
                     if (data.data !== null) {
 
-                        //console.log(data.data)
+                        console.log(data.data)
                         this.jobInter = [...data.data].map((it) => it.pname).join(',');
                         this.lstJobs = this.lstJobs.filter(a => data.data.findIndex(b => b.jobid == a.id) < 0);
-                        //console.log(this.lstJobs)
+                        console.log(this.lstJobs)
 
                     } else {
                         this.jobInter = " -- ไม่พบข้อมูล --"
@@ -389,23 +439,25 @@ export default {
             }
         },
         selectJob: async function (item) {
+
             this.isSelectJob = true;
             this.selectJobTopic = item.topic
             this.selectJobId = item.id
-            await this.getProfile();
-            console.log("jobid " + item.id)
-            const dataLength0 = this.lstProfile.length
-            console.log(this.lstProfile.length)
-            this.lstProfile = [...(this.lstProfile.filter(x => !((String(x.jobids) + ",").includes(item.id + ","))))]
-            this.lstProfileCopy = [...this.lstProfile]
-            this.countJob = (dataLength0 - this.lstProfile.length)
+
+            await this.getProfile(item.id);
+
+            this.checkPass = [...this.lstProfile.filter(x => (x.pmdate !== null)).map((x) => {
+                return [x.id].join(",")
+            })]
 
         },
-        getProfile: async function () {
+        getProfile: async function (jobid) {
             try {
                 const {
                     data
-                } = await this.$http.get(`api/profile/`)
+                } = await this.$http.get(`api/interview/jobid/${jobid}`)
+                console.log(" loading profile ")
+                console.log(data)
                 let objCtype = this.$store.state.jobs.ctype
                 let levelTopic = this.$store.state.jobs.etype
                 if (data.success == 1) {
@@ -413,7 +465,7 @@ export default {
                         this.lstProfile = data.data
 
                         this.lstProfile.forEach(function (item) {
-                            console.log(item.carid)
+                            //console.log(item.carid)
                             if (item.carid)
                                 item.carid = objCtype.find(x => x.id == item.carid).topic
                             if (item.edu != null) {
@@ -421,24 +473,14 @@ export default {
                                 edu[0] = levelTopic.find(x => x.id == edu[0]).topic;
                                 item.edu = [...edu]
                                 item.edux = [...edu].join("|")
-
-                            } else {
-                                //this.lstEducation = []
                             }
                         });
 
-                        /*
-
-                        */
-
                     } else {
                         this.lstProfile = {}
-                        // this.lstEducation = []
                     }
 
-                    //console.log(this.lstProfile)
                 }
-                //console.log(data)
             } catch (e) {
                 console.log(e)
             }
@@ -498,14 +540,14 @@ export default {
         getLstDatas: async function () {
             try {
 
-                const dataM = await this.$http.get('api/register/all')
+                //const dataM = await this.$http.get('api/register/all')
                 const dataJ = await this.$http.get('api/jobs/list')
 
-                this.$http.all([dataM, dataJ]).then(
+                this.$http.all([dataJ]).then(
                     this.$http.spread((...res) => {
-                        this.lstMebers = res[0].data.data
-                        console.log(this.lstMebers)
-                        this.lstJobs = res[1].data.data
+                        //this.lstMebers = res[0].data.data
+                        //console.log(this.lstMebers)
+                        this.lstJobs = res[0].data.data
                         this.lstJobsCopy = [...this.lstJobs]
                     })
                 )
@@ -533,24 +575,29 @@ export default {
         focusInput: function (inputRef) {
             this.$refs[inputRef].focus();
         },
-        async sendData() {
-            try {
-                console.log('save')
-                if (this.dataForm.member.length === 0 || this.dataForm.job.length === 0) {
-                    console.log("Input not yet!")
-                } else {
-                    const saveData = {
-                        idcard: this.dataForm.member.idcard,
-                        jobid: this.dataForm.job.id,
-                        regstatus: 1
-                    }
-                    console.log(saveData)
+        async sendData(dataSave = null) {
+
+            if (dataSave === null)
+                dataSave = {
+                    pmdate: this.dataForm.pmdate,
+                    id: this.checkPass.join(",")
                 }
+
+            try {
+                const dataJ = await this.$http.patch('/api/jobinterest', dataSave)
+                this.$http.all([dataJ]).then(
+                    this.$http.spread((...res) => {
+                        console.log(res[0])
+                    })
+                )
+
+                await this.getProfile(this.selectJobId);
 
             } catch (e) {
                 console.log(e)
                 this.alertFail()
             }
+
         },
 
     }

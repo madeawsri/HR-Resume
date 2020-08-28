@@ -34,6 +34,11 @@ export default new Vuex.Store({
                 { id: 9, topic: "รถแทรกเตอร์" },
                 { id: 10, topic: "รถชนิดอื่นนอกจาก (1) ถึง (9)" },
                 { id: 11, topic: "รถระหว่างประเทศ" },
+            ],
+            status: [
+                { id: 0, topic: "ว่างงาน" },
+                { id: 1, topic: "นัดสัมภาษณ์" },
+                { id: 2, topic: "รับเข้าทำงาน" }
             ]
 
         }

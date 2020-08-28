@@ -34,6 +34,9 @@ app.use('/api/jobattr', require('./api/jobattr/router'))
 app.use('/api/jobs', require('./api/jobs/router'))
 app.use('/api/jobinterest', require('./api/jobinterest/router'))
 app.use('/api/register', require('./api/register/router'))
+app.use('/api/interview', require('./api/interview/router'))
+
+app.use('/api/linenotify', require('./api/linenotify/router'))
 
 
 app.get('/user/:id(\\d+)', function(req, res) {

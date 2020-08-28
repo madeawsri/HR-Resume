@@ -57,14 +57,24 @@
                 <li>
                     <router-link :to="{name:'jobs'}" style="font-weight: bold;">ข้อมูลประกาศรับสมัครงาน</router-link>
                 </li>
-                <li><a href="#" style="color:#000099;font-weight: bold;">นำข้อมูลออก Resume</a></li>
+                <li v-if="0"><a href="#" style="color:#000099;font-weight: bold;">นำข้อมูลออก Resume</a></li>
 
                 <li class="active-submenu"><a>จัดการผู้สมัครงาน</a>
                     <ul>
                         <li>
                             <router-link to="ajobinterest" style="color:#000">ค้นหา/ รับสมัครงาน </router-link>
                         </li>
-<li><router-link to="ajobinterest" style="color:#000">นัดสัมภาษณ์</router-link></li>
+                        <li>
+                            <router-link to="interview" style="color:#000">นัดสัมภาษณ์</router-link>
+                        </li>
+
+                        <li>
+                            <router-link to="interview-report" style="color:#000">นัดทำสัญญา</router-link>
+                        </li>
+
+                        <li>
+                            <router-link to="jobclosed" style="color:#000">สิ้นสุดการทำสัญญา</router-link>
+                        </li>
 
                     </ul>
                 </li>

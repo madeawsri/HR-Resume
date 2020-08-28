@@ -87,7 +87,6 @@
 import "vue-select/src/scss/vue-select.scss";
 import memberLayout from '@/components/member-layouts/index'
 //import moment from 'moment'
-
 export default {
     components: {
         memberLayout,
@@ -102,7 +101,6 @@ export default {
 
         await this.getLstDatas();
         await this.showDataAll();
-
 
         console.log(this.lstPtypes)
     },
@@ -230,7 +228,7 @@ export default {
                     if (data.success == 1) {
 
                         this.listDatas.push({
-                            id:data.data.insertId,
+                            id: data.data.insertId,
                             topic: dataForm2.topic,
                             jobattrid: JSON.stringify({
                                 id: this.dataForm.jobattr.id,
@@ -257,12 +255,13 @@ export default {
                         ...this.dataForm
                     }
                     console.log('update')
-                    
-                    
-                    dataForm2.topic = {...dataForm2.position}.topic
-                    
+
+                    dataForm2.topic = {
+                        ...dataForm2.position
+                    }.topic
+
                     dataForm2.position = JSON.stringify(dataForm2.position)
-                    
+
                     dataForm2.jobattr = JSON.stringify({
                         id: this.dataForm.jobattr.id,
                         topic: this.dataForm.jobattr.topic
@@ -270,7 +269,7 @@ export default {
                     dataForm2.datein = dataForm2.regdate[0]
                     dataForm2.dateout = dataForm2.regdate[1]
 
-                     dataForm2.ptype = JSON.stringify({
+                    dataForm2.ptype = JSON.stringify({
                         id: this.dataForm.ptype.id,
                         topic: this.dataForm.ptype.topic
                     })
@@ -287,7 +286,6 @@ export default {
 
                     if (data.success == 1) {
 
-   
                         this.listDatas[this.editForm.index].topic = dataForm2.topic
                         this.listDatas[this.editForm.index].jobattrid = JSON.stringify({
                             id: this.dataForm.jobattr.id,
@@ -356,8 +354,8 @@ export default {
                         jobattr: JSON.parse(data.data.jobattrid),
                         num: data.data.num,
                         regdate: [data.data.datein, data.data.dateout],
-                        ptype:JSON.parse(data.data.ptype),
-                        stype:JSON.parse(data.data.stype),
+                        ptype: JSON.parse(data.data.ptype),
+                        stype: JSON.parse(data.data.stype),
                         topic: JSON.parse(data.data.positionid).topic
                     }
 
