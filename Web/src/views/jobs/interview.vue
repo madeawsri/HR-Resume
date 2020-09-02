@@ -206,10 +206,15 @@ export default {
 
             }
 
-            this.$http.put(`api/interview/${idcard}/${this.selectJobId}`, saveData).then((data) => {
+            this.$http.put(`api/interview/${idcard}/${this.selectJobId}`, saveData).then(async (data) => {
                 let obj = data.data
 
                 if (obj.success) {
+
+                    await this.getProfile(this.selectJobId);
+                    this.lstProfileCopy = [...this.lstProfile]
+                    console.log("save นัดสัมภาษณ์")
+                    console.log(this.lstProfile)
 
                     this.$fire({
                         title: "นัดสัมภาษณ์",

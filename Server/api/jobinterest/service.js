@@ -189,9 +189,9 @@ module.exports = {
 
     updatepmdate: (data, callBack) => {
         console.log(data)
-        let sql = `UPDATE  ${tableName} SET  pmdate='${data.pmdate}'  WHERE  id in (${data.id}) `
+        let sql = `UPDATE  ${tableName} SET  pmdate='${data.pmdate}',status=1  WHERE  id in (${data.id}) `
         if (data.pmdate === null)
-            sql = `UPDATE  ${tableName} SET  pmdate=null  WHERE  id in (${data.id}) `
+            sql = `UPDATE  ${tableName} SET  pmdate=null,status=0  WHERE  id in (${data.id}) `
 
         console.log(sql)
         pool.query(
@@ -204,6 +204,26 @@ module.exports = {
             }
         );
     },
+
+
+    updateworkdate: (data, callBack) => {
+        console.log(data)
+        let sql = `UPDATE  ${tableName} SET  workdate='${data.workdate}'  WHERE  id in (${data.id}) `
+        if (data.workdate === null)
+            sql = `UPDATE  ${tableName} SET  workdate=null  WHERE  id in (${data.id}) `
+
+        console.log(sql)
+        pool.query(
+            sql,
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
 
 
 };

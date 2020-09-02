@@ -147,8 +147,10 @@ export default {
         await this.getLstDatas();
         //await this.showDataAll();
         await this.getProfile();
+        this.lstProfile = [...this.lstProfile.filter(x => x.jobids === null)]
         this.lstProfileCopy = [...this.lstProfile]
-        // console.log(this.lstProfile)
+
+        console.log(this.lstProfile)
 
         //console.log(this.lstProfile.filter(x => (x.edux).indexOf("7") !== -1))
         /*let keyword = "ท"
@@ -393,12 +395,16 @@ export default {
             this.selectJobTopic = item.topic
             this.selectJobId = item.id
             await this.getProfile();
+
             console.log("jobid " + item.id)
+
             const dataLength0 = this.lstProfile.length
             console.log(this.lstProfile.length)
             this.lstProfile = [...(this.lstProfile.filter(x => !((String(x.jobids) + ",").includes(item.id + ","))))]
-            this.lstProfileCopy = [...this.lstProfile]
             this.countJob = (dataLength0 - this.lstProfile.length)
+
+            this.lstProfile = [...this.lstProfile.filter(x => x.jobids === null)]
+            this.lstProfileCopy = [...this.lstProfile]
 
         },
         getProfile: async function () {

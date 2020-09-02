@@ -6,13 +6,15 @@ const {
     deleteByID,
     findAll,
     updateNud,
-    updatePmdate
+    updatePmdate,
+    updateWorkdate
 
 } = require("./controller");
 
 router.post("/:id/:jobid", createData);
 router.put("/:id/:jobid", updateNud);
-router.patch("/", updatePmdate)
+router.patch("/contract", updatePmdate)
+router.patch("/work", updateWorkdate)
 
 router.get("/", findAll);
 router.get('/:id/:jobid?', findByID)

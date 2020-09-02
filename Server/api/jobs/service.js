@@ -146,7 +146,7 @@ module.exports = {
         id = (id * max)
 
         pool.query(
-            `select * from ${tableName}  order by id desc limit ${max} offset ${id}  `,
+            `select * from ${tableName}  where ostatus = 1 order by id desc limit ${max} offset ${id}  `,
             (error, results, fields) => {
                 if (error) {
                     callBack(error);

@@ -450,6 +450,8 @@ export default {
                 return [x.id].join(",")
             })]
 
+            //this.lstProfile = [...this.lstProfile.filter(x => x.nuddate !== null)]
+
         },
         getProfile: async function (jobid) {
             try {
@@ -463,7 +465,7 @@ export default {
                 if (data.success == 1) {
                     if (data.data !== null) {
                         this.lstProfile = data.data
-
+                        this.lstProfile = [...this.lstProfile.filter(x => x.nuddate !== null)]
                         this.lstProfile.forEach(function (item) {
                             //console.log(item.carid)
                             if (item.carid)
@@ -584,7 +586,7 @@ export default {
                 }
 
             try {
-                const dataJ = await this.$http.patch('/api/jobinterest', dataSave)
+                const dataJ = await this.$http.patch('/api/jobinterest/contract', dataSave)
                 this.$http.all([dataJ]).then(
                     this.$http.spread((...res) => {
                         console.log(res[0])

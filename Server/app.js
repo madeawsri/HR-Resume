@@ -16,7 +16,22 @@ const qualifyRouter = require('./api/qualify/router')
 
 app.use(express.json());
 //app.options('*', cors())
-app.use(cors({ origin: 'http://10.7.10.26:8081' }))
+app.use(cors())
+    //app.use(cors({ origin: true, credentials: true }));
+    /*
+    const whitelist = ['http://10.7.10.26', 'http://192.168.2.2'];
+    const corsOptions = {
+        credentials: true, // This is important.
+        origin: (origin, callback) => {
+            if (whitelist.includes(origin))
+                return callback(null, true)
+
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+    app.use(cors(corsOptions));
+    */
+
 
 app.use("/api/login", loginRouter);
 app.use("/api/profile", profileRouter);
@@ -37,6 +52,8 @@ app.use('/api/register', require('./api/register/router'))
 app.use('/api/interview', require('./api/interview/router'))
 
 app.use('/api/linenotify', require('./api/linenotify/router'))
+
+app.use('/api/promise', require('./api/promise/router'))
 
 
 app.get('/user/:id(\\d+)', function(req, res) {

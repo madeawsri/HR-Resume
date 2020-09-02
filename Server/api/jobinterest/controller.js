@@ -6,7 +6,8 @@ const {
     getAll,
     showPage,
     updatenud,
-    updatepmdate
+    updatepmdate,
+    updateworkdate
 
 } = require("./service");
 
@@ -14,6 +15,24 @@ const {
 
 
 module.exports = {
+    async updateWorkdate(req, res) {
+        let body = req.body
+        console.log(body)
+
+        await updateworkdate(body, async(err, results) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    success: 0,
+                    message: "** ไม่สามารถติดต่อฐานข้อมูลได้ **"
+                });
+            }
+            return res.status(200).json({
+                success: 1,
+                message: "อัพเดชข้อมูลเรียบร้อย."
+            });
+        });
+    },
     async updatePmdate(req, res) {
         let body = req.body
         console.log(body)
@@ -31,8 +50,6 @@ module.exports = {
                 message: "อัพเดชข้อมูลเรียบร้อย."
             });
         });
-
-
     },
     async updateNud(req, res) {
         let body = req.body

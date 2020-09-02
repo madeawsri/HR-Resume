@@ -119,10 +119,17 @@
                         </li>
                     </ul>
 
-                    <a href="#" @click="sentData" class="popup-with-zoom-anim button" v-show="isLogged && !isApplyJod"> ส่งใบสมัครงาน </a>
-                    <a class=" button disabled" v-show="isApplyJod"> <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </a>
+                    <div v-if="dataDetail.ostatus">
+                        <a href="#" @click="sentData" class="popup-with-zoom-anim button" v-show="isLogged && !isApplyJod"> ส่งใบสมัครงาน </a>
+                        <a class=" button disabled" v-show="isApplyJod"> <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </a>
+                        <router-link class="button" to="login" v-show="this.idcard==null"> ส่งใบสมัครงาน </router-link>
+                    </div>
+                    <div v-if="!dataDetail.ostatus" align="center">
+                        <h4 style="background: rgba(219, 255, 23,0.52); border-radius: 5px;">
+                            <strong style="margin-left: 10px; margin-right: 10px;color:red;">ปิดรับสมัครงาน</strong>
+                        </h4>
 
-                    <router-link class="button" to="login" v-show="this.idcard==null"> ส่งใบสมัครงาน </router-link>
+                    </div>
 
                 </div>
 

@@ -173,7 +173,7 @@ LEFT JOIN (SELECT profileid,workplace,'position',salary,begintime FROM hr_work) 
            (SELECT GROUP_CONCAT(ji.jobid) FROM hr_jobinterest AS ji WHERE ji.idcard = p.profileid) AS jobids,
            (SELECT DISTINCT  GROUP_CONCAT(w.position, w.detail) FROM hr_work AS w WHERE w.profileid = p.profileid ORDER BY w.endtime DESC LIMIT 1) AS worknote
            
-          FROM hr_profiles AS p  
+          FROM (SELECT a.* from hr_profiles AS a RIGHT JOIN hr_register AS r ON a.profileid = r.idcard AND r.wstatus <> 1) AS p  
          LEFT JOIN (SELECT profileid,workplace,'position',salary,begintime FROM hr_work) AS w  ON w.profileid = p.profileid
              where p.profileid = ?`, [idcard],
             (error, results, fields) => {
@@ -195,7 +195,7 @@ LEFT JOIN (SELECT profileid,workplace,'position',salary,begintime FROM hr_work) 
            (SELECT CONCAT(e.levelid,'|',e.institution,'|',e.subject,'|',e.endtime,'|',e.gpa) FROM hr_education AS e WHERE e.profileid = p.profileid AND e.institution <> "" ORDER BY e.levelid DESC LIMIT 1 ) AS edu,
            (SELECT GROUP_CONCAT(ji.jobid) FROM hr_jobinterest AS ji WHERE ji.idcard = p.profileid) AS jobids,
            (SELECT DISTINCT  GROUP_CONCAT(w.position, w.detail) FROM hr_work AS w WHERE w.profileid = p.profileid ORDER BY w.endtime DESC LIMIT 1) AS worknote
-          FROM hr_profiles AS p  
+          FROM (SELECT a.* from hr_profiles AS a RIGHT JOIN hr_register AS r ON a.profileid = r.idcard AND r.wstatus<>1) AS p  
          LEFT JOIN (SELECT profileid,workplace,'position',salary,begintime FROM hr_work) AS w  ON w.profileid = p.profileid
          where p.nameth <> ""
              `,

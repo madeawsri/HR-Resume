@@ -76,9 +76,10 @@ import memberLayout from '@/components/member-layouts/index'
 export default {
     components: {
         memberLayout
-    },mounted() {
-        if(!this.$store.getters['user/isWebAdmin']) {
-          this.alertAccess();
+    },
+    mounted() {
+        if (!this.$store.getters['user/isWebAdmin']) {
+            this.alertAccess();
         }
     },
     async created() {

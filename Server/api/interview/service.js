@@ -133,7 +133,9 @@ module.exports = {
             pool.query(
                 `SELECT p.profileid,p.nameth,p.phone,i.* from hr_jobinterest AS i 
                 LEFT OUTER JOIN hr_profiles AS p ON i.idcard = p.profileid
-                WHERE i.jobid = '${data.id}'`,
+                WHERE i.jobid = '${data.id}'
+                AND i.idcard NOT IN (SELECT x.idcard FROM hr_jobinterest AS x WHERE STATUS = 1 AND x.jobid != ${data.id})
+                `,
                 (error, results, fields) => {
                     if (error) {
                         callBack(error);
