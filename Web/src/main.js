@@ -43,6 +43,7 @@ Vue.config.productionTip = false;
 //Vue.use(LoadScript);
 
 router.beforeEach((to, from, next) => {
+
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
@@ -57,6 +58,13 @@ router.beforeEach((to, from, next) => {
     } else {
         next() // make sure to always call next()!
     }
+
+
+    //  console.log("xMenux")
+
+
+
+
 })
 
 
@@ -101,6 +109,46 @@ Vue.prototype.$vStrToJson = function(str) {
 
 };
 
+Vue.prototype.$eventMenu = () => {
+    console.log('event menu by jquery ')
+    const $ = require('jquery')
+    window.$ = $;
+    $('.dashboard-nav ul li router-link').on('click', function(e) {
+
+        if ($(this).closest("li").children("ul").length) {
+            if ($(this).closest("li").is(".active-submenu")) {
+                $('.dashboard-nav ul li').removeClass('active-submenu');
+            } else {
+                $('.dashboard-nav ul li').removeClass('active-submenu');
+                $(this).parent('li').addClass('active-submenu');
+            }
+            //e.preventDefault();
+        }
+    });
+    /*
+    $(window).on('load resize', function() {
+        var wrapperHeight = window.innerHeight;
+        var headerHeight = $("#header-container").height();
+        var winWidth = $(window).width();
+        if (winWidth > 992) {
+            $(".dashboard-nav-inner").css('max-height', wrapperHeight - headerHeight);
+        } else {
+            $(".dashboard-nav-inner").css('max-height', '');
+        }
+    });
+    */
+    /*
+    $('.dashboard-responsive-nav-trigger').on('click', function(e) {
+        e.preventDefault();
+        $(this).toggleClass('active');
+        var dashboardNavContainer = $('body').find(".dashboard-nav");
+        if ($(this).hasClass('active')) {
+            $(dashboardNavContainer).addClass('active');
+        } else {
+            $(dashboardNavContainer).removeClass('active');
+        }
+    });*/
+}
 
 
 new Vue({

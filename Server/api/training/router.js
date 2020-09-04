@@ -7,6 +7,6 @@ const {
 } = require("./controller");
 
 router.post("/:id/:lid", createData);
-router.get('/profile/:id/:lid', findByID)
+router.get('/profile/:id/:lid?', findByID)
 
 module.exports = router;

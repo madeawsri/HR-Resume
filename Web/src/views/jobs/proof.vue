@@ -63,10 +63,13 @@ export default {
     },
     created() {
         this.showDataAll();
-    },mounted() {
-        if(!this.$store.getters['user/isWebAdmin']) {
-          this.alertAccess();
+    },
+    mounted() {
+        if (!this.$store.getters['user/isWebAdmin']) {
+            this.alertAccess();
         }
+        console.log("proof")
+        this.$nextTick(this.$eventMenu);
     },
     data() {
         return {

@@ -65,16 +65,27 @@ module.exports = {
     },
 
     getByID: (data, callBack) => {
-
-        pool.query(
-            `select * from ${tableName} where profileid = ? and levelid=?`, [data.profileid, data.levelid],
-            (error, results, fields) => {
-                if (error) {
-                    callBack(error);
+        console.log("get edition" + data.levelid)
+        if (data.levelid == 0)
+            pool.query(
+                `select  (select x.topic from hr_education_level as x where x.id = a.levelid  ) as levelname,a.* from ${tableName} as a where a.profileid = ? and a.institution <> '' `, [data.profileid],
+                (error, results, fields) => {
+                    if (error) {
+                        callBack(error);
+                    }
+                    return callBack(null, results);
                 }
-                return callBack(null, results[0]);
-            }
-        );
+            );
+        else
+            pool.query(
+                `select * from ${tableName} where profileid = ? and levelid=?`, [data.profileid, data.levelid],
+                (error, results, fields) => {
+                    if (error) {
+                        callBack(error);
+                    }
+                    return callBack(null, results[0]);
+                }
+            );
     },
 
 

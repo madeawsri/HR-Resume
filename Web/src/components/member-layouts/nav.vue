@@ -29,6 +29,9 @@
                     </ul>
                 </li>
                 <li>
+                    <router-link :to="''" style="color:green;font-weight: bold;">คิดตามการสมัครงาน</router-link>
+                </li>
+                <li>
                     <router-link :to="'logout'" style="color:red;font-weight: bold;">ออกจากระบบ</router-link>
                 </li>
             </ul>
@@ -110,42 +113,44 @@ export default {
         console.log('check status isWebAdmin')
         console.log(this.isUser)
 
-        this.$nextTick(() => {
+        /*  this.$nextTick(() => {
 
-            const $ = require('jquery')
-            window.$ = $;
-            $('.dashboard-nav ul li a').on('click', function (e) {
-                if ($(this).closest("li").children("ul").length) {
-                    if ($(this).closest("li").is(".active-submenu")) {
-                        $('.dashboard-nav ul li').removeClass('active-submenu');
-                    } else {
-                        $('.dashboard-nav ul li').removeClass('active-submenu');
-                        $(this).parent('li').addClass('active-submenu');
-                    }
-                    e.preventDefault();
-                }
-            });
-            $(window).on('load resize', function () {
-                var wrapperHeight = window.innerHeight;
-                var headerHeight = $("#header-container").height();
-                var winWidth = $(window).width();
-                if (winWidth > 992) {
-                    $(".dashboard-nav-inner").css('max-height', wrapperHeight - headerHeight);
-                } else {
-                    $(".dashboard-nav-inner").css('max-height', '');
-                }
-            });
-            $('.dashboard-responsive-nav-trigger').on('click', function (e) {
-                e.preventDefault();
-                $(this).toggleClass('active');
-                var dashboardNavContainer = $('body').find(".dashboard-nav");
-                if ($(this).hasClass('active')) {
-                    $(dashboardNavContainer).addClass('active');
-                } else {
-                    $(dashboardNavContainer).removeClass('active');
-                }
-            });
-        })
+              const $ = require('jquery')
+              window.$ = $;
+              $('.dashboard-nav ul li router-link').on('click', function (e) {
+
+                  if ($(this).closest("li").children("ul").length) {
+                      if ($(this).closest("li").is(".active-submenu")) {
+                          $('.dashboard-nav ul li').removeClass('active-submenu');
+                      } else {
+                          $('.dashboard-nav ul li').removeClass('active-submenu');
+                          $(this).parent('li').addClass('active-submenu');
+                      }
+                      e.preventDefault();
+                  }
+              });
+              $(window).on('load resize', function () {
+                  var wrapperHeight = window.innerHeight;
+                  var headerHeight = $("#header-container").height();
+                  var winWidth = $(window).width();
+                  if (winWidth > 992) {
+                      $(".dashboard-nav-inner").css('max-height', wrapperHeight - headerHeight);
+                  } else {
+                      $(".dashboard-nav-inner").css('max-height', '');
+                  }
+              });
+              $('.dashboard-responsive-nav-trigger').on('click', function (e) {
+                  e.preventDefault();
+                  $(this).toggleClass('active');
+                  var dashboardNavContainer = $('body').find(".dashboard-nav");
+                  if ($(this).hasClass('active')) {
+                      $(dashboardNavContainer).addClass('active');
+                  } else {
+                      $(dashboardNavContainer).removeClass('active');
+                  }
+              });
+          })
+          */
 
     },
     data() {

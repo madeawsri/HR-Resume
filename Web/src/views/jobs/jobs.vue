@@ -96,6 +96,8 @@ export default {
         if (!this.$store.getters['user/isWebAdmin']) {
             this.alertAccess();
         }
+
+        this.$eventMenu();
     },
     async created() {
 

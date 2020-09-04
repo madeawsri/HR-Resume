@@ -57,16 +57,28 @@ module.exports = {
     },
 
     getByID: (data, callBack) => {
-
-        pool.query(
-            `select * from ${tableName} where profileid = ? and trainno=?`, [data.profileid, data.trainno],
-            (error, results, fields) => {
-                if (error) {
-                    callBack(error);
+        if (data.trainno === undefined)
+            pool.query(
+                `select * from ${tableName} where profileid = ? and course <> '' `, [data.profileid],
+                (error, results, fields) => {
+                    if (error) {
+                        callBack(error);
+                    }
+                    return callBack(null, results);
                 }
-                return callBack(null, results[0]);
-            }
-        );
+            );
+        else
+            pool.query(
+                `select * from ${tableName} where profileid = ? and trainno=?`, [data.profileid, data.trainno],
+                (error, results, fields) => {
+                    if (error) {
+                        callBack(error);
+                    }
+                    return callBack(null, results[0]);
+                }
+            );
+
+
     },
 
 

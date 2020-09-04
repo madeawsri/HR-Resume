@@ -1,19 +1,24 @@
 <template>
-  <div id="app">
+<div id="app">
     <router-view></router-view>
-  </div>
+</div>
 </template>
 
 <script>
 //import memberLayout from '@/views/Member'
 export default {
-  components:{
-   // memberLayout
-  }
+    components: {
+        // memberLayout
+    },
+    mounted() {
+
+        this.$nextTick(() => {
+
+        })
+    }
 }
 </script>
 
 <style >
 
 </style>
-

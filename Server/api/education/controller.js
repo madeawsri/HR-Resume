@@ -88,7 +88,8 @@ module.exports = {
 
     },
     findByID: (req, res) => {
-
+        console.log("fileByID")
+        console.log(req.params)
         const fdata = {
             profileid: req.params.id,
             levelid: req.params.lid
