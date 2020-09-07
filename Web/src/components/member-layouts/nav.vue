@@ -29,7 +29,7 @@
                     </ul>
                 </li>
                 <li>
-                    <router-link :to="''" style="color:green;font-weight: bold;">คิดตามการสมัครงาน</router-link>
+                    <router-link :to="'my-job'" style="color:green;font-weight: bold;">คิดตามการสมัครงาน</router-link>
                 </li>
                 <li>
                     <router-link :to="'logout'" style="color:red;font-weight: bold;">ออกจากระบบ</router-link>
@@ -77,6 +77,10 @@
 
                         <li>
                             <router-link to="jobclosed" style="color:#000">สิ้นสุดการทำสัญญา</router-link>
+                        </li>
+
+                        <li>
+                            <router-link to="layoff" style="color:#000">** เลิกจ้าง / ลาออก</router-link>
                         </li>
 
                     </ul>

@@ -87,7 +87,40 @@ module.exports = {
                 WHERE x.jobid = '${data.jobid}'`
                 flegAll = true
                 break;
-
+            case "myjob":
+                sql = `SELECT i.idcard,i.idcard as profileid,
+    i.jobid,
+    j.topic as jobname,
+      i.regdate,
+      i.nuddate,
+      i.nudnote,
+      i.pmdate,
+      i.workdate,
+      p.status,
+      p.statusnote,
+      r.nameth as namecard,
+      r.wstatus,
+      GROUP_CONCAT(i.nudnote,' ', p.statusnote) AS sumnote
+FROM hr_jobinterest AS i
+LEFT JOIN hr_register AS r ON r.idcard=i.idcard
+LEFT JOIN hr_promise AS p ON p.idcard = i.idcard
+LEFT JOIN hr_jobs AS j ON j.id = i.jobid
+WHERE i.idcard = '${data.jobid}'
+GROUP BY i.idcard,
+       i.jobid,
+       j.topic,
+		 i.regdate,
+		 i.nuddate,
+		 i.nudnote,
+		 i.pmdate,
+		 i.workdate,
+		 p.status,
+		 r.nameth,
+		 r.wstatus,
+		 p.statusnote
+ORDER BY i.nuddate DESC;`
+                flegAll = true
+                break;
             default:
                 if (data.idcard && data.jobid) {
                     sql = `SELECT *,(select j.topic from hr_jobs as j where j.id = x.jobid ) as pname from ${tableName}  as x

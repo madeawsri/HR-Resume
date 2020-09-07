@@ -38,9 +38,10 @@ export default new Vuex.Store({
             status: [
                 { id: 0, topic: "ว่างงาน" },
                 { id: 1, topic: "รับเข้าทำงาน" },
-                { id: 2, topic: "ถูกออกจากงาน" }
+                { id: 2, topic: "ถูกออกจากงาน" },
+                { id: 3, topic: "ลาออก" },
+                { id: 4, topic: "เลิกจ้าง" }
             ]
-
         }
     },
     getters: {

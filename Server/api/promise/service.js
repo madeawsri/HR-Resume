@@ -7,7 +7,7 @@ const ExcSQL = (querySql, callBack) => {
             if (error) {
                 callBack(error);
             }
-            return callBack(null, results[0]);
+            return callBack(null, results);
         }
     );
 }
@@ -52,6 +52,28 @@ FROM hr_jobinterest a
 LEFT JOIN hr_jobs b ON a.jobid = b.id 
 LEFT JOIN (SELECT a.* from hr_profiles AS a RIGHT JOIN hr_register AS r ON a.profileid = r.idcard AND r.wstatus <> 1) as c ON a.idcard = c.profileid
 WHERE a.pmdate IS NOT NULL AND a.workdate IS NOT NULL AND  status = 1 and a.jobid = ${jobid});  `
+        return ExcSQL(querySql, callBack)
+    },
+
+
+    getAll: (data, callBack) => {
+        let querySql = `
+        SELECT p.* , r.wstatus , p.jobinterestid as id , r.idcard as profileid
+          FROM hr_promise AS p LEFT JOIN hr_register AS r ON  p.idcard = r.idcard
+        `
+        return ExcSQL(querySql, callBack)
+    },
+
+    updateStatusPromise: (data, callBack) => {
+        let querySql = `
+          UPDATE hr_promise SET status = ${data.status} , statusnote = '${data.statusnote}' , outdate = '${data.outdate}' where idcard = '${data.idcard}';
+       `
+        return ExcSQL(querySql, callBack)
+    },
+    updateStatusRegister: (data, callBack) => {
+        let querySql = `
+        UPDATE hr_register SET wstatus = ${data.status} where idcard = '${data.idcard}';
+       `
         return ExcSQL(querySql, callBack)
     },
 

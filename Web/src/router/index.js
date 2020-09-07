@@ -13,6 +13,7 @@ import Training from '../views/account/training.vue';
 
 import Login from '../views/account/Login.vue';
 import Logout from '../views/account/Logout.vue';
+import MyJob from '../views/account/myjob.vue';
 
 import Qualify from '../views/jobs/qualify.vue';
 import Proof from '../views/jobs/proof.vue';
@@ -25,6 +26,8 @@ import Ajobinterest from '../views/jobs/jobinterest.vue';
 import Interview from '../views/jobs/interview.vue';
 import InterviewReport from '../views/jobs/rpinterview.vue';
 import InterviewSummary from '../views/jobs/sinterview.vue';
+
+import Layoff from '../views/jobs/layoff.vue';
 
 
 import Jobdetail from '../views/home/jobdetail.vue';
@@ -39,6 +42,16 @@ const routes = [{
         path: '/jobdetail/:jobid?',
         name: 'Jobdetail',
         component: Jobdetail,
+    },
+    {
+        path: '/layoff',
+        name: 'Layoff',
+        component: Layoff,
+    },
+    {
+        path: '/my-job',
+        name: 'MyJob',
+        component: MyJob,
     },
     {
         path: '/jobclosed',
