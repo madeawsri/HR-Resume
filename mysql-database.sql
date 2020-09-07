@@ -10083,27 +10083,28 @@ CREATE TABLE IF NOT EXISTS `hr_jobinterest` (
   `salary` varchar(8) CHARACTER SET utf8 DEFAULT NULL,
   `regdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `note` mediumtext CHARACTER SET utf8,
-  `status` tinyint(4) DEFAULT '0',
+  `status` tinyint(4) DEFAULT '0' COMMENT 'สถานะทำงาน 0-ว่างงาน / 1-รับเข้าทำงาน ',
   `lastedit` varchar(30) DEFAULT NULL,
   `topic` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   `nuddate` date DEFAULT NULL COMMENT 'วันนัดสัมภาษณ์',
   `nuduser` varchar(150) CHARACTER SET utf8 DEFAULT NULL COMMENT 'กรรมการสัมภาษณ์',
   `regstatus` tinyint(4) DEFAULT '0' COMMENT 'สมัครเอง, เลือกจากประวัติ',
-  `nudnode` varchar(150) CHARACTER SET utf8 DEFAULT NULL COMMENT 'แจ้งผลสัมภาษณ์',
+  `nudnote` varchar(150) CHARACTER SET utf8 DEFAULT NULL COMMENT 'แจ้งผลสัมภาษณ์',
   `pmdate` date DEFAULT NULL COMMENT 'วันที่นัดทำสัญญา',
   `workdate` date DEFAULT NULL COMMENT 'วันที่เริ่มงาน',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jobksl_db.hr_jobinterest: ~4 rows (approximately)
+-- Dumping data for table jobksl_db.hr_jobinterest: ~6 rows (approximately)
 /*!40000 ALTER TABLE `hr_jobinterest` DISABLE KEYS */;
-REPLACE INTO `hr_jobinterest` (`id`, `idcard`, `jobid`, `salary`, `regdate`, `note`, `status`, `lastedit`, `topic`, `nuddate`, `nuduser`, `regstatus`, `nudnode`, `pmdate`, `workdate`) VALUES
-	(1, '2 2222 22222 22 2', '12', NULL, '2020-08-18 15:35:28', NULL, 0, '2020-08-22 15:54:45', NULL, NULL, NULL, 0, NULL, NULL, NULL),
-	(2, '2 2222 22222 22 2', '13', NULL, '2020-08-18 16:24:12', NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL),
-	(3, '1 1111 11111 11 1', '12', NULL, '2020-08-18 16:24:51', NULL, 0, '2020-08-22 15:55:03', NULL, NULL, NULL, 0, NULL, NULL, NULL),
-	(4, '3 4101 00857 66 4', '12', NULL, '2020-08-19 09:45:21', NULL, 0, '2020-08-22 15:54:50', NULL, NULL, NULL, 0, NULL, NULL, NULL),
-	(5, '1 1111 11111 11 1', '13', NULL, '2020-08-22 15:16:29', NULL, 0, '2020-08-22 15:18:34', NULL, NULL, NULL, 1, NULL, NULL, NULL),
-	(6, '5 5555 55555 55 5', '12', NULL, '2020-08-22 15:54:57', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL);
+REPLACE INTO `hr_jobinterest` (`id`, `idcard`, `jobid`, `salary`, `regdate`, `note`, `status`, `lastedit`, `topic`, `nuddate`, `nuduser`, `regstatus`, `nudnote`, `pmdate`, `workdate`) VALUES
+	(1, '1 1111 11111 11 1', '14', NULL, '2020-09-03 09:52:59', NULL, 1, NULL, NULL, '2020-09-15', NULL, 1, 'มาสัมภาษณ์ภายในวันและเวลาทำการ', '2020-09-25', '2020-10-01'),
+	(2, '2 2222 22222 22 2', '14', NULL, '2020-09-03 09:53:22', NULL, 1, NULL, NULL, '2020-09-15', NULL, 1, 'มาสัมภาษณ์ภายในวันและเวลาทำการ', '2020-09-25', '2020-10-01'),
+	(3, '3 3515 21456 46 5', '14', NULL, '2020-09-03 09:53:27', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+	(4, '1 1111 11111 11 1', '13', NULL, '2020-09-03 09:59:36', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+	(5, '5 5555 55555 55 5', '13', NULL, '2020-09-03 09:59:43', NULL, 0, NULL, NULL, '2020-09-28', NULL, 1, 'มาสัมภาษณ์ภายในวันและเวลาทำการ', NULL, NULL),
+	(6, '3 4101 00857 66 4', '14', NULL, '2020-09-04 13:28:05', NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+	(7, '3 4101 00857 66 4', '13', NULL, '2020-09-05 16:37:51', NULL, 0, NULL, NULL, '2020-09-28', NULL, 1, 'มาสัมภาษณ์ภายในวันและเวลาทำการ', NULL, NULL);
 /*!40000 ALTER TABLE `hr_jobinterest` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_jobs
@@ -10119,15 +10120,16 @@ CREATE TABLE IF NOT EXISTS `hr_jobs` (
   `datein` varchar(50) DEFAULT NULL,
   `stype` varchar(200) DEFAULT NULL,
   `ptype` varchar(200) DEFAULT NULL,
-  `ostatus` tinyint(4) DEFAULT '1',
+  `ostatus` tinyint(4) DEFAULT '1' COMMENT 'สถานะ เปิด (1) /ปิดรับสมัคร (0)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_jobs: ~2 rows (approximately)
+-- Dumping data for table jobksl_db.hr_jobs: ~3 rows (approximately)
 /*!40000 ALTER TABLE `hr_jobs` DISABLE KEYS */;
 REPLACE INTO `hr_jobs` (`id`, `topic`, `regdate`, `jobattrid`, `positionid`, `num`, `flag`, `dateout`, `datein`, `stype`, `ptype`, `ostatus`) VALUES
 	(12, 'เจ้าหน้าที่วิเคราะห์และประมวลผล', '2020-08-17 11:34:22', '{"id":4,"topic":"พนักงานประจำ-รายเดือน-สำนักงาน"}', '{"id":1,"topic":"เจ้าหน้าที่วิเคราะห์และประมวลผล"}', 1, 1, '2020-11-30', '2020-08-01', '{"id":1,"topic":"งานด่วน"}', '{"id":3,"topic":"ประจำ (รายเดือน)"}', 1),
-	(13, 'เจ้าหน้าที่บุคคล', '2020-08-17 16:29:23', '{"id":4,"topic":"พนักงานประจำ-รายเดือน-สำนักงาน"}', '{"id":2,"topic":"เจ้าหน้าที่บุคคล"}', 10, 1, '2020-09-30', '2020-08-01', '{"id":2,"topic":"ปกติ"}', '{"id":3,"topic":"ประจำ (รายเดือน)"}', 1);
+	(13, 'เจ้าหน้าที่บุคคล', '2020-08-17 16:29:23', '{"id":4,"topic":"พนักงานประจำ-รายเดือน-สำนักงาน"}', '{"id":2,"topic":"เจ้าหน้าที่บุคคล"}', 10, 1, '2020-09-30', '2020-08-01', '{"id":2,"topic":"ปกติ"}', '{"id":3,"topic":"ประจำ (รายเดือน)"}', 1),
+	(14, 'เจ้าหน้าที่คลังสินค้า', '2020-09-03 07:35:55', '{"id":2,"topic":"พนักงานประจำ-รายวัน-สำนักงาน"}', '{"id":3,"topic":"เจ้าหน้าที่คลังสินค้า"}', 1, 1, '2020-09-19', '2020-09-03', '{"id":2,"topic":"ปกติ"}', '{"id":2,"topic":"ประจำ (รายวัน)"}', 0);
 /*!40000 ALTER TABLE `hr_jobs` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_knowledge
@@ -10169,13 +10171,14 @@ CREATE TABLE IF NOT EXISTS `hr_position` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `topic` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table jobksl_db.hr_position: ~2 rows (approximately)
+-- Dumping data for table jobksl_db.hr_position: ~3 rows (approximately)
 /*!40000 ALTER TABLE `hr_position` DISABLE KEYS */;
 REPLACE INTO `hr_position` (`id`, `topic`) VALUES
 	(1, 'เจ้าหน้าที่วิเคราะห์และประมวลผล'),
-	(2, 'เจ้าหน้าที่บุคคล');
+	(2, 'เจ้าหน้าที่บุคคล'),
+	(3, 'เจ้าหน้าที่คลังสินค้า');
 /*!40000 ALTER TABLE `hr_position` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_profiles
@@ -10200,7 +10203,7 @@ CREATE TABLE IF NOT EXISTS `hr_profiles` (
   `placecard` varchar(100) DEFAULT NULL,
   `expiredcard` varchar(50) DEFAULT NULL,
   `regtime` varchar(50) DEFAULT NULL,
-  `wtype` tinyint(4) DEFAULT '0' COMMENT 'สถานะว่างงาน/ไม่',
+  `wtype` tinyint(4) DEFAULT '0' COMMENT 'สถานะว่างงาน/นัด/รับเข้าทำงาน',
   PRIMARY KEY (`profileid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -10214,6 +10217,29 @@ REPLACE INTO `hr_profiles` (`profileid`, `nameth`, `nameen`, `addr`, `addrcur`, 
 	('5 5555 55555 55 5', '5555555', 'หกหดหหหกดหกด', '', NULL, NULL, NULL, '', '', '05/05/2525', 38, 0, 0, '', '', '', NULL, '', '', '2020-8-15 15:50', 0),
 	('9 9999 99999 99 9', NULL, 'utayan xxxxxx', NULL, NULL, NULL, NULL, 'utayan@gmail.com', '0958462541', '11/12/2525', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-7-22 8:58', 0);
 /*!40000 ALTER TABLE `hr_profiles` ENABLE KEYS */;
+
+-- Dumping structure for table jobksl_db.hr_promise
+CREATE TABLE IF NOT EXISTS `hr_promise` (
+  `jobinterestid` int(11) NOT NULL COMMENT 'ตำแหน่งที่ผู้สมัครสนใจ',
+  `idcard` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT 'ไม่น่าจะได้ใช้ จะใช้ jobinterestid แทน',
+  `jobname` varchar(50) CHARACTER SET utf8 DEFAULT NULL COMMENT 'ไม่น่าจะได้ใช้ จะใช้ jobinterestid แทน',
+  `promisedate` date DEFAULT NULL,
+  `workdate` date DEFAULT NULL,
+  `outdate` date DEFAULT NULL,
+  `status` tinyint(4) DEFAULT '1' COMMENT 'ได้รับเข้าทำงานแล้ว',
+  `statusnote` varchar(500) CHARACTER SET utf8 DEFAULT NULL,
+  `namecard` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `jobid` int(11) DEFAULT NULL,
+  `dodate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`jobinterestid`,`idcard`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='รหัสผู้สมัคร, ตำแหน่ง, วันที่เซ็นสัญญา, วันที่เริ่มงาน, สถานะ, สถานะโน็ต';
+
+-- Dumping data for table jobksl_db.hr_promise: ~2 rows (approximately)
+/*!40000 ALTER TABLE `hr_promise` DISABLE KEYS */;
+REPLACE INTO `hr_promise` (`jobinterestid`, `idcard`, `jobname`, `promisedate`, `workdate`, `outdate`, `status`, `statusnote`, `namecard`, `jobid`, `dodate`) VALUES
+	(1, '1 1111 11111 11 1', 'เจ้าหน้าที่คลังสินค้า', '2020-09-25', '2020-10-01', '2020-09-10', 1, 'ทดสอบ', 'อุทยาน ภูกิ่งเงิน', 14, '2020-09-04 13:29:07'),
+	(2, '2 2222 22222 22 2', 'เจ้าหน้าที่คลังสินค้า', '2020-09-25', '2020-10-01', '2020-09-25', 1, '123456', 'นายอุทยาน ภูกิ่งเงิน', 14, '2020-09-04 13:29:07');
+/*!40000 ALTER TABLE `hr_promise` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_proofs
 CREATE TABLE IF NOT EXISTS `hr_proofs` (
@@ -10265,23 +10291,24 @@ CREATE TABLE IF NOT EXISTS `hr_register` (
   `password` varchar(200) DEFAULT NULL,
   `logintime` varchar(25) DEFAULT NULL,
   `regtime` varchar(25) DEFAULT NULL,
+  `wstatus` tinyint(4) DEFAULT '0' COMMENT 'สถานะ 0-ว่างาน / 1-รับเข้าทำงาน',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jobksl_db.hr_register: ~8 rows (approximately)
+-- Dumping data for table jobksl_db.hr_register: ~11 rows (approximately)
 /*!40000 ALTER TABLE `hr_register` DISABLE KEYS */;
-REPLACE INTO `hr_register` (`id`, `idcard`, `nameth`, `birthday`, `status`, `username`, `password`, `logintime`, `regtime`) VALUES
-	(1, '1 1111 11111 11 1', 'อุทยาน ภูกิ่งเงิน', '11/12/2525', 2, '1 1111 11111 11 1', '$2b$10$yqKFLrcFD56ILY1pXpG1lOfD7Kdf5KZXRET/M53fRENtHEAU10tx.', NULL, '2020-7-21 9:13'),
-	(2, '3 3515 21456 46 5', 'ทดสอบ ทดสอบ', '13/01/2563', 1, '3 3515 21456 46 5', '$2b$10$cxp.jSgRAtsT7DC7RwpeH.16kCdbF/G/ajlLWBmChkJPFghN4vLka', NULL, '2020-8-3 14:2'),
-	(3, '3 4101 00857 66 4', 'เอกพล นามลึก', '24/12/2524', 2, '3 4101 00857 66 4', '$2b$10$YW/8OTPcZwxAtC1Ca6j1.Oj8aVrNIj0WZkNfnQskpuDGUeUo36lCW', NULL, '2020-8-3 14:17'),
-	(4, '2 2222 22222 22 2', 'นายอุทยาน ภูกิ่งเงิน', '10/10/2525', 1, '2 2222 22222 22 2', '$2b$10$0pg46SbCMEevplZo/wIW/uAWsSC.TCvGGcyv1LxICHCkX5RBql6bK', NULL, '2020-8-3 14:20'),
-	(5, '4 4444 44444 44 4', '132132', '11/11/2000', 1, '4 4444 44444 44 4', '$2b$10$zYY0eAFLEtQGTbZDmIkEkeV3UHzJxtTbyE8Sz4kSSju2M0dFw.R1S', NULL, '2020-8-8 14:35'),
-	(6, '2 2222 22222 22 9', '1213213', '11/11/2000', 1, '2 2222 22222 22 9', '$2b$10$VtDFTgvOQtJQOohpX229Ze77StiCUvUHvGG8CFCtnUIY0rWB0rvbW', NULL, '2020-8-8 14:39'),
-	(7, '3 3333 33333 33 3', '123154654', '11/11/2000', 1, '3 3333 33333 33 3', '$2b$10$TIwJElTgHO2QxuM8VJgJWObCnH8YvihT/5GDP6pFhuhZ5btJhwMSW', NULL, '2020-8-8 14:43'),
-	(8, '2 2222 22222 22 1', 'xxxx', '11/11/2000', 1, '2 2222 22222 22 1', '$2b$10$Z05erjMAXneT.tmSGRxeS.ym9X6f.IguBS2Eob.Q53UOtuyBsV.H.', NULL, '2020-8-8 14:46'),
-	(9, '8 8888 88888 88 8', 'ทดสอบ', '11/11/2000', 1, '8 8888 88888 88 8', '$2b$10$2VILt2dYnLFl1RNwupZ5Lu1NKDlKprgpqhnra2Nr6ImK88NvdAAmW', NULL, '2020-8-8 14:51'),
-	(10, '5 8585 85858 58 5', 'boonyadol', '11/11/2000', 1, '5 8585 85858 58 5', '$2b$10$z29rb5hmAWrxk1w8X0Ein.7HhB.9CLSGpoJtS79SJhf5.ebr0iOnW', NULL, '2020-8-8 14:53'),
-	(11, '5 5555 55555 55 5', '5555555', '05/05/2525', 1, '5 5555 55555 55 5', '$2b$10$EZTJ6b1Sgxln0RBfSiHlmuFPWwLifqjCxpgOWiyAQMGmxthGNoPKu', NULL, '2020-8-15 15:49');
+REPLACE INTO `hr_register` (`id`, `idcard`, `nameth`, `birthday`, `status`, `username`, `password`, `logintime`, `regtime`, `wstatus`) VALUES
+	(1, '1 1111 11111 11 1', 'อุทยาน ภูกิ่งเงิน', '11/12/2525', 2, '1 1111 11111 11 1', '$2b$10$yqKFLrcFD56ILY1pXpG1lOfD7Kdf5KZXRET/M53fRENtHEAU10tx.', NULL, '2020-7-21 9:13', 1),
+	(2, '3 3515 21456 46 5', 'ทดสอบ ทดสอบ', '13/01/2563', 1, '3 3515 21456 46 5', '$2b$10$cxp.jSgRAtsT7DC7RwpeH.16kCdbF/G/ajlLWBmChkJPFghN4vLka', NULL, '2020-8-3 14:2', 0),
+	(3, '3 4101 00857 66 4', 'เอกพล นามลึก', '24/12/2524', 2, '3 4101 00857 66 4', '$2b$10$YW/8OTPcZwxAtC1Ca6j1.Oj8aVrNIj0WZkNfnQskpuDGUeUo36lCW', NULL, '2020-8-3 14:17', 0),
+	(4, '2 2222 22222 22 2', 'นายอุทยาน ภูกิ่งเงิน', '10/10/2525', 1, '2 2222 22222 22 2', '$2b$10$0pg46SbCMEevplZo/wIW/uAWsSC.TCvGGcyv1LxICHCkX5RBql6bK', NULL, '2020-8-3 14:20', 1),
+	(5, '4 4444 44444 44 4', '132132', '11/11/2000', 1, '4 4444 44444 44 4', '$2b$10$zYY0eAFLEtQGTbZDmIkEkeV3UHzJxtTbyE8Sz4kSSju2M0dFw.R1S', NULL, '2020-8-8 14:35', 0),
+	(6, '2 2222 22222 22 9', '1213213', '11/11/2000', 1, '2 2222 22222 22 9', '$2b$10$VtDFTgvOQtJQOohpX229Ze77StiCUvUHvGG8CFCtnUIY0rWB0rvbW', NULL, '2020-8-8 14:39', 0),
+	(7, '3 3333 33333 33 3', '123154654', '11/11/2000', 1, '3 3333 33333 33 3', '$2b$10$TIwJElTgHO2QxuM8VJgJWObCnH8YvihT/5GDP6pFhuhZ5btJhwMSW', NULL, '2020-8-8 14:43', 0),
+	(8, '2 2222 22222 22 1', 'xxxx', '11/11/2000', 1, '2 2222 22222 22 1', '$2b$10$Z05erjMAXneT.tmSGRxeS.ym9X6f.IguBS2Eob.Q53UOtuyBsV.H.', NULL, '2020-8-8 14:46', 0),
+	(9, '8 8888 88888 88 8', 'ทดสอบ', '11/11/2000', 1, '8 8888 88888 88 8', '$2b$10$2VILt2dYnLFl1RNwupZ5Lu1NKDlKprgpqhnra2Nr6ImK88NvdAAmW', NULL, '2020-8-8 14:51', 0),
+	(10, '5 8585 85858 58 5', 'boonyadol', '11/11/2000', 1, '5 8585 85858 58 5', '$2b$10$z29rb5hmAWrxk1w8X0Ein.7HhB.9CLSGpoJtS79SJhf5.ebr0iOnW', NULL, '2020-8-8 14:53', 0),
+	(11, '5 5555 55555 55 5', '5555555', '05/05/2525', 1, '5 5555 55555 55 5', '$2b$10$EZTJ6b1Sgxln0RBfSiHlmuFPWwLifqjCxpgOWiyAQMGmxthGNoPKu', NULL, '2020-8-15 15:49', 0);
 /*!40000 ALTER TABLE `hr_register` ENABLE KEYS */;
 
 -- Dumping structure for table jobksl_db.hr_staff
