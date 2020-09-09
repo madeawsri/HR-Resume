@@ -144,6 +144,7 @@ export default {
         await this.getLstDatas();
         this.lstProfileCopy = [...this.lstProfile]
 
+        //console.log("full url : " + this.fullUrl)
     },
     data() {
         return {
@@ -191,7 +192,8 @@ export default {
             listDatas: [{
                 id: 1,
                 topic: 'xxx'
-            }] // data in table
+            }],
+            fullUrl: window.location.origin
 
         }
     },
@@ -421,7 +423,7 @@ export default {
             let msgFormat = `
 ตรวจสอบรายชื่อนัดสัมภาษณ์ 
 ตำแหน่ง : ${this.selectJobTopic} 
-ตามลิงค์นี้ http://10.7.10.26:8081/jobdetail/${this.selectJobId}
+ตามลิงค์นี้ ${this.fullUrl}/jobdetail/${this.selectJobId}
             `;
             //let newData = [...this.lstProfile.filter(x => x.nuddate !== null)]
             //console.log(msgFormat)

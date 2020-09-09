@@ -5,8 +5,8 @@
         <div class="listings-container">
             <div v-for="(item, index) in listDatas" :key="index">
 
-              <!--  <a href=""  > -->
-                <router-link class="listing " :class="getPtypeClass(item.ptype)" :to="{ name: 'Jobdetail', params: { jobid: item.id }}" >  
+                <!--  <a href=""  > -->
+                <router-link class="listing " :class="getPtypeClass(item.ptype)" :to="{ name: 'Jobdetail', params: { jobid: item.id }}">
                     <div class="listing-title">
                         <h4>
                             {{item.topic}} / {{item.num}} ตำแหน่ง
@@ -31,7 +31,7 @@
 
         </div>
 
-        <a href="#" class="button centered" @click="showMoreData" ><i class="fa fa-plus-circle"></i> แสดงงานเพิ่มเติม</a>
+        <button class="button centered" @click="showMoreData"><i class="fa fa-plus-circle"></i> แสดงงานเพิ่มเติม</button>
         <div class="margin-bottom-55"></div>
     </div>
 </div>
@@ -50,9 +50,9 @@ export default {
 
     },
     methods: {
-        
+
         getPtypeClass: function (value) {
-            let obj = this.$store.getters.strtojson(value,'id')
+            let obj = this.$store.getters.strtojson(value, 'id')
             return this.$store.getters.getptype(obj).class
         },
         showMoreData: async function () {

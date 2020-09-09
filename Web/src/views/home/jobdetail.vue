@@ -68,13 +68,16 @@
                     <div class="clearfix"></div>
                 </div>
                 <p class="margin-reset" v-if="1">
-                    ให้ผู้สมัครมาสอบสัมภาษณ์ในเวลาทำการเท่านั้น
+                    ให้ผู้สมัครที่ผ่านสัมภาษณ์มาทำสัญญาจ้างในวันที่กำหนดให้
                 </p>
+
                 <div v-for="(item, index) in lstInterviews" :key="'ii'+index">
-                    <p class="margin-bottom-0"><strong>วันที่ {{item.workdate|moment('DD MMMM YYYY')}}</strong> </p>
-                    <ul class="list-1" v-for="(itemx, index) in item.fname.split(',') " :key="'aii'+index">
-                        <li>{{itemx}}</li>
-                    </ul>
+                    <div v-show="item.pmdate !== null">
+                        <p class="margin-bottom-0"><strong>วันที่ {{item.pmdate|moment('DD MMMM YYYY')}}</strong> </p>
+                        <ul class="list-1" v-for="(itemx, index) in item.fname.split(',') " :key="'aii'+index">
+                            <li>{{itemx}}</li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>
@@ -120,8 +123,8 @@
                     </ul>
 
                     <div v-if="dataDetail.ostatus">
-                        <a href="#" @click="sentData" class="popup-with-zoom-anim button" v-show="isLogged && !isApplyJod"> ส่งใบสมัครงาน </a>
-                        <a class=" button disabled" v-show="isApplyJod"> <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </a>
+                        <button @click="sentData" class="popup-with-zoom-anim button" v-show="isLogged && !isApplyJod"> ส่งใบสมัครงาน </button>
+                        <button class=" button disabled" v-show="isApplyJod"> <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </button>
                         <router-link class="button" to="login" v-show="this.idcard==null"> ส่งใบสมัครงาน </router-link>
                     </div>
                     <div v-if="!dataDetail.ostatus" align="center">
@@ -132,13 +135,13 @@
                     </div>
 
                 </div>
-
+                <!--
                 <div class="dashboard-list-box margin-top-5" v-if="0">
                     <h4 style="padding: 5px 10px;"> ตำแหน่งงานอื่นๆ </h4>
                     <ul v-for="(item,index) in $vStrToJson(dataDetail.proofs)" :key="'b'+index">
-                        <li style="padding: 5px 10px;"><i class="ln ln-icon-Check"></i> <a href="#">เจ้าหน้าที่จัดสวน / 10 ตำแหน่ง </a></li>
+                        <li style="padding: 5px 10px;"><i class="ln ln-icon-Check"></i> <a>เจ้าหน้าที่จัดสวน / 10 ตำแหน่ง </a></li>
                     </ul>
-                </div>
+                </div> -->
 
             </div>
 
@@ -165,9 +168,10 @@ export default {
         this.idcard = this.getIDCard
         this.isSent();
         await this.getInterviews();
-
+        await this.getPromises();
     },
     async created() {
+
         if (this.jobid === undefined) {
             this.alertFail();
         } else {

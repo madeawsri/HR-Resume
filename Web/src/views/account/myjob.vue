@@ -45,9 +45,8 @@
                     <table class="manage-table responsive-table">
 
                         <tr>
-                            <th style="width:15%"><i class="fa fa-tasks"></i>บัตรประชาชน</th>
-                            <th><i class="fa fa-file-text"></i> ชื่อ-สกุล</th>
                             <th><i class="fa fa-file-text"></i> ตำแหน่งงาน</th>
+                            <th><i class="fa fa-file-text"></i> วันที่สมัครงาน</th>
                             <th><i class="fa fa-file-text"></i> วันที่นัดสัมภาษณ์</th>
                             <th><i class="fa fa-file-text"></i> วันที่ทำสัญญา</th>
                             <th><i class="fa fa-file-text"></i> วันที่เริ่มงาน</th>
@@ -56,9 +55,9 @@
                         </tr>
 
                         <tr style="padding: 2px 2px;" v-for="(item, index) in lstProfile" :key="index">
-                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.idcard}}</td>
-                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{ item.namecard}}</td>
+
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.jobname}} </td>
+                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.regdate | moment("DD MMMM YYYY") }} </td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.nuddate | moment("DD MMMM YYYY") }} </td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.pmdate | moment("DD MMMM YYYY") }} </td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.workdate | moment("DD MMMM YYYY") }} </td>

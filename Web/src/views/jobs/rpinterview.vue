@@ -197,7 +197,8 @@ export default {
                 topic: 'xxx'
             }], // data in table,
             selectPass: "ln ln-icon-Yes",
-            checkPass: []
+            checkPass: [],
+            fullUrl: window.location.origin
 
         }
     },
@@ -226,7 +227,7 @@ export default {
             let msgFormat = `
 ตรวจสอบรายชื่อนัดสัมภาษณ์ 
 ตำแหน่ง : ${this.selectJobTopic} 
-ตามลิงค์นี้ http://10.7.10.26:8081/jobdetail/${this.selectJobId}
+ตามลิงค์นี้ ${this.fullUrl}/jobdetail/${this.selectJobId}
             `;
             //let newData = [...this.lstProfile.filter(x => x.nuddate !== null)]
             //console.log(msgFormat)
