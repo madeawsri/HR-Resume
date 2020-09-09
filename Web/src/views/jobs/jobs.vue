@@ -67,8 +67,8 @@
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{ item.jobattrid | stringToJson }}</td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.datein | moment("DD MMMM YYYY")}} ถีง {{item.dateout | moment("DD MMMM YYYY")}}</td>
                             <td style="padding: 5px 5px;">
-                                <a href="#" @click="preEditData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-pencil"></i> แก้ไข</a>
-                                <a href="#" @click="delData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-remove"></i> ลบ </a>
+                                <button @click="preEditData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-pencil"></i> แก้ไข</button>
+                                <button @click="delData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-remove"></i> ลบ </button>
                             </td>
                         </tr>
 

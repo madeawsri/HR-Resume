@@ -38,14 +38,14 @@
                         <tr style="padding: 5px 5px;" v-for="(item, index) in listDatas" :key="index">
                             <td style="padding: 5px 5px;font-weight:bold;" class="topic"> <i class="fa fa-check"></i> {{item.topic}}</td>
                             <td style="padding: 5px 5px;">
-                                <a href="#" @click="preEditData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-pencil"></i> แก้ไข</a>
-                                <a href="#" @click="delData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-remove"></i> ลบ </a>
+                                <button @click="preEditData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-pencil"></i> แก้ไข</button>
+                                <button @click="delData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-remove"></i> ลบ </button>
                             </td>
                         </tr>
 
                     </table>
 
-<a href="#" class="button " style="margin:20px" @click="showMore" > แสดงเพิ่มเติม </a>
+                    <button class="button " style="margin:20px" @click="showMore"> แสดงเพิ่มเติม </button>
 
                 </div>
             </div>
@@ -84,13 +84,13 @@ export default {
                 topic: ""
             },
             listDatas: [],
-            numPage : 0
+            numPage: 0
         }
     },
     methods: {
-        showMore: async function(){
-           this.numPage ++;
-           this.showDataAll(this.numPage)
+        showMore: async function () {
+            this.numPage++;
+            this.showDataAll(this.numPage)
         },
         alertAccess: function () {
             this.$fire({
@@ -194,15 +194,15 @@ export default {
             }
 
         },
-        async showDataAll(xnum=0) {
+        async showDataAll(xnum = 0) {
             try {
                 const {
                     data
                 } = await this.$http.get(`/api/qualify/page/${xnum}`)
 
                 if (data.success == 1) {
-                    if(data.data)
-                       this.listDatas.push(...data.data)
+                    if (data.data)
+                        this.listDatas.push(...data.data)
                     else return
 
                 } else {

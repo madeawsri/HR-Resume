@@ -71,7 +71,7 @@
                     ให้ผู้สมัครมาสอบสัมภาษณ์ในเวลาทำการเท่านั้น
                 </p>
                 <div v-for="(item, index) in lstInterviews" :key="'ii'+index">
-                    <p class="margin-bottom-0"><strong>วันที่ {{item.nuddate|moment('DD MMMM YYYY')}}</strong> </p>
+                    <p class="margin-bottom-0"><strong>วันที่ {{item.workdate|moment('DD MMMM YYYY')}}</strong> </p>
                     <ul class="list-1" v-for="(itemx, index) in item.fname.split(',') " :key="'aii'+index">
                         <li>{{itemx}}</li>
                     </ul>
@@ -181,7 +181,8 @@ export default {
             dataDetail: [],
             isApplyJod: false,
             idcard: this.getIDCard,
-            lstInterviews: []
+            lstInterviews: [],
+            lstPromises: []
         }
     },
     components: {
@@ -191,16 +192,24 @@ export default {
     methods: {
         async getInterviews() {
             try {
-
                 const {
                     data
                 } = await this.$http.get(`/api/jobinterest/interview/${this.jobid}`)
-
                 if (data.success) {
                     this.lstInterviews = [...data.data]
                 }
-
-                //  
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        async getPromises() {
+            try {
+                const {
+                    data
+                } = await this.$http.get(`/api/promise/${this.jobid}`)
+                if (data.success) {
+                    this.lstPromises = [...data.data]
+                }
             } catch (e) {
                 console.log(e)
             }

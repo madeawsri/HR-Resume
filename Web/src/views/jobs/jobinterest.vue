@@ -71,10 +71,10 @@
             <div class="dashboard-list-box margin-top-30" v-show="0">
                 <div class="" ref="info">
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <img :src="profileImg" alt="" class="margin-top-0 img-rounded img-responsive">
                     </div>
-                    <div class="col-sm-8" align="left">
+                    <div class="col-sm-10" align="left">
 
                         <div>
                             <ul class="tabs-nav">
@@ -84,6 +84,8 @@
                                 <li><a href="#tab4">ประวัติการงาน</a></li>
                                 <li><a href="#tab5">ประวัติอบรม</a></li>
                                 <li><a href="#tab6">ความสามารถพิเศษ</a></li>
+                                <li><a href="#tab7">ตำแหน่งที่เคยสนใจ</a></li>
+
                             </ul>
 
                             <div class="tabs-container">
@@ -255,6 +257,18 @@
                                     </div>
                                 </div>
 
+                                <div class="tab-content" id="tab7" style="display: none;">
+
+                                    <div class="message-by" v-for="(item, index) in lstMyJob" :key="'myjob'+index">
+                                        <div class="message-by-headline">
+                                            <h5>
+                                                ตำแหน่งที่รับสมัคร <i style="font-size:18px;">{{item.pname || "คุณยังไม่เลือกงานที่สมัคร "}}</i>
+                                                วันที่สมัคร <i style="font-size:18px;">{{item.regdate | moment("DD MMMM YYYY") }}</i>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="tab-content" id="tab6" style="display: none;">
                                     <!-- Main -->
                                     <div class="container">
@@ -324,7 +338,7 @@
             </div>
 
         </div>
-
+        {{lstMyJob}}
     </div>
 </memberLayout>
 </template>
@@ -342,10 +356,40 @@ export default {
         if (!this.$store.getters['user/isWebAdmin']) {
             this.alertAccess();
         }
-        /*
-                let output = ttt.filter(a => aaa.findIndex(b => b.id == a.id) < 0);
-                console.log(output)                
-                */
+
+        this.$nextTick(() => {
+
+            console.log("NEXT TICK Component++")
+
+            const $ = require('jquery')
+            window.$ = $;
+
+            var $tabsNav = $('.tabs-nav'),
+                $tabsNavLis = $tabsNav.children('li');
+            $tabsNav.each(function () {
+                var $this = $(this);
+                $this.next().children('.tab-content').stop(true, true).hide().first().show();
+                $this.children('li').first().addClass('active').stop(true, true).show();
+            });
+            $tabsNavLis.on('click', function (e) {
+                var $this = $(this);
+                $this.siblings().removeClass('active').end().addClass('active');
+                $this.parent().next().children('.tab-content').stop(true, true).hide().siblings($this.find('a').attr('href')).fadeIn();
+                e.preventDefault();
+            });
+
+            /*
+            var hash = window.location.hash;
+            var anchor = $('.tabs-nav a[href="' + hash + '"]');
+            if (anchor.length === 0) {
+                $(".tabs-nav li:first").addClass("active").show();
+                $(".tab-content:first").show();
+            } else {
+                console.log(anchor);
+                anchor.parent('li').click();
+            }
+            */
+        })
 
     },
     async created() {
@@ -356,14 +400,6 @@ export default {
         //this.lstProfileCopy = [...this.lstProfile]
 
         console.log(this.lstProfile)
-
-        //console.log(this.lstProfile.filter(x => (x.edux).indexOf("7") !== -1))
-        /*let keyword = "ท"
-        console.log(this.lstProfile.filter(x => (String(x.edux).includes(keyword) ||
-            String(x.profileid).includes(keyword) ||
-            String(x.nameth).includes(keyword))))*/
-
-        //console.log("ปริญญาตรี|มหาวิทยาลัยมหาสารคาม|สารสนเทศเพื่อการจัดการ|2549|2.57".includes("7"))
 
     },
     data() {
@@ -406,6 +442,7 @@ export default {
             lstEducation: [],
             lstMebers: [],
             lstJobs: [],
+            lstMyJob: [],
             lstJobsCopy: [],
             jobInter: " -- ไม่พบข้อมูล --",
             listDatas: [{
@@ -500,10 +537,12 @@ export default {
             }
         },
         dialogInfo: async function (idcard) {
+
             console.log(this.$refs.info)
             await this.getMemberInfo(idcard);
             await this.loadMyPicture(idcard);
             await this.getWork(idcard)
+            await this.getJobIn(idcard)
 
             /*
              dataInfo: 
@@ -513,7 +552,7 @@ export default {
                 training
                 knowledge
             */
-            await this.loadDataInfo(idcard);
+            // await this.loadDataInfo(idcard);
 
             console.log(this.dataInfo)
 
@@ -640,10 +679,14 @@ export default {
                 if (data.success == 1) {
                     if (data.data !== null) {
 
-                        //console.log(data.data)
+                        console.log(data.data)
+                        this.lstMyJob = [...data.data]
                         this.jobInter = [...data.data].map((it) => it.pname).join(',');
+                        console.log(this.jobInter)
                         this.lstJobs = this.lstJobs.filter(a => data.data.findIndex(b => b.jobid == a.id) < 0);
-                        //console.log(this.lstJobs)
+                        console.log(this.lstJobs)
+                        console.log("MY JOB")
+                        console.log(this.lstMyJob)
 
                     } else {
                         this.jobInter = " -- ไม่พบข้อมูล --"
@@ -654,6 +697,7 @@ export default {
             }
         },
         selectJob: async function (item) {
+
             this.isSelectJob = true;
             this.selectJobTopic = item.topic
             this.selectJobId = item.id
@@ -713,6 +757,7 @@ export default {
             }
         },
         selectIdcard: async function (item) {
+            console.log(" data item from select")
             console.log(item)
             this.lstJobs = [...this.lstJobsCopy]
             console.log(this.lstJobs)

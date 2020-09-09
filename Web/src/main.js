@@ -24,6 +24,8 @@ Vue.use(require('vue-moment'), {
 })
 
 
+
+
 import Config from './config'
 Vue.prototype.$config = Config
 

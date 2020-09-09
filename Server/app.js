@@ -64,8 +64,8 @@ app.get('/user/:id(\s+)', function(req, res) {
 });
 
 
-const port = process.env.PORT || 4000;
-const host = process.env.HOST || '10.7.10.26';
+const port = process.env.PORT;
+const host = process.env.HOST;
 const server = app.listen(port, host, () => {
     console.log("app listening at http://%s:%s", host, port)
 });
