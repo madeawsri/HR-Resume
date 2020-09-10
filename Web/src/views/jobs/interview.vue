@@ -140,8 +140,10 @@
 
                                     <div class="message-by">
                                         <div class="message-by-headline">
-                                            <h5>ตำแหน่งที่รับสมัคร <i style="font-size:18px;">{{selectJobTopic || "คุณยังไม่เลือกงานที่สมัคร "}}</i></h5>
+                                            <h5>ตำแหน่งที่รับสมัคร <i style="font-size:18px;">{{selectJobTopic || "คุณยังไม่เลือกงานที่สมัคร "}}</i></h5><br>
+
                                         </div>
+
                                     </div>
 
                                 </div>
@@ -506,6 +508,32 @@ export default {
                 console.log(e)
             }
         },
+        getJobIn: async function (idcard) {
+            try {
+                console.log("job id")
+                const {
+                    data
+                } = await this.$http.get(`api/jobinterest/${idcard}`)
+                if (data.success == 1) {
+                    if (data.data !== null) {
+
+                        console.log(data.data)
+                        this.lstMyJob = [...data.data]
+                        this.jobInter = [...data.data].map((it) => it.pname).join(',');
+                        console.log(this.jobInter)
+                        this.lstJobs = this.lstJobs.filter(a => data.data.findIndex(b => b.jobid == a.id) < 0);
+                        console.log(this.lstJobs)
+                        console.log("MY JOB")
+                        console.log(this.lstMyJob)
+
+                    } else {
+                        this.jobInter = " -- ไม่พบข้อมูล --"
+                    }
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        },
         dialogInfo: async function (idcard) {
 
             console.log(this.$refs.info)
@@ -791,28 +819,28 @@ export default {
             }
 
         },
-        getJobIn: async function (idcard) {
-            try {
-                console.log("job id")
-                const {
-                    data
-                } = await this.$http.get(`api/jobinterest/${idcard}`)
-                if (data.success == 1) {
-                    if (data.data !== null) {
+        /* getJobIn: async function (idcard) {
+             try {
+                 console.log("job id")
+                 const {
+                     data
+                 } = await this.$http.get(`api/jobinterest/${idcard}`)
+                 if (data.success == 1) {
+                     if (data.data !== null) {
 
-                        console.log(data.data)
-                        this.jobInter = [...data.data].map((it) => it.pname).join(',');
-                        this.lstJobs = this.lstJobs.filter(a => data.data.findIndex(b => b.jobid == a.id) < 0);
-                        console.log(this.lstJobs)
+                         console.log(data.data)
+                         this.jobInter = [...data.data].map((it) => it.pname).join(',');
+                         this.lstJobs = this.lstJobs.filter(a => data.data.findIndex(b => b.jobid == a.id) < 0);
+                         console.log(this.lstJobs)
 
-                    } else {
-                        this.jobInter = " -- ไม่พบข้อมูล --"
-                    }
-                }
-            } catch (e) {
-                console.log(e)
-            }
-        },
+                     } else {
+                         this.jobInter = " -- ไม่พบข้อมูล --"
+                     }
+                 }
+             } catch (e) {
+                 console.log(e)
+             }
+         },*/
         selectJob: async function (item) {
 
             this.isSelectJob = true;
