@@ -135,7 +135,6 @@
                                 <!-- Register -->
                                 <div class="tab-content" id="tab2" style="display: none;">
 
-                                    <!-- Main -->
                                     <div class="container">
 
                                         <div class="six columns">
@@ -143,14 +142,14 @@
                                             <h4><i class="text-topic"> ข้อมูลครอบครัว </i></h4>
                                             <ul class="footer-links">
                                                 <li>
-                                                    <p class="text-h"><strong>ชื่อ-สกุล (ภรรยา/สามี)</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong>อาชีพ</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong>ตำแหน่ง</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong>สภานที่ทำงาน</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong>จำนวนบุตร</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong>จำนวนบุตรที่กำลังศึกษา</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong>จำนวนบุตรที่ไม่ได้กำลังศึกษา</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong>จำนวนบุตรที่มีงานทำ</strong> : {{memberInfo.nameth}}</p>
+                                                    <p class="text-h"><strong>ชื่อ-สกุล (ภรรยา/สามี)</strong> : {{dataInfo.family.namewh}}</p>
+                                                    <p class="text-h"><strong>อาชีพ</strong> : {{dataInfo.family.career}}</p>
+                                                    <p class="text-h"><strong>ตำแหน่ง</strong> : {{dataInfo.family.position}}</p>
+                                                    <p class="text-h"><strong>สภานที่ทำงาน</strong> : {{dataInfo.family.workplace}}</p>
+                                                    <p class="text-h"><strong>จำนวนบุตร</strong> : {{dataInfo.family.numchild}}</p>
+                                                    <p class="text-h"><strong>จำนวนบุตรที่กำลังศึกษา</strong> : {{dataInfo.family.numchildedu}}</p>
+                                                    <p class="text-h"><strong>จำนวนบุตรที่ไม่ได้กำลังศึกษา</strong> : {{dataInfo.family.numchildeduno}}</p>
+                                                    <p class="text-h"><strong>จำนวนบุตรที่มีงานทำ</strong> : {{dataInfo.family.numchildwork}}</p>
                                                 </li>
                                             </ul>
 
@@ -160,17 +159,17 @@
                                             <h4><i class="text-topic">ข้อมูลบิดา-มารดา</i></h4>
                                             <ul class="footer-links">
                                                 <li>
-                                                    <p class="text-h"><strong>ชื่อ-สกุล (บิดา)</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong> - อายุ</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong> - เชื้อชาติ</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong> - สัญชาติ</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong> - สถานภาพ</strong> : {{memberInfo.nameth}}</p>
+                                                    <p class="text-h"><strong>ชื่อ-สกุล (บิดา)</strong> : {{dataInfo.family.father}}</p>
+                                                    <p class="text-h"><strong> - อายุ</strong> : {{dataInfo.family.fage}}</p>
+                                                    <p class="text-h"><strong> - เชื้อชาติ</strong> : {{dataInfo.family.fnation}}</p>
+                                                    <p class="text-h"><strong> - สัญชาติ</strong> : {{dataInfo.family.forigin}}</p>
+                                                    <p class="text-h"><strong> - สถานภาพ</strong> : {{dataInfo.family.flive}}</p>
 
-                                                    <p class="text-h"><strong>ชื่อ-สกุล (มารดา)</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong> - อายุ</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong> - เชื้อชาติ</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong> - สัญชาติ</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong> - สถานภาพ</strong> : {{memberInfo.nameth}}</p>
+                                                    <p class="text-h"><strong>ชื่อ-สกุล (มารดา)</strong> : {{dataInfo.family.mother}}</p>
+                                                    <p class="text-h"><strong> - อายุ</strong> : {{dataInfo.family.mage}}</p>
+                                                    <p class="text-h"><strong> - เชื้อชาติ</strong> : {{dataInfo.family.mnation}}</p>
+                                                    <p class="text-h"><strong> - สัญชาติ</strong> : {{dataInfo.family.morigin}}</p>
+                                                    <p class="text-h"><strong> - สถานภาพ</strong> : {{dataInfo.family.mlive}}</p>
 
                                                 </li>
                                             </ul>
@@ -180,15 +179,12 @@
                                             <h4><i class="text-topic">ข้อมูลผู้ที่สามารถติดต่อได้</i></h4>
                                             <ul class="footer-links">
                                                 <li>
-                                                    <p class="text-h"><strong>ชื่อ-สกุล (สามารถติดต่อได้)</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong> - เบอร์โทร</strong> : {{memberInfo.nameth}}</p>
-                                                    <p class="text-h"><strong> - ความสัมพันธ์</strong> : {{memberInfo.nameth}}</p>
+                                                    <p class="text-h"><strong>ชื่อ-สกุล (สามารถติดต่อได้)</strong> : {{dataInfo.family.nameo}}</p>
+                                                    <p class="text-h"><strong> - เบอร์โทร</strong> : {{dataInfo.family.phoneo}}</p>
+                                                    <p class="text-h"><strong> - ความสัมพันธ์</strong> : {{dataInfo.family.relation}}</p>
                                                     <p class="text-h"><strong> - ที่อยู่</strong> : </p>
                                                     <p class="text-h">
-                                                        หกดหกหก ห ดฟหกด หฟกด ฟหกดฟ หกด ฟหกดฟห ดฟ ฟหกดฟห
-                                                        หกหก ห ดฟหกด หฟกด ฟหกดฟ หกด ฟห หกหก ห ดฟหกด หฟกด ฟหกดฟ หกด ฟห
-                                                        หกหก ห ดฟหกด หฟกด ฟหกดฟ หกด ฟหหกหก ห ดฟหกด หฟกด ฟหกดฟ หกด ฟห
-                                                        หกหก ห ดฟหกด หฟกด ฟหกดฟ หกด ฟหหกหก ห ดฟหกด หฟกด ฟหกดฟ หกด ฟห
+                                                        {{dataInfo.family.addro}}
                                                     </p>
 
                                                 </li>
@@ -574,7 +570,7 @@ export default {
                 training
                 knowledge
             */
-            // await this.loadDataInfo(idcard);
+            await this.loadDataInfo(idcard);
 
             console.log(this.dataInfo)
 

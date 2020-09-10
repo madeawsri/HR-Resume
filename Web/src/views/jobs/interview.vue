@@ -52,10 +52,28 @@
                             <td style="padding: 2px 2px;font-weight:bold;" class="title"> {{item.profileid}}</td>
                             <td style="padding: 2px 2px;font-weight:bold;" class="title"> {{ item.nameth}}</td>
                             <td style="padding: 2px 2px;font-weight:bold;" class="title"> {{ item.phone || " - "}}</td>
-                            <td style="padding: 2px 2px;font-weight:bold;" class="title"> {{item.nuddate | moment('DD MMMM YYYY')}}</td>
+                            <td style="padding: 2px 2px;font-weight:bold;" class="title">
+
+                                <div class="flex" style="height:20px">
+                                    {{item.nuddate | moment('DD MMMM YYYY')}}
+                                    <div class="pull-right" v-show="item.nuddate !== null">
+                                        <div style="display:flex;height:30px;">
+                                            <button type="button" class="button " style="padding: 0px 20px;" @click="cancelApplyJob(item.profileid)"><i class="ln ln-icon-Arrow-TurnRight"></i>ยกเลิก</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
                             <td style="padding: 2px 2px;font-weight:bold;">{{item.nudnote}}</td>
                             <td style="padding: 2px 2px;">
-                                <button @click="dialogInfo(item.profileid)" v-show="isSelectJob" class="button" style="margin-right:5px;"> นัดสัมภาษณ์ </button>
+
+                                <div class="flex" style="height:20px">
+                                    <div class="pull-right">
+                                        <div style="display:flex;height:30px;">
+                                            <button @click="dialogInfo(item.profileid)" v-show="isSelectJob" class="button" style="margin-right:5px;padding: 0px 20px;"> นัดสัมภาษณ์ </button>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </td>
                         </tr>
 
@@ -67,50 +85,263 @@
             <div class="dashboard-list-box margin-top-30" v-show="0">
                 <div class="" ref="info">
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <img :src="profileImg" alt="" class="margin-top-0 img-rounded img-responsive">
                     </div>
-                    <div class="col-sm-8" align="left">
+                    <div class="col-sm-10" align="left">
 
-                        <p style="margin-bottom:2px;font-size:16px;"><strong>เลขบัตรประจำตัวประชาชน</strong>: {{memberInfo.profileid}} </p>
-                        <p style="margin-bottom:2px;font-size:16px;"><strong>ชื่อ-สกุล</strong> : {{memberInfo.nameth}}</p>
-                        <p style="margin-bottom:2px;font-size:16px;"><strong>น้ำหนัก</strong>: {{memberInfo.weight}} <strong> กิโลกรัม</strong> <strong>ส่วนสูง</strong>: {{memberInfo.height}} <strong>เซ็นติเมตร</strong></p>
-                        <p style="margin-bottom:2px;font-size:16px;"><strong>วันเกิด</strong>: {{memberInfo.birthday}} <br>
-                            <strong>อายุ</strong>: {{ memberInfo.cbirthday | moment("from", "now", true) }}
-                        </p>
-                        <p style="margin-bottom:2px;font-size:16px;"><strong>เบอร์โทรที่ติดต่อได้</strong>: {{memberInfo.phone}} </p>
-                        <p style="margin-bottom:2px;font-size:16px;"><strong>อีเมล์</strong>: {{memberInfo.email}} <br>
-                            <strong>ไลน์ไอดี</strong>: {{memberInfo.lineid || " ไม่มีไลน์ไอดี "}}
-                        </p>
-                        <p style="margin-bottom:2px;font-size:16px;"><strong>ประเภทใบอนุญาตขับขี่</strong>: {{memberInfo.carid||"-"}} </p>
-                        <p style="margin-bottom:2px;font-size:16px;">
-                            <strong>วุฒิการศึกษาสูงสุด</strong>: {{getValue(memberInfo.edu,0) }}
-                            <!--{{ lstProfile.edu | getArray(0) }}-->
-                            <strong>สาขา</strong>: {{getValue(memberInfo.edu,1) }} <br>
-                            <strong>ปีที่จบ</strong>: {{getValue(memberInfo.edu,3) }}
-                            <strong>เกรดเฉลี่ย</strong>: {{getValue(memberInfo.edu,4) }}
-                        </p>
-                        <p style="margin-bottom:2px;font-size:16px;"><strong>ประสบการณ์ทำงาน</strong>:</p>
-                        <ul class="list-1" v-for="(item, index) in lstWorks" :key="index">
+                        <div>
+                            <ul class="tabs-nav">
+                                <li class=""><a href="#tab1">ข้อมูลส่วนตัว</a></li>
+                                <li><a href="#tab2">ครอบครัว</a></li>
+                                <li><a href="#tab3">ประวัติการศึกษา</a></li>
+                                <li><a href="#tab4">ประวัติการงาน</a></li>
+                                <li><a href="#tab5">ประวัติอบรม</a></li>
+                                <li><a href="#tab6">ความสามารถพิเศษ</a></li>
+                                <li><a href="#tab7">ตำแหน่งที่เคยสนใจ</a></li>
 
-                            <li style="padding:0px;">
-                                <p style="margin-bottom:0px;font-size:16px;">
-                                    <strong>สถานที่ทำงาน</strong>: {{item.workplace}}
-                                    <strong>ระยะเวลา</strong>: {{item.endtime - item.begintime}} <strong>ปี </strong><br>
-                                    <strong>ตำแหน่ง</strong> {{item.position}}
-                                    <strong>เงินเดือน</strong> {{(item.salary*1).toLocaleString()}} <strong> บาท</strong>
-                                </p>
-                            </li>
+                            </ul>
 
-                        </ul>
+                            <div class="tabs-container">
+                                <!-- Login -->
+                                <div class="tab-content" id="tab1" style="display: none;">
 
-                        <div class="message-by">
-                            <div class="message-by-headline">
-                                <h5>ตำแหน่งที่รับสมัคร <i style="font-size:18px;">{{selectJobTopic || "คุณยังไม่เลือกงานที่สมัคร "}}</i></h5>
-                                <h5>วันที่นัดสัมภาษณ์ <i style="font-size:18px;">{{dataForm.nuddate | moment('DD MMMM YYYY') }}</i></h5>
-                                <h5>ข้อความถึงผู้สมัคร <i style="font-size:18px;">{{dataForm.nudnote || " - "}}</i></h5>
+                                    <p class="text-h"><strong>เลขบัตรประจำตัวประชาชน</strong>: {{memberInfo.profileid}} </p>
+                                    <p class="text-h"><strong>ชื่อ-สกุล</strong> : {{memberInfo.nameth}}</p>
+                                    <p class="text-h"><strong>น้ำหนัก</strong>: {{memberInfo.weight}} <strong> กิโลกรัม</strong> <strong>ส่วนสูง</strong>: {{memberInfo.height}} <strong>เซ็นติเมตร</strong></p>
+                                    <p class="text-h"><strong>วันเกิด</strong>: {{memberInfo.birthday }} <br>
+                                        <strong>อายุ</strong>: {{ memberInfo.cbirthday | moment("from", "now", true) }}
+                                    </p>
+                                    <p class="text-h"><strong>เบอร์โทรที่ติดต่อได้</strong>: {{memberInfo.phone}} </p>
+                                    <p class="text-h"><strong>อีเมล์</strong>: {{memberInfo.email}} <br>
+                                        <strong>ไลน์ไอดี</strong>: {{memberInfo.lineid || " ไม่มีไลน์ไอดี "}}
+                                    </p>
+                                    <p class="text-h"><strong>ประเภทใบอนุญาตขับขี่</strong>: {{memberInfo.carid||"-"}} </p>
+                                    <p class="text-h">
+                                        <strong>วุฒิการศึกษาสูงสุด</strong>: {{getValue(memberInfo.edu,0) }}
+                                        <!--{{ lstProfile.edu | getArray(0) }}-->
+                                        <strong>สาขา</strong>: {{getValue(memberInfo.edu,1) }} <br>
+                                        <strong>ปีที่จบ</strong>: {{getValue(memberInfo.edu,3) }}
+                                        <strong>เกรดเฉลี่ย</strong>: {{getValue(memberInfo.edu,4) }}
+                                    </p>
+                                    <p class="text-h"><strong>ประสบการณ์ทำงาน</strong>:</p>
+                                    <ul class="list-1" v-for="(item, index) in lstWorks" :key="index">
+
+                                        <li style="padding:0px;">
+                                            <p style="margin-bottom:0px;font-size:16px;">
+                                                <strong>สถานที่ทำงาน</strong>: {{item.workplace}}
+                                                <strong>ระยะเวลา</strong>: {{item.endtime - item.begintime}} <strong>ปี </strong><br>
+                                                <strong>ตำแหน่ง</strong> {{item.position}}
+                                                <strong>เงินเดือน</strong> {{(item.salary*1).toLocaleString()}} <strong> บาท</strong>
+                                            </p>
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="message-by">
+                                        <div class="message-by-headline">
+                                            <h5>ตำแหน่งที่รับสมัคร <i style="font-size:18px;">{{selectJobTopic || "คุณยังไม่เลือกงานที่สมัคร "}}</i></h5>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Register -->
+                                <div class="tab-content" id="tab2" style="display: none;">
+
+                                    <!-- Main -->
+                                    <div class="container">
+
+                                        <div class="six columns">
+
+                                            <h4><i class="text-topic"> ข้อมูลครอบครัว </i></h4>
+                                            <ul class="footer-links">
+                                                <li>
+                                                    <p class="text-h"><strong>ชื่อ-สกุล (ภรรยา/สามี)</strong> : {{dataInfo.family.namewh}}</p>
+                                                    <p class="text-h"><strong>อาชีพ</strong> : {{dataInfo.family.career}}</p>
+                                                    <p class="text-h"><strong>ตำแหน่ง</strong> : {{dataInfo.family.position}}</p>
+                                                    <p class="text-h"><strong>สภานที่ทำงาน</strong> : {{dataInfo.family.workplace}}</p>
+                                                    <p class="text-h"><strong>จำนวนบุตร</strong> : {{dataInfo.family.numchild}}</p>
+                                                    <p class="text-h"><strong>จำนวนบุตรที่กำลังศึกษา</strong> : {{dataInfo.family.numchildedu}}</p>
+                                                    <p class="text-h"><strong>จำนวนบุตรที่ไม่ได้กำลังศึกษา</strong> : {{dataInfo.family.numchildeduno}}</p>
+                                                    <p class="text-h"><strong>จำนวนบุตรที่มีงานทำ</strong> : {{dataInfo.family.numchildwork}}</p>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+
+                                        <div class="six columns">
+                                            <h4><i class="text-topic">ข้อมูลบิดา-มารดา</i></h4>
+                                            <ul class="footer-links">
+                                                <li>
+                                                    <p class="text-h"><strong>ชื่อ-สกุล (บิดา)</strong> : {{dataInfo.family.father}}</p>
+                                                    <p class="text-h"><strong> - อายุ</strong> : {{dataInfo.family.fage}}</p>
+                                                    <p class="text-h"><strong> - เชื้อชาติ</strong> : {{dataInfo.family.fnation}}</p>
+                                                    <p class="text-h"><strong> - สัญชาติ</strong> : {{dataInfo.family.forigin}}</p>
+                                                    <p class="text-h"><strong> - สถานภาพ</strong> : {{dataInfo.family.flive}}</p>
+
+                                                    <p class="text-h"><strong>ชื่อ-สกุล (มารดา)</strong> : {{dataInfo.family.mother}}</p>
+                                                    <p class="text-h"><strong> - อายุ</strong> : {{dataInfo.family.mage}}</p>
+                                                    <p class="text-h"><strong> - เชื้อชาติ</strong> : {{dataInfo.family.mnation}}</p>
+                                                    <p class="text-h"><strong> - สัญชาติ</strong> : {{dataInfo.family.morigin}}</p>
+                                                    <p class="text-h"><strong> - สถานภาพ</strong> : {{dataInfo.family.mlive}}</p>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="twelve columns">
+                                            <h4><i class="text-topic">ข้อมูลผู้ที่สามารถติดต่อได้</i></h4>
+                                            <ul class="footer-links">
+                                                <li>
+                                                    <p class="text-h"><strong>ชื่อ-สกุล (สามารถติดต่อได้)</strong> : {{dataInfo.family.nameo}}</p>
+                                                    <p class="text-h"><strong> - เบอร์โทร</strong> : {{dataInfo.family.phoneo}}</p>
+                                                    <p class="text-h"><strong> - ความสัมพันธ์</strong> : {{dataInfo.family.relation}}</p>
+                                                    <p class="text-h"><strong> - ที่อยู่</strong> : </p>
+                                                    <p class="text-h">
+                                                        {{dataInfo.family.addro}}
+                                                    </p>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-content" id="tab3" style="display: none;">
+                                    <!-- Main -->
+                                    <div class="container">
+
+                                        <div class="three columns" v-for="(item, index) in dataInfo.education" :key="'e'+index">
+                                            <h4><i class="text-topic"> {{item.levelname}} </i></h4>
+                                            <ul class="footer-links">
+                                                <li>
+                                                    <p class="text-h"><strong>ชื่อสถาบัน</strong> : <br> {{item.institution}}</p>
+                                                    <p class="text-h"><strong>สาขาวิชาที่จบ</strong> : <br> {{item.subject}}</p>
+                                                    <p class="text-h"><strong>ปีการศึกษา (เริ่ม)</strong> : {{item.begintime}} </p>
+                                                    <p class="text-h"><strong>ปีการศึกษา (จบ)</strong> : {{item.endtime}} </p>
+                                                    <p class="text-h"><strong>เกรดเฉลี่ย</strong> : {{item.gpa}}</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="tab-content" id="tab4" style="display: none;">
+                                    <!-- Main -->
+                                    <div class="container">
+                                        <div class="three columns" v-for="(item, index) in dataInfo.work" :key="'w'+index">
+                                            <h4><i class="text-topic"> {{item.workplace}} </i></h4>
+                                            <ul class="footer-links">
+                                                <li>
+                                                    <p class="text-h"><strong>ระยะเวลาปี (จาก)</strong> : {{item.begintime}} </p>
+                                                    <p class="text-h"><strong>ระยะเวลาปี (ถึง)</strong> : {{item.endtime}} </p>
+                                                    <p class="text-h"><strong>ตำแหน่งงาน</strong> : {{item.position}}</p>
+                                                    <p class="text-h"><strong>เงินเดือนล่าสุด (บาท)</strong> : {{item.salary}}</p>
+                                                    <p class="text-h"><strong>ลักษณะงานโดยย่อ</strong> : <br> {{item.detail}}</p>
+                                                    <p class="text-h"><strong>เหตุผลที่ออกงาน</strong> : <br> {{item.note}}</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="tab-content" id="tab5" style="display: none;">
+                                    <!-- Main -->
+                                    <div class="container">
+
+                                        <div class="three columns" v-for="(item, index) in dataInfo.training" :key="'t'+index">
+                                            <h4><i class="text-topic"> {{item.course}} </i></h4>
+                                            <ul class="footer-links">
+                                                <li>
+                                                    <p class="text-h"><strong>สถานที่จัดอบรม</strong> : <br> {{item.location}} </p>
+                                                    <p class="text-h"><strong>ปีที่อบรม</strong> : {{item.tyear}} </p>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="tab-content" id="tab7" style="display: none;">
+
+                                    <div class="message-by" v-for="(item, index) in lstMyJob" :key="'myjob'+index">
+                                        <div class="message-by-headline">
+                                            <h5>
+                                                ตำแหน่งที่รับสมัคร <i style="font-size:18px;">{{item.pname || "คุณยังไม่เลือกงานที่สมัคร "}}</i>
+                                                วันที่สมัคร <i style="font-size:18px;">{{item.regdate | moment("DD MMMM YYYY") }}</i>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-content" id="tab6" style="display: none;">
+                                    <!-- Main -->
+                                    <div class="container">
+
+                                        <div class="four columns">
+                                            <h4><i class="text-topic"> ทักษะด้านการใช้เครื่องมือ </i></h4>
+                                            <ul class="footer-links">
+                                                <li>
+                                                    <p class="text-h"><strong>ความสามารถด้านการใช้คอมพิวเตอร์ / โปรแกรม</strong> : <br> {{dataInfo.knowledge.topic}} </p>
+                                                    <p class="text-h"><strong>เครื่องมือที่เคยใช้ในสำนักงาน</strong> : <br> {{dataInfo.knowledge.detail}} </p>
+
+                                                    <p class="text-h"><strong>งานด้านช่างฝีมือ</strong> : <br> {{dataInfo.knowledge.workid}} </p>
+                                                    <p class="text-h"><strong>งานด้านช่างฝีมือ อื่นๆ</strong> : <br> {{dataInfo.knowledge.workname}} </p>
+
+                                                    <p class="text-h"><strong>ใบอนุญาตขับขี่</strong> : <br> {{ memberInfo.carid || ' - '}} </p>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="four columns">
+                                            <h4><i class="text-topic"> ทักษะด้านภาษา </i></h4>
+                                            <ul class="footer-links">
+                                                <li>
+
+                                                    <p class="text-h"><strong>ทักษะด้านภาษา อังกฤษ (อ่าน)</strong> : {{dataInfo.knowledge.reng}} </p>
+                                                    <p class="text-h"><strong>ทักษะด้านภาษา อังกฤษ (เขียน)</strong> : {{dataInfo.knowledge.weng}} </p>
+                                                    <p class="text-h"><strong>ทักษะด้านภาษา อังกฤษ (พูด)</strong> : {{dataInfo.knowledge.seng}} </p>
+
+                                                    <p class="text-h"><strong>ทักษะด้านภาษา จีน (อ่าน)</strong> : {{dataInfo.knowledge.rch}} </p>
+                                                    <p class="text-h"><strong>ทักษะด้านภาษา จีน (เขียน)</strong> : {{dataInfo.knowledge.wch}} </p>
+                                                    <p class="text-h"><strong>ทักษะด้านภาษา จีน (พูด)</strong> : {{dataInfo.knowledge.sch}} </p>
+
+                                                    <p class="text-h"><strong>ทักษะด้านภาษา อื่น (ระบุ)</strong> : {{dataInfo.knowledge.oth}} </p>
+                                                    <p class="text-h"><strong>ทักษะด้านภาษา อื่น (อ่าน)</strong> : {{dataInfo.knowledge.roth}} </p>
+                                                    <p class="text-h"><strong>ทักษะด้านภาษา อื่น (เขียน)</strong> : {{dataInfo.knowledge.woth}} </p>
+                                                    <p class="text-h"><strong>ทักษะด้านภาษา อื่น (พูด)</strong> : {{dataInfo.knowledge.soth}} </p>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="container">
+                                        <div class="eight  columns">
+                                            <h4><i class="text-topic"> ประวัติเจ็บป่วย/อาชญากรรม </i></h4>
+                                            <ul class="footer-links">
+                                                <li>
+
+                                                    <p class="text-h"><strong>ท่านเคยเจ็บป่วยขนาดหนัก หรือมีโรคติดต่อร้ายแรงหรือไม่</strong> : {{(dataInfo.knowledge.sick)?'เคย':'ไม่เคย'}} </p>
+                                                    <p class="text-h"><strong>ท่ายเคยเป็นโรคติดต่อ ระบุ</strong> : {{dataInfo.knowledge.sickname}} </p>
+                                                    <p class="text-h"><strong>ท่ายเคยถูกจับกุม หรือต้องโทษในคดีอาญาหรือไม่</strong> : {{(dataInfo.knowledge.raw)?'เคย':'ไม่เคย'}} </p>
+                                                    <p class="text-h"><strong>ท่านยินดีให้ตรวจสอบประวัติอาชญากรรมโดยการพิมพ์ลายน้ำมือหรือไม่</strong> : {{(dataInfo.knowledge.rawok)?'เคย':'ไม่เคย'}} </p>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-
                         </div>
 
                     </div>
@@ -135,16 +366,54 @@ export default {
         if (!this.$store.getters['user/isWebAdmin']) {
             this.alertAccess();
         }
-        /*
-        let output = ttt.filter(a => aaa.findIndex(b => b.id == a.id) < 0);
-        console.log(output)                
-        */
+
+        this.$nextTick(() => {
+
+            console.log("NEXT TICK Component++")
+
+            const $ = require('jquery')
+            window.$ = $;
+
+            var $tabsNav = $('.tabs-nav'),
+                $tabsNavLis = $tabsNav.children('li');
+            $tabsNav.each(function () {
+                var $this = $(this);
+                $this.next().children('.tab-content').stop(true, true).hide().first().show();
+                $this.children('li').first().addClass('active').stop(true, true).show();
+            });
+            $tabsNavLis.on('click', function (e) {
+                var $this = $(this);
+                $this.siblings().removeClass('active').end().addClass('active');
+                $this.parent().next().children('.tab-content').stop(true, true).hide().siblings($this.find('a').attr('href')).fadeIn();
+                e.preventDefault();
+            });
+        })
     },
     async created() {
         await this.getLstDatas();
         this.lstProfileCopy = [...this.lstProfile]
 
-        //console.log("full url : " + this.fullUrl)
+        this.$nextTick(() => {
+
+            console.log("NEXT TICK Component++")
+
+            const $ = require('jquery')
+            window.$ = $;
+
+            var $tabsNav = $('.tabs-nav'),
+                $tabsNavLis = $tabsNav.children('li');
+            $tabsNav.each(function () {
+                var $this = $(this);
+                $this.next().children('.tab-content').stop(true, true).hide().first().show();
+                $this.children('li').first().addClass('active').stop(true, true).show();
+            });
+            $tabsNavLis.on('click', function (e) {
+                var $this = $(this);
+                $this.siblings().removeClass('active').end().addClass('active');
+                $this.parent().next().children('.tab-content').stop(true, true).hide().siblings($this.find('a').attr('href')).fadeIn();
+                e.preventDefault();
+            });
+        })
     },
     data() {
         return {
@@ -176,6 +445,13 @@ export default {
                 keyword: ""
 
             },
+            dataInfo: {
+                family: {},
+                education: {},
+                work: {},
+                training: {},
+                knowledge: {}
+            },
             dataFormReset: {
                 ...this.dataForm
             },
@@ -193,11 +469,128 @@ export default {
                 id: 1,
                 topic: 'xxx'
             }],
-            fullUrl: window.location.origin
+            fullUrl: window.location.origin,
+            lstMyJob: []
 
         }
     },
     methods: {
+
+        async loadDataInfo(idcard) {
+            try {
+                console.log("****get datat info ****")
+                const family = `api/family/${idcard}`
+                const education = `api/education/profile/${idcard}/0`
+                const work = `api/work/profile/${idcard}`
+                const training = `api/training/profile/${idcard}`
+                const knowledge = `api/knowledge/profile/${idcard}`
+
+                const data1 = await this.$http.get(family)
+                const data2 = await this.$http.get(education)
+                const data3 = await this.$http.get(work)
+                const data4 = await this.$http.get(training)
+                const data5 = await this.$http.get(knowledge)
+
+                this.$http.all([data1, data2, data3, data4, data5]).then(
+                    this.$http.spread((...res) => {
+
+                        this.dataInfo.family = res[0].data.data
+                        this.dataInfo.education = res[1].data.data
+                        this.dataInfo.work = res[2].data.data
+                        this.dataInfo.training = res[3].data.data
+                        this.dataInfo.knowledge = (res[4].data.data === null) ? {} : res[4].data.data;
+
+                    }))
+
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        dialogInfo: async function (idcard) {
+
+            console.log(this.$refs.info)
+            await this.getMemberInfo(idcard);
+            await this.loadMyPicture(idcard);
+            await this.getWork(idcard)
+            await this.getJobIn(idcard)
+
+            /*
+             dataInfo: 
+                family
+                education
+                work
+                training
+                knowledge
+            */
+            await this.loadDataInfo(idcard);
+
+            console.log(this.dataInfo)
+
+            this.$fire({
+                title: '<span style="text-align:left;">รายละเอียดผู้สมัคร</span>',
+                html: this.$refs.info,
+                width: "90%",
+                showCloseButton: false,
+                cancelButtonText: 'ยกเลิก',
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'รับสมัครงาน',
+                showLoaderOnConfirm: true,
+            }).then(async (result) => {
+                if (result.value) {
+                    try {
+                        await this.applyJob(idcard);
+
+                    } catch (e) {
+
+                        console.log(e)
+
+                    }
+                }
+            })
+
+        },
+
+        cancelApplyJob: async function (idcard) {
+            let saveData = {
+
+                nudnote: '',
+                nuddate: null,
+                idcard: idcard,
+                jobid: this.selectJobId
+
+            }
+
+            this.$http.put(`api/interview/${idcard}/${this.selectJobId}`, saveData).then(async (data) => {
+                let obj = data.data
+
+                if (obj.success) {
+
+                    await this.getProfile(this.selectJobId);
+                    this.lstProfileCopy = [...this.lstProfile]
+
+                } else {
+                    this.$fire({
+                        title: "นัดสัมภาษณ์",
+                        text: "ระบบมีปัญหา กรุณาติดต่อเจ้าหน้าที่.",
+                        type: "error",
+                        timer: 3000
+                    })
+                }
+                //console.log(obj)
+            }).catch(e => {
+                console.log(e)
+                this.$fire({
+                    title: "ยกเลิกนัดสัมภาษณ์",
+                    text: "ระบบมีปัญหา กรุณาติดต่อเจ้าหน้าที่.",
+                    type: "error",
+                    timer: 3000
+                })
+            })
+
+            // console.log(saveData)
+
+        },
         applyJob: async function (idcard) {
             let saveData = {
 
@@ -247,48 +640,48 @@ export default {
             // console.log(saveData)
 
         },
-        dialogInfo: async function (idcard) {
+        /* dialogInfo: async function (idcard) {
 
-            console.log(this.$refs.info)
+             console.log(this.$refs.info)
 
-            if (this.dataForm.nuddate && this.dataForm.nudnote) {
+             if (this.dataForm.nuddate && this.dataForm.nudnote) {
 
-                await this.getMemberInfo(idcard);
-                await this.loadMyPicture(idcard);
-                await this.getWork(idcard)
-                this.$fire({
-                    title: '<span style="text-align:left;">รายละเอียดผู้สมัคร</span>',
-                    html: this.$refs.info,
-                    width: 800,
-                    showCloseButton: false,
-                    cancelButtonText: 'ยกเลิก',
-                    focusConfirm: false,
-                    showCancelButton: true,
-                    confirmButtonText: 'นัดสัมภาษณ์',
-                    showLoaderOnConfirm: true,
-                }).then(async (result) => {
+                 await this.getMemberInfo(idcard);
+                 await this.loadMyPicture(idcard);
+                 await this.getWork(idcard)
+                 this.$fire({
+                     title: '<span style="text-align:left;">รายละเอียดผู้สมัคร</span>',
+                     html: this.$refs.info,
+                     width: 800,
+                     showCloseButton: false,
+                     cancelButtonText: 'ยกเลิก',
+                     focusConfirm: false,
+                     showCancelButton: true,
+                     confirmButtonText: 'นัดสัมภาษณ์',
+                     showLoaderOnConfirm: true,
+                 }).then(async (result) => {
 
-                    if (result.value) {
-                        try {
-                            await this.applyJob(idcard);
+                     if (result.value) {
+                         try {
+                             await this.applyJob(idcard);
 
-                        } catch (e) {
+                         } catch (e) {
 
-                            console.log(e)
+                             console.log(e)
 
-                        }
-                    }
-                })
-            } else {
-                this.$fire({
-                    title: "นัดสัมภาษณ์",
-                    text: "กรอกข้อมูลให้ครบ.",
-                    type: "warning",
-                    timer: 3000
-                })
-            }
+                         }
+                     }
+                 })
+             } else {
+                 this.$fire({
+                     title: "นัดสัมภาษณ์",
+                     text: "กรอกข้อมูลให้ครบ.",
+                     type: "warning",
+                     timer: 3000
+                 })
+             }
 
-        },
+         },*/
         getMemberInfo: async function (idcard) {
             console.log(idcard)
 
@@ -376,50 +769,7 @@ export default {
             }
         },
         alertLineNotify: async function () {
-            /*
-                        let dataF = [
-                            `ในวันที่ 2 เมษายน 2564  
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx`,
-                            `ในวันที่ 3 เมษายน 2564  
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx`,
-                            `ในวันที่ 4 เมษายน 2564  
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx
-            - xxxxxxxxxx`
-                        ]
 
-                        let msgFormat = `
-            ตรวจสอบรายชื่อนัดสัมภาษณ์ 
-            ${dataF.join('\n')}
-            ภายในเวลาทำการเท่านั้น
-            `;
-            */
             let msgFormat = `
 ตรวจสอบรายชื่อนัดสัมภาษณ์ 
 ตำแหน่ง : ${this.selectJobTopic} 
@@ -651,5 +1001,26 @@ export default {
 .multiselect__option--selected.multiselect__option--highlight {
     background: #ff6a6a;
     color: slategrey;
+}
+</style><style scoped>
+.text-h {
+    margin-bottom: 2px;
+    font-size: 14px;
+}
+
+.text-topic {
+    background: rgba(219, 255, 23, 0.52);
+    border-radius: 30px;
+
+    /*background-color: #64bc36;
+    border-radius: 50px;
+    line-height: 20px;
+    font-size: 12px;
+    color: #fff;
+    font-style: normal;
+    */
+    font-weight: bold;
+    padding: 3px 8px;
+    margin-left: 3px;
 }
 </style>
