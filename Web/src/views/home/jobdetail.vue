@@ -50,10 +50,10 @@
                 <p class="margin-reset" v-if="1">
                     ให้ผู้สมัครมาสอบสัมภาษณ์ในเวลาทำการเท่านั้น
                 </p>
-                <div v-for="(item, index) in lstInterviews" :key="'i'+index">
-                    <p class="margin-bottom-0"><strong>วันที่ {{item.nuddate|moment('DD MMMM YYYY')}}</strong> </p>
-                    <ul class="list-1" v-for="(itemx, index) in item.fname.split(',') " :key="'ai'+index">
-                        <li>{{itemx}}</li>
+                <div v-for="(item, index) in groupDateInterviews" :key="'i'+index">
+                    <p class="margin-bottom-0"><strong>วันที่ {{index|moment('DD MMMM YYYY')}}</strong> </p>
+                    <ul class="list-1" v-for="(itemx, index) in item " :key="'ai'+index">
+                        <li>{{itemx.fname}}</li>
                     </ul>
                 </div>
 
@@ -71,11 +71,11 @@
                     ให้ผู้สมัครที่ผ่านสัมภาษณ์มาทำสัญญาจ้างในวันที่กำหนดให้
                 </p>
 
-                <div v-for="(item, index) in lstInterviews" :key="'ii'+index">
-                    <div v-show="item.pmdate !== null">
-                        <p class="margin-bottom-0"><strong>วันที่ {{item.pmdate|moment('DD MMMM YYYY')}}</strong> </p>
-                        <ul class="list-1" v-for="(itemx, index) in item.fname.split(',') " :key="'aii'+index">
-                            <li>{{itemx}}</li>
+                <div v-for="(item, index) in groupDatePromise" :key="'ii'+index">
+                    <div v-show="index != 'null'">
+                        <p class="margin-bottom-0"><strong>วันที่ {{index|moment('DD MMMM YYYY')}}</strong> </p>
+                        <ul class="list-1" v-for="(itemx, index) in item " :key="'aii'+index">
+                            <li>{{itemx.fname}}</li>
                         </ul>
                     </div>
                 </div>
@@ -122,18 +122,19 @@
                         </li>
                     </ul>
 
-                    <div v-if="dataDetail.ostatus">
-                        <button @click="sentData" class="popup-with-zoom-anim button" v-show="isLogged && !isApplyJod"> ส่งใบสมัครงาน </button>
-                        <button class=" button disabled" v-show="isApplyJod"> <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </button>
-                        <router-link class="button" to="login" v-show="this.idcard==null"> ส่งใบสมัครงาน </router-link>
-                    </div>
-                    <div v-if="!dataDetail.ostatus" align="center">
-                        <h4 style="background: rgba(219, 255, 23,0.52); border-radius: 5px;">
-                            <strong style="margin-left: 10px; margin-right: 10px;color:red;">ปิดรับสมัครงาน</strong>
-                        </h4>
+                    <div v-show="lstRegister.wstatus != 1">
+                        <div v-if="dataDetail.ostatus">
+                            <button @click="sentData" class="popup-with-zoom-anim button" v-show="isLogged && !isApplyJod"> ส่งใบสมัครงาน </button>
+                            <button class=" button disabled" v-show="isApplyJod"> <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </button>
+                            <router-link class="button" to="login" v-show="this.idcard==null"> ส่งใบสมัครงาน </router-link>
+                        </div>
+                        <div v-if="!dataDetail.ostatus" align="center">
+                            <h4 style="background: rgba(219, 255, 23,0.52); border-radius: 5px;">
+                                <strong style="margin-left: 10px; margin-right: 10px;color:red;">ปิดรับสมัครงาน</strong>
+                            </h4>
 
+                        </div>
                     </div>
-
                 </div>
                 <!--
                 <div class="dashboard-list-box margin-top-5" v-if="0">
@@ -162,6 +163,30 @@ export default {
         },
         getIDCard() {
             return this.$vStrToJson(this.$store.state.user.data) ? this.$vStrToJson(this.$store.state.user.data).idcard : null;
+        },
+        groupDateInterviews() {
+            const groupBy = (array, key) => {
+                return array.reduce((result, currentValue) => {
+                    (result[currentValue[key]] = result[currentValue[key]] || []).push(
+                        currentValue
+                    );
+                    return result;
+                }, {});
+            };
+            console.log([groupBy(this.lstInterviews, "nuddate")])
+            return groupBy(this.lstInterviews, "nuddate");
+        },
+        groupDatePromise() {
+            const groupBy = (array, key) => {
+                return array.reduce((result, currentValue) => {
+                    (result[currentValue[key]] = result[currentValue[key]] || []).push(
+                        currentValue
+                    );
+                    return result;
+                }, {});
+            };
+            console.log([groupBy(this.lstInterviews, "pmdate")])
+            return groupBy(this.lstInterviews, "pmdate");
         }
     },
     async mounted() {
@@ -169,6 +194,7 @@ export default {
         this.isSent();
         await this.getInterviews();
         await this.getPromises();
+
     },
     async created() {
 
@@ -176,6 +202,7 @@ export default {
             this.alertFail();
         } else {
             await this.showDetail();
+            await this.getRegister();
         }
 
     },
@@ -186,7 +213,8 @@ export default {
             isApplyJod: false,
             idcard: this.getIDCard,
             lstInterviews: [],
-            lstPromises: []
+            lstPromises: [],
+            lstRegister: {}
         }
     },
     components: {
@@ -201,6 +229,21 @@ export default {
                 } = await this.$http.get(`/api/jobinterest/interview/${this.jobid}`)
                 if (data.success) {
                     this.lstInterviews = [...data.data]
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        async getRegister() {
+            try {
+                const {
+                    data
+                } = await this.$http.get(`/api/register/id/${this.getIDCard}`)
+
+                if (data.success) {
+                    this.lstRegister = {
+                        ...data.data
+                    }
                 }
             } catch (e) {
                 console.log(e)

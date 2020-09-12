@@ -67,7 +67,8 @@
                             <td style="padding: 2px 2px;">
 
                                 <div class="flex" style="height:20px">
-                                    <div class="pull-right">
+                                    <i class="ln ln-icon-Double-Tap" style="font-weight:bold" title="สมัครมาด้วยตนเอง" v-show="!item.regstatus"></i>
+                                    <div class="pull-right" v-show="dataForm.nuddate">
                                         <div style="display:flex;height:30px;">
                                             <button @click="dialogInfo(item.profileid)" v-show="isSelectJob" class="button" style="margin-right:5px;padding: 0px 20px;"> นัดสัมภาษณ์ </button>
                                         </div>

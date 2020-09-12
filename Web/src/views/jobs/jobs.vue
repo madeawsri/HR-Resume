@@ -66,9 +66,22 @@
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> <i class="fa fa-check"></i> {{item.topic}} / {{item.num}} คน</td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{ item.jobattrid | stringToJson }}</td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.datein | moment("DD MMMM YYYY")}} ถีง {{item.dateout | moment("DD MMMM YYYY")}}</td>
-                            <td style="padding: 5px 5px;">
-                                <button @click="preEditData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-pencil"></i> แก้ไข</button>
-                                <button @click="delData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-remove"></i> ลบ </button>
+                            <td style="padding: 2px 2px;">
+
+                                <div class="flex" style="height:20px">
+                                    <div class="pull-left message-by">
+                                        <div class="message-by-headline">
+                                            <h5><i style="background-color:red" v-show="!item.ostatus">ปิดรับสมัคร</i></h5>
+                                        </div>
+                                    </div>
+                                    <div class="pull-right" v-show="item.ostatus">
+                                        <div style="display:flex;height:30px;">
+                                            <button @click="preEditData(index,item.id)" class="button" style="margin-right:5px;padding: 0px 20px;"><i class="fa fa-pencil"></i> แก้ไข</button>
+                                            <button @click="delData(index,item.id)" class="button" style="margin-right:5px;padding: 0px 20px;"><i class="fa fa-remove"></i> ลบ </button>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </td>
                         </tr>
 

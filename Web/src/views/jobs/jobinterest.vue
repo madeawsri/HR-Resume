@@ -724,8 +724,8 @@ export default {
             console.log("jobid " + item.id)
 
             const dataLength0 = this.lstProfile.length
-            console.log(this.lstProfile.length)
-            this.lstProfile = [...(this.lstProfile.filter(x => !((String(x.jobids) + ",").includes(item.id + ","))))]
+            console.log(this.lstProfile)
+            this.lstProfile = [...(this.lstProfile.filter(x => !((String(x.jobids) + ",").includes(item.id + ",")) && (x.wstatus === 0)))]
             this.countJob = (dataLength0 - this.lstProfile.length)
 
             //this.lstProfile = [...this.lstProfile.filter(x => x.jobids === null)]
