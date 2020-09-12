@@ -563,7 +563,7 @@ export default {
                 cancelButtonText: 'ยกเลิก',
                 focusConfirm: false,
                 showCancelButton: true,
-                confirmButtonText: 'รับสมัครงาน',
+                confirmButtonText: 'นัดสัมภาษณ์',
                 showLoaderOnConfirm: true,
             }).then(async (result) => {
                 if (result.value) {

@@ -26,7 +26,7 @@
 
                             <div class="form">
                                 <h5> คุณสมบัติประจำตำแหน่ง </h5>
-                                <v-multiselect placeholder=" คุณลักษณะผู้สมัคร " label="topic" track-by="topic" v-model="dataForm.jobattr" :options="lstJobattrs" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" />
+                                <v-multiselect placeholder=" คุณสมบัติประจำตำแหน่ง " label="topic" track-by="topic" v-model="dataForm.jobattr" :options="lstJobattrs" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" />
                             </div>
                             <div class="form">
                                 <h5> ระยะเวลาในการประกาศรับสมัคร </h5>
@@ -56,7 +56,7 @@
 
                         <tr>
                             <th width="25%"><i class="fa fa-tasks"></i> ตำแหน่ง / คน</th>
-                            <th width="20%"><i class="fa fa-file-text"></i> คุณลักษณะผู้สมัคร</th>
+                            <th width="20%"><i class="fa fa-file-text"></i> คุณสมบัติประจำตำแหน่ง</th>
                             <th width="25%"><i class="fa fa-file-text"></i> ระยะเวลารับสมัคร</th>
                             <th width="30%"></th>
 

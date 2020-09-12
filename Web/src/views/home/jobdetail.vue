@@ -52,9 +52,11 @@
                 </p>
                 <div v-for="(item, index) in groupDateInterviews" :key="'i'+index">
                     <p class="margin-bottom-0"><strong>วันที่ {{index|moment('DD MMMM YYYY')}}</strong> </p>
+
                     <ul class="list-1" v-for="(itemx, index) in item " :key="'ai'+index">
                         <li>{{itemx.fname}}</li>
                     </ul>
+
                 </div>
 
                 <!-- Company Info -->
@@ -173,7 +175,6 @@ export default {
                     return result;
                 }, {});
             };
-            console.log([groupBy(this.lstInterviews, "nuddate")])
             return groupBy(this.lstInterviews, "nuddate");
         },
         groupDatePromise() {
@@ -185,7 +186,6 @@ export default {
                     return result;
                 }, {});
             };
-            console.log([groupBy(this.lstInterviews, "pmdate")])
             return groupBy(this.lstInterviews, "pmdate");
         }
     },

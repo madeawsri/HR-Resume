@@ -72,12 +72,11 @@ module.exports = {
 
         switch (data.idcard) {
             case "interview":
-                sql = `SELECT r.nuddate,r.pmdate, group_concat(p.nameth) AS fname
+                sql = `SELECT r.nuddate,r.pmdate, p.nameth AS fname
                 FROM hr_jobinterest AS r , hr_profiles AS p 
                 WHERE r.jobid = ${data.jobid}
                 AND r.idcard = p.profileid
                 AND r.nuddate IS NOT NULL 
-                GROUP BY r.nuddate,r.pmdate
                 ORDER BY nuddate ,r.pmdate`
                 flegAll = true
                 break;
