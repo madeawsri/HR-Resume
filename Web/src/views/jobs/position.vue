@@ -11,7 +11,7 @@
                         <div class="submit-page">
                             <!-- topic -->
                             <div class="form">
-                                <h5>จัดการรายการ{{headtopic}}</h5>
+                                <h5>เพิ่มรายการ{{headtopic}}</h5>
                                 <input class="search-field" ref="topic" name="topic" type="text" placeholder="" v-model="dataForm.topic" v-focus required />
                             </div>
                             <div class="form">

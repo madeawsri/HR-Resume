@@ -12,7 +12,7 @@
                 <div class="col-lg-4 col-md-12">
 
                     <div class="dashboard-list-box margin-top-0">
-                        <h4>ข้อมูลการทำงาน 1</h4>
+                        <h4>ประวัติการทำงาน 1</h4>
                         <div class="dashboard-list-box-content">
 
                             <div class="submit-page">
@@ -38,7 +38,7 @@
                                 </div>
 
                                 <div class="form">
-                                    <h5>ค้าจ้างเงินเดือนก่อนออก</h5>
+                                    <h5>ค่าตอบแทน</h5>
                                     <input class="search-field" type="text" placeholder="" v-model="work1.salary" />
                                 </div>
 
@@ -62,7 +62,7 @@
                 <div class="col-lg-4 col-md-12">
 
                     <div class="dashboard-list-box margin-top-0">
-                        <h4>ข้อมูลการทำงาน 2</h4>
+                        <h4>ประวัติการทำงาน 2</h4>
                         <div class="dashboard-list-box-content">
 
                            <div class="submit-page">
@@ -88,7 +88,7 @@
                                 </div>
 
                                 <div class="form">
-                                    <h5>ค้าจ้างเงินเดือนก่อนออก</h5>
+                                    <h5>ค่าตอบแทน</h5>
                                     <input class="search-field" type="text" placeholder="" v-model="work2.salary" />
                                 </div>
 
@@ -112,7 +112,7 @@
                 <div class="col-lg-4 col-md-12">
 
                     <div class="dashboard-list-box margin-top-0">
-                        <h4>ข้อมูลการทำงาน 3</h4>
+                        <h4>ประวัติการทำงาน 3</h4>
                         <div class="dashboard-list-box-content">
 
                             <div class="submit-page">
@@ -138,7 +138,7 @@
                                 </div>
 
                                 <div class="form">
-                                    <h5>ค้าจ้างเงินเดือนก่อนออก</h5>
+                                    <h5>ค่าตอบแทน</h5>
                                     <input class="search-field" type="text" placeholder="" v-model="work3.salary" />
                                 </div>
 

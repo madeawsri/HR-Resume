@@ -23,7 +23,7 @@
                                 </div>
 
                                 <div class="form" style="width:100%">
-                                    <h5>สถาบันที่จัด</h5>
+                                    <h5>สถาบันฝึกอบรม</h5>
                                     <input class="search-field" type="text" placeholder="" v-model="train1.location" />
                                 </div>
 
@@ -63,7 +63,7 @@
                                 </div>
 
                                 <div class="form" style="width:100%">
-                                    <h5>สถาบันที่จัด</h5>
+                                    <h5>สถาบันฝึกอบรม</h5>
                                     <input class="search-field" type="text" placeholder="" v-model="train2.location" />
                                 </div>
 
@@ -103,7 +103,7 @@
                                 </div>
 
                                 <div class="form" style="width:100%">
-                                    <h5>สถาบันที่จัด</h5>
+                                    <h5>สถาบันฝึกอบรม</h5>
                                     <input class="search-field" type="text" placeholder="" v-model="train3.location" />
                                 </div>
 

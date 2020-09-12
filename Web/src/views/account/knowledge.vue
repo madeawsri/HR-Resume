@@ -182,7 +182,7 @@
                                     </div>
 
                                     <div class="form3 col-lg-4 col-sm-8 col-xs-12">
-                                        <h5>ท่านยินดีให้ตรวจสอบประวัติอาชญากรรมโดยการพิมพ์ลายน้ำมือหรือไม่</h5>
+                                        <h5>ท่านยินดีให้ตรวจสอบประวัติอาชญากรรมโดยการพิมพ์ลายนิ้วมือหรือไม่</h5>
                                         <select data-placeholder="เลือกให้ตรวจสอบประวัติอาชญากรรม" v-model="dataForm.rawok">
                                             <option value="0" selected>ไม่เคย</option>
                                             <option value="1">เคย</option>

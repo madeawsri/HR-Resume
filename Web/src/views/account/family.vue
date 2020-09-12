@@ -106,22 +106,22 @@
                                     </div>
 
                                     <div class="form">
-                                        <h5>อายุบิดา</h5>
+                                        <h5>อายุ (บิดา)</h5>
                                         <input class="search-field" type="number" placeholder="" v-model="formdata.fage" name="fage" />
                                     </div>
 
                                     <div class="form">
-                                        <h5>เชื้อชาติบิดา</h5>
+                                        <h5>เชื้อชาติ (บิดา)</h5>
                                         <input class="search-field" type="text" placeholder="" v-model="formdata.fnation" name="fnation" />
                                     </div>
 
                                     <div class="form">
-                                        <h5>สัญชาติบิดา</h5>
+                                        <h5>สัญชาติ (บิดา)</h5>
                                         <input class="search-field" type="text" placeholder="" v-model="formdata.forigin" name="forigin" />
                                     </div>
 
                                     <div class="form" style="width:100%">
-                                        <h5>สถานะบิดา</h5>
+                                        <h5>สถานะ (บิดา)</h5>
                                         <select data-placeholder="" class="" v-model="formdata.flive" id="flive" ref="select" name="flive">
                                             <option value="0">- ไม่มีชีวิต - </option>
                                             <option value="1">- ยังมีชีวิต -</option>
@@ -134,22 +134,22 @@
                                     </div>
 
                                     <div class="form">
-                                        <h5>อายุมารดา</h5>
+                                        <h5>อายุ (มารดา)</h5>
                                         <input class="search-field" type="number" placeholder="" v-model="formdata.mage" name="mage" />
                                     </div>
 
                                     <div class="form">
-                                        <h5>เชื้อชาติมารดา</h5>
+                                        <h5>เชื้อชาติ (มารดา)</h5>
                                         <input class="search-field" type="text" placeholder="" v-model="formdata.mnation" name="mnation" />
                                     </div>
 
                                     <div class="form">
-                                        <h5>สัญชาติมารดา</h5>
+                                        <h5>สัญชาติ (มารดา)</h5>
                                         <input class="search-field" type="text" placeholder="" v-model="formdata.morigin" name="morigin" />
                                     </div>
 
                                     <div class="form" style="width:100%">
-                                        <h5>สถานะมารดา {{formdata.mlive}}</h5>
+                                        <h5>สถานะ (มารดา) {{formdata.mlive}}</h5>
                                         <select v-model="formdata.mlive" name="mlive">
                                             <option v-for="option in liveOptions" :value="option.value" :key="option.value">
                                                 {{ option.value }} {{ option.text }}

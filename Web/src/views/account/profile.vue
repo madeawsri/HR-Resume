@@ -41,7 +41,7 @@
                                     <label>เบอร์โทร</label>
                                     <input placeholder="" type="text" v-model="profileData.phone" name="phone">
 
-                                    <label>อีเมล์</label>
+                                    <label>E-mail</label>
                                     <input placeholder="" type="text" v-model="profileData.email" name="email">
 
                                     <label><i class="fa fa-comments-o"></i> Line</label>
@@ -61,7 +61,7 @@
                                 <!-- Change Password -->
                                 <div class="my-profile">
 
-                                    <label>ส่วนสูง (เซ็นติเมตร)</label>
+                                    <label>ส่วนสูง (เซนติเมตร)</label>
                                     <input type="number" v-model="profileData.height" name="height">
 
                                     <label>น้ำหนัก (กิโลกรัม)</label>

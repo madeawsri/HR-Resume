@@ -5,7 +5,7 @@
         <img src="images/LogoKSL.png" class="img-responsive" style="width:50%" />
         <h2> ระบบฝากประวัติเพื่อสมัครงาน </h2>
         <ul class="tabs-nav">
-            <li class=""><a href="#tab1">เข้าสู้ระบบ</a></li>
+            <li class=""><a href="#tab1">เข้าสู่ระบบ</a></li>
             <li><a href="#tab2">ลงทะเบียนเข้าใช้งาน</a></li>
         </ul>
 
@@ -15,7 +15,7 @@
                 <form method="post" class="login" @submit.prevent="handleSubmitLogin">
 
                     <p class="form-row form-row-wide">
-                        <label for="username">รหัสบัตรประจำประชาชน:
+                        <label for="username">เลขที่บัตรประจำตัวประชาชน:
                             <i class="ln ln-icon-Male"></i>
                             <masked-input type="text" ref="username" class="form-control input-text" v-model="login.username" :mask="[/[0-9]/,' ', /\d/,/\d/, /\d/,/\d/,' ', /\d/, /\d/, /\d/,/\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/]" :guide="false" placeholderChar="#" :class="{ 'is-invalid': submitted && $v.user.idcard.$error  }">
                             </masked-input>
