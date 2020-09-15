@@ -50,11 +50,10 @@
                         <li>
                             <router-link :to="{name:'position'}">ข้อมูลตำแหน่ง</router-link>
                         </li>
+                        <li>
+                            <router-link :to="{name:'jobattr'}">คุณสมบัติประจำตำแหน่ง</router-link>
+                        </li>
                     </ul>
-                </li>
-
-                <li>
-                    <router-link :to="{name:'jobattr'}" style="font-weight: bold;">คุณสมบัติประจำตำแหน่ง</router-link>
                 </li>
                 <li>
                     <router-link :to="{name:'jobs'}" style="font-weight: bold;">ข้อมูลประกาศรับสมัครงาน</router-link>

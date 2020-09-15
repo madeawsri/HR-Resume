@@ -72,7 +72,7 @@
 
                                         <div style="display:flex;height:30px;">
 
-                                            <button type="button" class="button " @click="onCheckboxPM(item)" style="padding: 0px 20px;">อัพเดชสถานะ</button>
+                                            <button type="button" class="button " @click="onCheckboxPM(item)" style="padding: 0px 20px;">อัพเดทสถานะ</button>
                                         </div>
                                     </li>
                                 </ul>

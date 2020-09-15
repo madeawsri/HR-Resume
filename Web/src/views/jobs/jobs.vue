@@ -252,6 +252,7 @@ export default {
                             datein: dataForm2.datein,
                             dateout: dataForm2.dateout,
                             num: dataForm2.num,
+                            ostatus: 1
 
                         })
 
