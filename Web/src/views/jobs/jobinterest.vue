@@ -14,7 +14,7 @@
                         <div class="submit-page">
                             <div class="form">
                                 <h5> ตำแหน่งเปิดรับสมัครแล้ว (<span style="font-weight:bold;color:green;">{{countJob}}</span>) คน</h5>
-                                <v-multiselect placeholder="รายชื่อผู้สมัคร " label="topic" track-by="topic" v-model="dataForm.job" :options="lstJobs" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" @select="selectJob"></v-multiselect>
+                                <v-multiselect placeholder=" " label="topic" track-by="topic" v-model="dataForm.job" :options="lstJobs" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" @select="selectJob"></v-multiselect>
                             </div>
 
                             <div class="form">

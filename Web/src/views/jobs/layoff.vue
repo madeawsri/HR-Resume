@@ -21,11 +21,11 @@
 
                             <div class="form" style="width:30%">
                                 <h5> วันที่เลิกจ้าง </h5>
-                                <v-date v-model="dataForm.outdate" class="datetime-picker" value-type="format" format="YYYY-MM-DD" :lang="dateFormatThai" type="date" placeholder="วันที่นัดสัมภาษณ์"></v-date>
+                                <v-date v-model="dataForm.outdate" class="datetime-picker" value-type="format" format="YYYY-MM-DD" :lang="dateFormatThai" type="date" placeholder=""></v-date>
                             </div>
                             <div class="form" style="width:20%">
                                 <h5> สถานภาพพนักงาน </h5>
-                                <v-multiselect placeholder="สถานะพนักงาน " label="topic" track-by="topic" v-model="dataForm.status" :options="lstStatus" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false"></v-multiselect>
+                                <v-multiselect placeholder=" " label="topic" track-by="topic" v-model="dataForm.status" :options="lstStatus" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false"></v-multiselect>
                             </div>
 
                             <div class="form" style="width:50%">
@@ -48,6 +48,7 @@
                             <th style="width:15%"><i class="fa fa-tasks"></i>บัตรประชาชน</th>
                             <th><i class="fa fa-file-text"></i> ชื่อ-สกุล</th>
                             <th><i class="fa fa-file-text"></i> ตำแหน่งงาน</th>
+                            <th><i class="fa fa-file-text"></i> วันที่เริ่มงาน</th>
                             <th><i class="fa fa-file-text"></i> วันที่เลิกจ้าง</th>
                             <th><i class="fa fa-file-text"></i> สถานภาพ</th>
                             <th><i class="fa fa-file-text"></i> เหตุผล</th>
@@ -59,19 +60,16 @@
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.idcard}}</td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{ item.namecard}}</td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.jobname}} </td>
+                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.workdate | moment("DD MMMM YYYY") }} </td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.outdate | moment("DD MMMM YYYY") }} </td>
-                            <td>{{ $store.state.jobs.status.find(x=>x.id==item.wstatus).topic}}</td>
+                            <td>{{ $store.state.jobs.status.find(x=>x.id==item.status).topic}}</td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.statusnote}} </td>
 
                             <td style="padding: 2px 2px;">
 
                                 <ul class="checkboxes">
                                     <li v-show="dataForm.outdate && dataForm.status">
-                                        <!--<input :id="'chk'+index" :value="item.id" v-model="checkPass" type="checkbox" name="check" @click="onCheckboxPM($event,item)">
-                                        <label :for="'chk'+index"> เลิกจ้าง </label>-->
-
                                         <div style="display:flex;height:30px;">
-
                                             <button type="button" class="button " @click="onCheckboxPM(item)" style="padding: 0px 20px;">อัพเดทสถานะ</button>
                                         </div>
                                     </li>

@@ -71,6 +71,7 @@ WHERE a.pmdate IS NOT NULL AND a.workdate IS NOT NULL AND  status = 1 and a.jobi
         return ExcSQL(querySql, callBack)
     },
     updateStatusRegister: (data, callBack) => {
+        if (data.status != 1) data.status = 0;
         let querySql = `
         UPDATE hr_register SET wstatus = ${data.status} where idcard = '${data.idcard}';
        `

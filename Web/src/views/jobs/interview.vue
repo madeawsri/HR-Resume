@@ -15,11 +15,11 @@
                         <div class="submit-page">
                             <div class="form" style="width:35%">
                                 <h5> ตำแหน่งเปิดรับสมัคร </h5>
-                                <v-multiselect placeholder="รายชื่อผู้สมัคร " label="topic" track-by="topic" v-model="dataForm.job" :options="lstJobs" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" @select="selectJob"></v-multiselect>
+                                <v-multiselect placeholder=" " label="topic" track-by="topic" v-model="dataForm.job" :options="lstJobs" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" @select="selectJob"></v-multiselect>
                             </div>
                             <div class="form" style="width:30%">
                                 <h5> วันที่นัดสัมภาษณ์ </h5>
-                                <v-date v-model="dataForm.nuddate" class="datetime-picker" value-type="format" format="YYYY-MM-DD" :lang="dateFormatThai" type="date" placeholder="วันที่นัดสัมภาษณ์"></v-date>
+                                <v-date v-model="dataForm.nuddate" class="datetime-picker" value-type="format" format="YYYY-MM-DD" :lang="dateFormatThai" type="date" placeholder=""></v-date>
                             </div>
                             <div class="form" style="width:35%">
                                 <h5> ข้อความถึงผู้สมัคร </h5>
