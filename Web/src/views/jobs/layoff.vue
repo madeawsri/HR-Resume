@@ -109,6 +109,9 @@ export default {
 
         this.lstStatus = (this.lstStatus.filter(x => x.id > 0))
 
+        console.log("list status")
+        console.log(this.lstStatus.find(x => x.id == 2).topic);
+
     },
     data() {
         return {
@@ -149,7 +152,8 @@ export default {
                 outdate: this.dataForm.outdate,
                 status: this.dataForm.status.id,
                 statusnote: this.dataForm.statusnote,
-                idcard: data.idcard
+                idcard: data.idcard,
+                jobid: data.jobid
 
             }
 
@@ -162,10 +166,12 @@ export default {
                                 if (data.success) {
 
                                     */
-                let updateJson = this.lstProfile.find(x => x.idcard == data.idcard)
+                let updateJson = this.lstProfile.find(x => (x.idcard == data.idcard && x.jobid == data.jobid))
                 console.log(updateJson)
                 updateJson.outdate = dataSave.outdate
                 updateJson.statusnote = dataSave.statusnote
+                updateJson.status = dataSave.status
+
                 await this.$http.patch('api/promise', dataSave)
                 await this.alertSuccess()
                 /* } else {
@@ -186,6 +192,7 @@ export default {
                 this.lstProfile = [...this.lstProfileCopy.filter(x => (
                     String(x.namecard).includes(keyword) ||
                     String(x.profileid).split(' ').join('').includes(keyword) ||
+                    (this.lstStatus.find(xx => xx.id == x.status).topic).includes(keyword) ||
                     String(x.statusnote).includes(keyword) ||
                     String(x.jobname).includes(keyword)))]
             else

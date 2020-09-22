@@ -8,7 +8,7 @@
 
                 <!-- Company Info -->
                 <div class="company-info">
-                    <img src="images/company-logo.png" alt="" v-if="0">
+                    <img :src="lineQrcode" alt="" v-if="0">
                     <div class="content">
                         <h4 style="background-color: hsla(14, 100%, 53%, 0.3);border-radius: 5px;"><strong style="margin-left:10px;margin-right:10px;"> {{dataDetail.xtopic}} <span style="color:green;">{{dataDetail.num}}</span>ตำแหน่ง </strong> </h4>
                         <span v-if="0"><a href="#"><i class="fa fa-link"></i> Website</a></span>
@@ -47,14 +47,15 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <p class="margin-reset" v-if="1">
+                <p class="margin-reset" v-if="0">
                     ให้ผู้สมัครมาสอบสัมภาษณ์ในเวลาทำการเท่านั้น
                 </p>
                 <div v-for="(item, index) in groupDateInterviews" :key="'i'+index">
+
                     <p class="margin-bottom-0"><strong>วันที่ {{index|moment('DD MMMM YYYY')}}</strong> </p>
 
                     <ul class="list-1" v-for="(itemx, index) in item " :key="'ai'+index">
-                        <li>{{itemx.fname}}</li>
+                        <li>{{itemx.fname}} <i class="fa fa-align-left"></i> <small>{{itemx.nudnote}}</small></li>
                     </ul>
 
                 </div>
@@ -69,7 +70,7 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <p class="margin-reset" v-if="1">
+                <p class="margin-reset" v-if="0">
                     ให้ผู้สมัครที่ผ่านสัมภาษณ์มาทำสัญญาจ้างในวันที่กำหนดให้
                 </p>
 
@@ -77,7 +78,7 @@
                     <div v-show="index != 'null'">
                         <p class="margin-bottom-0"><strong>วันที่ {{index|moment('DD MMMM YYYY')}}</strong> </p>
                         <ul class="list-1" v-for="(itemx, index) in item " :key="'aii'+index">
-                            <li>{{itemx.fname}}</li>
+                            <li>{{itemx.fname}} </li>
                         </ul>
                     </div>
                 </div>
@@ -88,10 +89,13 @@
         <!-- Widgets -->
         <div class="five columns">
 
-            <!-- Sort by -->
+            <!-- Sort by position: fixed; top: 50%; left: 50%;  transform: translate(-50%, -50%);-->
             <div class="widget">
 
                 <div class="job-overview">
+                    <div style="text-align:center;" v-if="0">
+                        <img :src="lineQrcode" alt="" v-if="1" align="center">
+                    </div>
 
                     <ul>
                         <li>
@@ -214,7 +218,8 @@ export default {
             idcard: this.getIDCard,
             lstInterviews: [],
             lstPromises: [],
-            lstRegister: {}
+            lstRegister: {},
+            lineQrcode: 'images/line-hr.jpg'
         }
     },
     components: {
@@ -306,10 +311,20 @@ export default {
                 title: "ส่งใบสมัครงาน",
                 text: "เรียบร้อยแล้ว.",
                 type: "success",
-                timer: 3000
-            }).then(() => {
-                //this.$router.push('/home')
-                window.location.href = '/home';
+                //timer: 3000
+            }).then((ok) => {
+                if (ok) {
+                    this.$fire({
+                        imageUrl: `${this.lineQrcode}`,
+                        footer: '<a href>ติดตามผลการสมัครงานได้ที่ Line Official Account</a>',
+                        confirmButtonText: "รับทราบ",
+                        timer: 60000
+                    }).then((ook) => {
+                        if (ook)
+                            window.location.href = '/home';
+                    })
+                }
+
             })
         },
         alertFail: function () {

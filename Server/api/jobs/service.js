@@ -111,7 +111,7 @@ module.exports = {
     getAll: (data, callBack) => {
 
         pool.query(
-            `select * from ${tableName} `,
+            `select * from ${tableName} where 1 = 1 order by id desc,ostatus desc`,
             (error, results, fields) => {
                 if (error) {
                     callBack(error);

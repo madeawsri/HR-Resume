@@ -58,7 +58,7 @@
 
                                 <ul class="checkboxes">
                                     <li v-show="dataForm.pmdate || item.pmdate">
-                                        <input :id="'chk'+index" :value="item.id" v-model="checkPass" type="checkbox" name="check" @click="onCheckboxPM($event,item.id)">
+                                        <input :id="'chk'+index" :value="item.id" v-model="checkPass" type="checkbox" name="check" @click="onCheckboxPM($event,item.id,item)">
                                         <label :for="'chk'+index"> รับเอกสารทำสัญญา </label>
                                     </li>
                                 </ul>
@@ -206,7 +206,7 @@ export default {
 
     },
     methods: {
-        onCheckboxPM: async function (e, index) {
+        onCheckboxPM: async function (e, index, itemData) {
             let dataSave = {
                 pmdate: this.dataForm.pmdate,
                 id: index
@@ -215,7 +215,42 @@ export default {
                 dataSave.pmdate = null
             }
             try {
-                await this.sendData(dataSave)
+
+                console.log(itemData)
+                console.log(dataSave)
+
+                if (itemData.pmdate === null) {
+                    const {
+                        data
+                    } = await this.$http.get(`/api/jobinterest/checkpmdate/${dataSave.id}`)
+                    console.log("check pm date")
+                    console.log(data)
+                    if (data.success == 1) {
+                        let getData = data.data.find(x => x.pmdate !== null)
+                        if (getData !== undefined) {
+                            if (getData.pmdate !== null) {
+                                this.$fire({
+                                    topic: this.headTitle,
+                                    text: 'คุณมีการนัดทำสัญญาไปแล้ว.',
+                                    type: "warning",
+                                    timer: 3000
+                                })
+                                e.target.checked = !e.target.checked
+                            } else {
+                                console.log("check & save 2")
+                                console.log(dataSave)
+                                await this.sendData(dataSave)
+                            }
+                        } else {
+                            console.log("check & save 1")
+                            console.log(dataSave)
+                            await this.sendData(dataSave)
+                        }
+                    }
+                } else {
+                    await this.sendData(dataSave)
+                }
+
             } catch (err) {
                 console.log(err)
             }
@@ -578,22 +613,23 @@ export default {
         focusInput: function (inputRef) {
             this.$refs[inputRef].focus();
         },
+
         async sendData(dataSave = null) {
 
             if (dataSave === null)
                 dataSave = {
                     pmdate: this.dataForm.pmdate,
-                    id: this.checkPass.join(",")
+                    id: this.checkPass
                 }
 
             try {
+
                 const dataJ = await this.$http.patch('/api/jobinterest/contract', dataSave)
                 this.$http.all([dataJ]).then(
                     this.$http.spread((...res) => {
                         console.log(res[0])
                     })
                 )
-
                 await this.getProfile(this.selectJobId);
 
             } catch (e) {

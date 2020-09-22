@@ -442,7 +442,7 @@ export default {
             },
             dataForm: {
                 topic: '',
-                nudnote: "มาสัมภาษณ์ภายในวันและเวลาทำการ",
+                nudnote: "",
                 job: [],
                 member: [],
                 keyword: ""
@@ -522,7 +522,9 @@ export default {
                         this.lstMyJob = [...data.data]
                         this.jobInter = [...data.data].map((it) => it.pname).join(',');
                         console.log(this.jobInter)
-                        this.lstJobs = this.lstJobs.filter(a => data.data.findIndex(b => b.jobid == a.id) < 0);
+
+                        // this.lstJobs = this.lstJobs.filter(a => data.data.findIndex(b => b.jobid == a.id) < 0);
+
                         console.log(this.lstJobs)
                         console.log("MY JOB")
                         console.log(this.lstMyJob)
@@ -637,8 +639,12 @@ export default {
 
                     await this.getProfile(this.selectJobId);
                     this.lstProfileCopy = [...this.lstProfile]
+
                     console.log("save นัดสัมภาษณ์")
                     console.log(this.lstProfile)
+
+                    console.log("list jobs")
+                    console.log(this.lstJobs)
 
                     this.$fire({
                         title: "นัดสัมภาษณ์",

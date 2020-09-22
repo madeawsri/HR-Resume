@@ -132,13 +132,14 @@ module.exports = {
 
             pool.query(
                 `SELECT p.profileid,p.nameth,p.phone,i.* from hr_jobinterest AS i 
-                LEFT OUTER JOIN ( 
+                inner JOIN ( 
                     SELECT p.profileid,p.nameth,p.phone FROM hr_profiles AS p RIGHT JOIN hr_register AS r ON (p.profileid=r.idcard AND r.wstatus NOT IN (1))
                      where p.profileid is not null 
                      group by p.profileid,p.nameth,p.phone
                     )  AS p ON i.idcard = p.profileid
+                    inner join hr_jobs as j on (i.jobid = j.id and ostatus=1)
                 WHERE i.jobid = ${data.id}
-                
+               
                 `,
                 (error, results, fields) => {
                     if (error) {

@@ -50,7 +50,7 @@ module.exports = {
 (SELECT a.id AS jobinterestid,a.jobid , a.idcard,c.nameth AS namecard,b.topic AS jobname,a.pmdate AS promisedate ,a.workdate 
 FROM hr_jobinterest a 
 LEFT JOIN hr_jobs b ON a.jobid = b.id 
-LEFT JOIN (SELECT a.* from hr_profiles AS a RIGHT JOIN hr_register AS r ON a.profileid = r.idcard AND r.wstatus <> 1) as c ON a.idcard = c.profileid
+LEFT JOIN (SELECT a.* from hr_profiles AS a RIGHT JOIN hr_register AS r ON a.profileid = r.idcard ) as c ON a.idcard = c.profileid
 WHERE a.pmdate IS NOT NULL AND a.workdate IS NOT NULL AND  status = 1 and a.jobid = ${jobid});  `
         return ExcSQL(querySql, callBack)
     },
@@ -65,14 +65,19 @@ WHERE a.pmdate IS NOT NULL AND a.workdate IS NOT NULL AND  status = 1 and a.jobi
     },
 
     updateStatusPromise: (data, callBack) => {
+        data.outdate = `'${data.outdate}'`
+        if (data.status == 1)
+            data.outdate = null;
+
         let querySql = `
-          UPDATE hr_promise SET status = ${data.status} , statusnote = '${data.statusnote}' , outdate = '${data.outdate}' where idcard = '${data.idcard}';
+          UPDATE hr_promise SET status = ${data.status} , statusnote = '${data.statusnote}' , outdate = ${data.outdate} where idcard = '${data.idcard}' and jobid = '${data.jobid}';
        `
         return ExcSQL(querySql, callBack)
     },
     updateStatusRegister: (data, callBack) => {
+        let querySql = ''
         if (data.status != 1) data.status = 0;
-        let querySql = `
+        querySql = `
         UPDATE hr_register SET wstatus = ${data.status} where idcard = '${data.idcard}';
        `
         return ExcSQL(querySql, callBack)

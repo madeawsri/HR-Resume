@@ -71,8 +71,18 @@ module.exports = {
         let flegAll = false;
 
         switch (data.idcard) {
+            case "checkpmdate":
+                sql = `select ji.idcard, ji.pmdate , ji.id
+                from hr_jobs as j , hr_jobinterest as ji 
+                where j.ostatus = 1 
+                and j.id = ji.jobid 
+                and ji.idcard in (select x.idcard from hr_jobinterest as x where x.id = ${data.jobid})  
+                group by ji.idcard, ji.pmdate
+                `
+                flegAll = true
+                break;
             case "interview":
-                sql = `SELECT r.nuddate,r.pmdate, p.nameth AS fname
+                sql = `SELECT r.nuddate,r.pmdate, p.nameth AS fname , r.nudnote
                 FROM hr_jobinterest AS r , hr_profiles AS p 
                 WHERE r.jobid = ${data.jobid}
                 AND r.idcard = p.profileid
