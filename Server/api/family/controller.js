@@ -32,7 +32,9 @@ module.exports = {
                     });
                 }
                 let data = uresults ? uresults : null
-                if (data === null) {
+                console.log("insert family")
+                console.log(data)
+                if (data.length == 0) {
                     // new insert
                     console.log('insert table family')
                     console.log(body)

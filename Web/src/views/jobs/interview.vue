@@ -1,7 +1,7 @@
 <template lang="dateFormatThai">
 <memberLayout>
     <div slot="content">
-
+        {{fullUrl}}
         <div class="col-lg-12 col-md-12">
             <form @submit.prevent="sendData">
                 <div class="dashboard-list-box margin-top-0">

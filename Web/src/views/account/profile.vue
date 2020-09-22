@@ -39,7 +39,7 @@
                                     </div>
 
                                     <label>เบอร์โทร</label>
-                                    <input placeholder="" type="text" v-model="profileData.phone" name="phone">
+                                    <masked-input type="text" :mask="[ /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,/\d/, /\d/,/\d/, /\d/]" v-model="profileData.phone" name="phone"></masked-input>
 
                                     <label>E-mail</label>
                                     <input placeholder="" type="text" v-model="profileData.email" name="email">
@@ -94,13 +94,13 @@
                                     <input type="text" v-model="profileData.idcard" readonly style="background-color:lightblue" name="profileid">
 
                                     <label>วันเกิด</label>
-                                    <input type="text" v-model="profileData.birthday" name="birthday">
+                                    <masked-input type="text" :mask="[ /\d/, /\d/, '/',/\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]" v-model="profileData.birthday" name="birthday"></masked-input>
 
                                     <label>วันที่ออกบัตร</label>
-                                    <input type="text" v-model="profileData.placecard" name="placecard">
+                                    <masked-input type="text" :mask="[ /\d/, /\d/, '/',/\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]" v-model="profileData.placecard" name="placecard"></masked-input>
 
                                     <label>วันที่หมดอายุ</label>
-                                    <input type="text" v-model="profileData.expiredcard" name="expiredcard">
+                                    <masked-input type="text" :mask="[ /\d/, /\d/, '/',/\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]" v-model="profileData.expiredcard" name="expiredcard"></masked-input>
 
                                     <label>ที่อยู่ตามบัตรประชาชน</label>
                                     <textarea name="addr" id="notes" cols="30" rows="10" v-model="profileData.addr"></textarea>
@@ -193,8 +193,8 @@ export default {
                 type: "success",
                 timer: 3000
             }).then(() => {
-//                this.$router.push('/family')
-this.$vLink('family')
+                //                this.$router.push('/family')
+                this.$vLink('family')
 
             })
         },
@@ -234,21 +234,32 @@ this.$vLink('family')
 
             const objFrm = document.getElementById('frmProfile')
             const formData = new FormData(objFrm);
+
             try {
-                const {
-                    data
-                } = await this.$http.post(`api/profile/${this.profileData.idcard}`, formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                })
-                console.log(data)
-                this.alertSuccess();
+                if (this.profileData.email.includes('@') || this.profileData.email.length == 0) {
+                    const {
+                        data
+                    } = await this.$http.post(`api/profile/${this.profileData.idcard}`, formData, {
+                        headers: {
+                            "Content-Type": "multipart/form-data"
+                        }
+                    })
+                    console.log(data)
+                    this.alertSuccess();
+                } else {
+                    this.$fire({
+                        title: "ข้อมูลส่วนตัว",
+                        text: 'อีเมล์ต้องมีเครื่องหมาย @ .',
+                        type: "warning",
+                        timer: 3000
+                    })
+                }
 
             } catch (err) {
                 console.log(err)
                 this.alertLoginFail();
             }
+
         },
         async loadMyPicture() {
             try {

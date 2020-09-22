@@ -101,7 +101,7 @@
                         <li>
                             <i class="fa fa-map-marker"></i>
                             <div>
-                                <strong>กรอกใบสมัครด้วยต้นเองได้</strong>
+                                <strong>กรอกใบสมัครด้วยตนเองได้</strong>
                                 <span>ชั้น 1: แผนกบุคคล โทร.043-432-902-6 ต่อ 7053</span>
                             </div>
                         </li>
@@ -128,19 +128,23 @@
                         </li>
                     </ul>
 
-                    <div v-show="lstRegister.wstatus != 1">
-                        <div v-if="dataDetail.ostatus">
-                            <button @click="sentData" class="popup-with-zoom-anim button" v-show="isLogged && !isApplyJod"> ส่งใบสมัครงาน </button>
-                            <button class=" button disabled" v-show="isApplyJod"> <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </button>
-                            <router-link class="button" to="login" v-show="this.idcard==null"> ส่งใบสมัครงาน </router-link>
-                        </div>
-                        <div v-if="!dataDetail.ostatus" align="center">
-                            <h4 style="background: rgba(219, 255, 23,0.52); border-radius: 5px;">
-                                <strong style="margin-left: 10px; margin-right: 10px;color:red;">ปิดรับสมัครงาน</strong>
-                            </h4>
+                    <div v-if="!isWebAdmin">
 
+                        <div v-show="lstRegister.wstatus != 1">
+                            <div v-if="dataDetail.ostatus">
+                                <button @click="sentData" class="popup-with-zoom-anim button" v-show="isLogged && !isApplyJod"> ส่งใบสมัครงาน </button>
+                                <button class=" button disabled" v-show="isApplyJod"> <i class="ln ln-icon-Mail-Send"></i> ส่งใบสมัครงานเรียบร้อยแล้ว. </button>
+                                <router-link class="button" to="login" v-show="this.idcard==null"> ส่งใบสมัครงาน </router-link>
+                            </div>
+                            <div v-if="!dataDetail.ostatus" align="center">
+                                <h4 style="background: rgba(219, 255, 23,0.52); border-radius: 5px;">
+                                    <strong style="margin-left: 10px; margin-right: 10px;color:red;">ปิดรับสมัครงาน</strong>
+                                </h4>
+
+                            </div>
                         </div>
                     </div>
+
                 </div>
                 <!--
                 <div class="dashboard-list-box margin-top-5" v-if="0">
@@ -164,6 +168,9 @@ import homeLayout from '../../components/layouts/index'
 
 export default {
     computed: {
+        isWebAdmin() {
+            return this.$store.getters['user/isWebAdmin']
+        },
         isLogged() {
             return this.$store.getters['user/isLogged']
         },

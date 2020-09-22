@@ -176,7 +176,8 @@
 
                                     <div class="form">
                                         <h5>เบอร์โทรผู้ติดต่อ</h5>
-                                        <input class="search-field" type="number" placeholder="" v-model="formdata.phoneo" name="phoneo" />
+
+                                        <masked-input type="text" :mask="[ /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,/\d/, /\d/,/\d/, /\d/]" v-model="formdata.phoneo" name="phoneo"></masked-input>
                                     </div>
 
                                     <div class="form" style="width:100%">
@@ -268,13 +269,14 @@ export default {
                 //this.$router.push('/home')
                 window.location.href = '/home';
             })
-        }, alertSuccess: function () {
+        },
+        alertSuccess: function () {
             this.$fire({
                 title: "ข้อมูลบิดาและมารดา",
                 text: 'บันทึกเรียบร้อยแล้ว',
                 type: "success",
                 timer: 3000
-            }).then(()=>{
+            }).then(() => {
                 //this.$router.push('/education')
                 this.$vLink('education')
             })

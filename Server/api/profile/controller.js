@@ -8,6 +8,7 @@ const {
 } = require("./service");
 
 const { hashSync, genSaltSync } = require("bcrypt");
+const { patch } = require("../jobs/router");
 
 function createData(req, res) {
 
@@ -86,15 +87,31 @@ module.exports = {
         const idcard = req.params.id
         const multer = require('multer')
         const path = require('path')
+        const fs = require('fs')
         const storage = multer.diskStorage({
             destination: function(req, file, cb) {
                 cb(null, './uploads/')
             },
             filename: function(req, file, cb) {
+                console.log('upload images')
                 console.log(req.body)
+                fs.readdirSync('./uploads/').forEach(file => {
+                    if (file.includes(idcard)) {
+                        console.log('clear all image before upload...')
+                        fType = (file.split(".")[1]);
+                        let path = `./uploads/${idcard}.${fType}`;
+                        fs.unlinkSync(path);
+                        return;
+                    }
+                });
+
+
+
                 cb(null, idcard + path.extname(file.originalname))
             }
         })
+
+
 
         let upload = multer({ storage: storage, }).single('file');
         upload(req, res, function(err) {
@@ -111,14 +128,25 @@ module.exports = {
     },
     myPicture: (req, res) => {
         let id = req.params.id //.split(' ').join('')
-        var path = `./uploads/${id}.jpg`;
         const fs = require('fs')
         try {
+            //console.log('get images')
+            var fType = 'jpg'
+            fs.readdirSync('./uploads/').forEach(file => {
+                if (file.includes(id)) {
+                    console.log(file)
+                    fType = (file.split(".")[1]);
+                    return;
+                }
+            });
+            var path = `./uploads/${id}.${fType}`;
+            //console.log(path)
+            //fs.unlinkSync(path);
             if (fs.existsSync(path)) {
                 //  let buff = new Buffer(data, 'base64');
                 // fs.writeFileSync(path, buff);
-
-                var bitmap = fs.readFileSync(path);
+                var bitmap = null
+                bitmap = fs.readFileSync(path);
                 // convert binary data to base64 encoded string
                 return res.status(200).json({
                     success: 1,
@@ -135,7 +163,7 @@ module.exports = {
         } catch (err) {
             return res.status(500).json({
                 success: 0,
-                message: "ไม่พบรูปภาพ",
+                message: "ไม่พบรูปภาพ Error",
                 data: path
             });
         }
