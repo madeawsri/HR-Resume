@@ -53,8 +53,8 @@
                         <tr style="padding: 5px 5px;" v-for="(item, index) in listDatas" :key="index">
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> <i class="fa fa-check"></i> {{item.topic}}</td>
                             <td style="padding: 5px 5px;">
-                                <a href="#" @click="preEditData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-pencil"></i> แก้ไข</a>
-                                <a v-if="!item.cjob" href="#" @click="delData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-remove"></i> ลบ </a>
+                                <button @click="preEditData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-pencil"></i> แก้ไข</button>
+                                <button v-if="!item.cjob" href="#" @click="delData(index,item.id)" class="button" style="margin-right:5px;"><i class="fa fa-remove"></i> ลบ </button>
                             </td>
                         </tr>
 
@@ -76,9 +76,10 @@ import memberLayout from '@/components/member-layouts/index'
 export default {
     components: {
         memberLayout
-    },mounted() {
-        if(!this.$store.getters['user/isWebAdmin']) {
-          this.alertAccess();
+    },
+    mounted() {
+        if (!this.$store.getters['user/isWebAdmin']) {
+            this.alertAccess();
         }
     },
     async created() {

@@ -123,7 +123,7 @@
                             <i class="fa fa-money"></i>
                             <div>
                                 <strong>อัตราค่าจ้าง:</strong>
-                                <span>ขึ้นอยู่กับโครงสร้างของบริษัท</span>
+                                <span>ตามโครงสร้างของบริษัท</span>
                             </div>
                         </li>
                     </ul>

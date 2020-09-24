@@ -16,7 +16,9 @@
     </ul>
 
     <ul class="responsive float-right">
-
+        <li>
+            <a href="#" style=" cursor: default;  pointer-events: none;   text-decoration: none;     background-color: #f0f0f000;"> {{getUserName}} </a>
+        </li>
         <li><a href="/home"><i class="fa fa-home"></i> หน้าแรก</a></li>
 
         <!--<li v-if="isWebAdmin"><a href="/message"><i class="fa fa-envelope"></i> ผู้สมัคร <span class="nav-tag text-green"> 0 </span> </a> </li>
@@ -32,12 +34,20 @@
 
 <script>
 export default {
+    created() {
+        let objUser = JSON.parse(this.$store.state.user.data)
+        if (Object.keys(objUser).length > 0) {
+            this.getUserName = objUser.nameth
+        }
+    },
     data() {
         return {
             isWebAdmin: this.$store.getters['user/isWebAdmin'],
             isUser: this.$store.getters['user/isUser'],
+            getUserName: ''
         }
-    }
+    },
+
 }
 </script>
 
