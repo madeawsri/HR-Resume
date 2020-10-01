@@ -5,8 +5,8 @@
     <div class="dashboard-nav" style="zoom:0.8">
         <div class="dashboard-nav-innerx">
             <ul v-if="isUser ">
-                <li :class="(cmenu1)?'active-submenu':''" @click="onShow1"><a>ข้อมูลเบื้องต้น</a>
-                    <ul v-show="cmenu1">
+                <li :class="(cmenu1)?'active-submenu':''"><a>ข้อมูลเบื้องต้น</a>
+                    <ul>
                         <li>
                             <router-link :to="'profile'">ข้อมูลส่วนตัว</router-link>
                         </li>
@@ -58,6 +58,9 @@
                 <li>
                     <router-link :to="{name:'jobs'}" style="font-weight: bold;">ข้อมูลประกาศรับสมัครงาน</router-link>
                 </li>
+                <li>
+                    <router-link :to="{name:'members'}" style="font-weight: bold;">ข้อมูลผู้ลงทะเบียน</router-link>
+                </li>
                 <li v-if="0"><a href="#" style="color:#000099;font-weight: bold;">นำข้อมูลออก Resume</a></li>
 
                 <li :class="(cmenu2)?'active-submenu':''" @click="onShow2"><a>จัดการผู้สมัครงาน</a>
@@ -84,7 +87,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li v-if="0">
                     <router-link :to="{name:'Logout'}" style="color:red;font-weight: bold;">ออกจากระบบ</router-link>
                 </li>
             </ul>

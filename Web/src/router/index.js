@@ -22,6 +22,7 @@ import Position from '../views/jobs/position.vue';
 import Jobs from '../views/jobs/jobs.vue';
 import Jobattr from '../views/jobs/jobsattr.vue';
 
+import Members from '../views/jobs/members.vue';
 import Ajobinterest from '../views/jobs/jobinterest.vue';
 import Interview from '../views/jobs/interview.vue';
 import InterviewReport from '../views/jobs/rpinterview.vue';
@@ -71,10 +72,15 @@ const routes = [{
 
     },
     {
+        path: '/members',
+        name: 'members',
+        component: Members,
+    },
+
+    {
         path: '/ajobinterest',
         name: 'ajobinterest',
         component: Ajobinterest,
-
     },
     {
         path: '/qualify',

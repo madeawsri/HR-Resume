@@ -77,7 +77,7 @@
                                     <div class="pull-right" v-show="item.ostatus">
                                         <div style="display:flex;height:30px;">
                                             <button @click="preEditData(index,item.id)" class="button" style="margin-right:5px;padding: 0px 20px;"><i class="fa fa-pencil"></i> แก้ไข</button>
-                                            <button @click="delData(index,item.id)" class="button" style="margin-right:5px;padding: 0px 20px;"><i class="fa fa-remove"></i> ลบ </button>
+                                            <button @click="delData(index,item.id)" v-show="!lstJobInterests.find(x=>x.jobid ==item.id)" class="button" style="margin-right:5px;padding: 0px 20px;"><i class="fa fa-remove"></i> ลบ </button>
                                         </div>
                                     </div>
                                 </div>
@@ -112,10 +112,12 @@ export default {
 
         this.$eventMenu();
     },
+
     async created() {
 
         await this.getLstDatas();
         await this.showDataAll();
+        await this.getJobInterestAll();
 
         console.log(this.lstPtypes)
     },
@@ -154,11 +156,26 @@ export default {
             lstPtypes: this.$store.state.jobs.ptype,
             lstStypes: this.$store.state.jobs.stype,
 
-            listDatas: [] // data in table
+            chkJobDelete: true,
+            lstJobInterests: [],
+            listDatas: [] // data in table,
 
         }
     },
     methods: {
+
+        getJobInterestAll: async function () {
+            try {
+                const dataP = await this.$http.get('api/jobinterest')
+                this.$http.all([dataP]).then(
+                    this.$http.spread((...res) => {
+                        this.lstJobInterests = res[0].data.data;
+                    })
+                )
+            } catch (e) {
+                console.log(e)
+            }
+        },
 
         alertAccess: function () {
             this.$fire({
@@ -252,7 +269,8 @@ export default {
                             datein: dataForm2.datein,
                             dateout: dataForm2.dateout,
                             num: dataForm2.num,
-                            ostatus: 1
+                            ostatus: 1,
+                            jobdelete: this.chkJobDelete
 
                         })
 
@@ -294,7 +312,7 @@ export default {
                         topic: this.dataForm.stype.topic
                     })
 
-                    console.log(dataForm2)
+                    // console.log(dataForm2)
 
                     const {
                         data

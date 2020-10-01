@@ -6,21 +6,32 @@
             <form @submit.prevent="sendData">
                 <div class="dashboard-list-box margin-top-0">
                     <h4>{{headTitle}}
-                        <button type="button" class="button margin-bottom-0  float-xl-right pull-right " @click="findMember"> ค้นหา <i class="fa fa-search"></i></button>
+                        <!--  <button type="button" class="button margin-bottom-0  
+                            float-xl-right pull-right " @click="findMember"> ค้นหา 
+                            <i class="fa fa-search"></i></button> -->
+
+                        <div class="pull-right">
+                            <div style="display:flex;height:30px;">
+                                <input type="text" v-model="dataForm.keyword" class="form-control input-text" style="margin-right:8px;" />
+                                <button type="button" class="button " @click="findMember" style="padding: 0px 20px;"><i class="fa fa-search"></i></button>
+                            </div>
+
+                        </div>
+
                     </h4>
 
                     <div class="dashboard-list-box-content">
 
-                        <div class="submit-page">
+                        <div class="submit-page" v-if="0">
                             <div class="form">
                                 <h5> ตำแหน่งเปิดรับสมัครแล้ว (<span style="font-weight:bold;color:green;">{{countJob}}</span>) คน</h5>
                                 <v-multiselect placeholder=" " label="topic" track-by="topic" v-model="dataForm.job" :options="lstJobs" :multiple="false" :close-on-select="true" :hide-selected="true" :show-labels="false" @select="selectJob"></v-multiselect>
                             </div>
-
+                            <!--
                             <div class="form">
                                 <h5> คำค้นหา : {{dataForm.topic}}</h5>
                                 <input type="text" v-model="dataForm.keyword" class="form-control input-text" />
-                            </div>
+                            </div> -->
 
                         </div>
 
@@ -37,28 +48,25 @@
                         <tr>
                             <th style="width:15%"><i class="fa fa-tasks"></i>บัตรประชาชน</th>
                             <th><i class="fa fa-file-text"></i> ชื่อ-สกุล</th>
-                            <th><i class="fa fa-file-text"></i> วุฒิการศึกษาสูงสุด</th>
+                            <th><i class="fa fa-file-text"></i> เบอร์โทร</th>
                             <th><i class="fa fa-file-text"></i> สถานะ</th>
+
                             <th></th>
 
                         </tr>
 
-                        <tr style="padding: 5px 5px;" v-for="(item, index) in lstProfile" :key="index">
-                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.profileid}}</td>
+                        <tr style="padding: 5px 5px;" v-for="(item, index) in lstMembers" :key="index">
+                            <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{item.idcard}}</td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title"> {{ item.nameth}}</td>
                             <td style="padding: 5px 5px;font-weight:bold;" class="title">
-
-                                <strong>วุฒิการศึกษาสูงสุด</strong>: {{getValue(item.edu,0) }} <br>
-                                <strong>สาขา</strong>: {{getValue(item.edu,1) }}<br>
-                                <strong>ปีที่จบ</strong>: {{getValue(item.edu,3) }}<br>
-                                <strong>เกรดเฉลี่ย</strong>: {{getValue(item.edu,4) }}
-
+                                {{getPhone(item.idcard)}}
                             </td>
                             <td>
-                                {{ $store.state.jobs.status.find(x=>x.id==item.wstatus).topic}}
+                                {{getStatus(item)}}
                             </td>
+
                             <td style="padding: 5px 5px;">
-                                <button @click="dialogInfo(item.profileid)" v-show="isSelectJob" class="button" style="margin-right:5px;"> รายละเอียด / รับสมัครงาน</button>
+                                <button @click="dialogInfo(item.idcard)" class="button" style="margin-right:5px;"> รายละเอียด </button>
 
                             </td>
                         </tr>
@@ -396,6 +404,7 @@ export default {
         //this.lstProfileCopy = [...this.lstProfile]
 
         console.log(this.lstProfile)
+        console.log(this.lstMebers);
 
         this.$nextTick(() => {
 
@@ -428,7 +437,7 @@ export default {
             selectJobTopic: "",
             selectJobId: "",
             countJob: 0,
-            headTitle: 'จัดการผู้สมัคร',
+            headTitle: 'ข้อมูลผู้ลงทะเบียนสมัครงาน',
             editForm: {
                 keydb: 0,
                 index: 0,
@@ -459,6 +468,8 @@ export default {
             profileImg: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=300",
             lstEducation: [],
             lstMebers: [],
+            lstMembers: [],
+            lstMembersCopy: [],
             lstJobs: [],
             lstMyJob: [],
             lstJobsCopy: [],
@@ -471,7 +482,24 @@ export default {
         }
     },
     methods: {
+        getStatus: function (obj) {
 
+            if (obj.status === 2) {
+                return '*** เจ้าหน้าที่บุคคล'
+            } else {
+                const objStatus = this.$store.state.jobs.status
+                return objStatus.find(x => x.id === obj.wstatus).topic;
+            }
+        },
+        getPhone: function (idcard) {
+            const obj = this.lstProfile.find(x => x.profileid === idcard)
+            console.log(obj);
+            if (obj === undefined) {
+                return ''
+            } else {
+                return obj.phone;
+            }
+        },
         applyJob: async function (idcard) {
             let saveData = {
                 idcard: idcard,
@@ -582,12 +610,13 @@ export default {
                 cancelButtonText: 'ยกเลิก',
                 focusConfirm: false,
                 showCancelButton: true,
-                confirmButtonText: 'รับสมัครงาน',
-                showLoaderOnConfirm: true,
+                showConfirmButton: false,
+                //confirmButtonText: 'รับสมัครงาน',
+                //showLoaderOnConfirm: true,
             }).then(async (result) => {
                 if (result.value) {
                     try {
-                        await this.applyJob(idcard);
+                        // await this.applyJob(idcard);
 
                     } catch (e) {
 
@@ -641,17 +670,21 @@ export default {
         findMember: function () {
             let keyword = this.dataForm.keyword
             console.log("key : " + keyword)
-            console.log(this.lstProfileCopy);
-            if (keyword !== "")
-                this.lstProfile = [...this.lstProfileCopy.filter(x => (
-                    String(x.edux).includes(keyword) ||
-                    String(x.profileid).split(' ').join('').includes(keyword) ||
-                    String(x.nameth).includes(keyword) ||
-                    String(x.worknote).includes(keyword) ||
-                    (this.$store.state.jobs.status.find(xx => (xx.id == x.wstatus)).topic).includes(keyword)
-                ))]
-            else
-                this.lstProfile = [...this.lstProfileCopy]
+
+            if (keyword !== "") {
+                /*this.lstProfile = [...this.lstProfile.filter(x => ((String(x.edux).includes(keyword) ||
+                        String(x.profileid).split(' ').join('').includes(keyword) ||
+                        String(x.nameth).includes(keyword)) ||
+                    String(x.worknote).includes(keyword)))]*/
+                this.lstMembers = [...this.lstMembersCopy.filter(x => ((
+                        String(x.idcard).split(' ').join('').includes(keyword) ||
+                        String(x.nameth).includes(keyword)) ||
+                    (this.$store.state.jobs.status.find(xx => (xx.id == x.wstatus)).topic).includes(keyword)) && x.status != 2)]
+
+            } else {
+                /*this.lstProfile = [...this.lstProfileCopy]*/
+                this.lstMembers = [...this.lstMembersCopy]
+            }
 
         },
         getValue(arr, i) {
@@ -747,7 +780,6 @@ export default {
                 if (data.success == 1) {
                     if (data.data !== null) {
                         this.lstProfile = data.data
-                        this.lstProfileCopy = [...this.lstProfile]
 
                         this.lstProfile.forEach(function (item) {
                             console.log(item.carid)
@@ -842,6 +874,8 @@ export default {
                 this.$http.all([dataM, dataJ]).then(
                     this.$http.spread((...res) => {
                         this.lstMebers = res[0].data.data
+                        this.lstMembers = [...this.lstMebers]
+                        this.lstMembersCopy = [...this.lstMebers]
                         console.log(this.lstMebers)
                         this.lstJobs = res[1].data.data
                         this.lstJobsCopy = [...this.lstJobs]
@@ -944,5 +978,9 @@ export default {
     font-weight: bold;
     padding: 3px 8px;
     margin-left: 3px;
+}
+</style><style scoped>
+table.manage-table tr td {
+    padding: 0px 0px;
 }
 </style>
