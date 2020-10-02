@@ -66,7 +66,10 @@
                             </td>
 
                             <td style="padding: 5px 5px;">
+
                                 <button @click="dialogInfo(item.idcard)" class="button" style="margin-right:5px;"> รายละเอียด </button>
+
+                                <button @click="updateStatus(item.idcard,item.status)" class="button" style="margin-right:5px;"> {{changeUpdateTextButton(item.status)}} </button>
 
                             </td>
                         </tr>
@@ -263,11 +266,12 @@
 
                                 <div class="tab-content" id="tab7" style="display: none;">
 
-                                    <div class="message-by" v-for="(item, index) in lstMyJob" :key="'myjob'+index">
+                                    <div class="message-by" v-for="(itemJob, index) in lstMyJob" :key="'myjob'+index">
                                         <div class="message-by-headline">
                                             <h5>
-                                                ตำแหน่งที่รับสมัคร <i style="font-size:18px;">{{item.pname || "คุณยังไม่เลือกงานที่สมัคร "}}</i>
-                                                วันที่สมัคร <i style="font-size:18px;">{{item.regdate | moment("DD MMMM YYYY") }}</i>
+                                                ตำแหน่งที่รับสมัคร <i style="font-size:18px;">{{itemJob.pname || "คุณยังไม่เลือกงานที่สมัคร "}}</i>
+                                                วันที่สมัคร <i style="font-size:18px;">{{itemJob.regdate | moment("DD MMMM YYYY") }}</i>
+                                                สถานะ <i style="font-size:18px;">{{$store.state.jobs.status.find(x=>x.id==itemJob.pstatus).topic}}</i>
                                             </h5>
                                         </div>
                                     </div>
@@ -474,6 +478,7 @@ export default {
             lstMyJob: [],
             lstJobsCopy: [],
             jobInter: " -- ไม่พบข้อมูล --",
+            adminStatus: "เปลี่ยนเป็นผู้ใช้งาน",
             listDatas: [{
                 id: 1,
                 topic: 'xxx'
@@ -482,6 +487,43 @@ export default {
         }
     },
     methods: {
+        changeUpdateTextButton: function (status) {
+            let adminStatus = "เปลี่ยนเป็นเจ้าหน้าที่"
+            if (status === 2) adminStatus = "เปลี่ยนเป็นผู้ใช้งาน"
+            return adminStatus;
+        },
+        updateStatus: async function (idcard, status) {
+            this.$fire({
+                title: 'ยืนยันรหัสความปลอดภัยในการเปลี่ยนสิทธิ์การใช้งาน',
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'ยืนยัน',
+                showLoaderOnConfirm: true,
+            }).then(async (result) => {
+                if (result.value == 'kslitc@1234') {
+
+                    try {
+                        await this.$http.put('/api/register/permission', {
+                            status: status,
+                            idcard: idcard
+                        });
+                        this.getLstDatas();
+
+                    } catch (e) {
+                        console.log(e)
+                    }
+
+                } else {
+                    this.$fire({
+                        type: 'error',
+                        title: 'รหัสยืนยันไม่ถูกต้อง',
+                    })
+                }
+            })
+        },
         getStatus: function (obj) {
 
             if (obj.status === 2) {

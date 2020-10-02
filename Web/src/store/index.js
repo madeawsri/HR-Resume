@@ -36,6 +36,7 @@ export default new Vuex.Store({
                 { id: 11, topic: "รถระหว่างประเทศ" },
             ],
             status: [
+                { id: -1, topic: 'อยู่ระหว่างคัดเลือก' },
                 { id: 0, topic: "ว่างงาน" },
                 { id: 1, topic: "รับเข้าทำงาน" },
                 { id: 2, topic: "ถูกออกจากงาน" },

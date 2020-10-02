@@ -1,13 +1,28 @@
 const {
     getData,
     getDataByPage,
-    getDataAll
+    getDataAll,
+    updateStatusRegister
 } = require("./service");
 //const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 //const { sign } = require("jsonwebtoken");
 
 module.exports = {
+    updateStatus: (req, res) => {
 
+        let data = req.body
+
+        updateStatusRegister(data, (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            return res.json({
+                success: 1,
+                data: results
+            });
+        });
+    },
     getDatas: (req, res) => {
         let data = {
             idcard: req.params.id,

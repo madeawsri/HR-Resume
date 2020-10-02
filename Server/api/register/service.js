@@ -7,6 +7,18 @@ function getNow() {
     const dateTime = date + ' ' + time;
     return dateTime;
 }
+const ExcSQL = (querySql, callBack) => {
+    pool.query(
+        querySql,
+        (error, results, fields) => {
+            if (error) {
+                callBack(error);
+            }
+            return callBack(null, results);
+        }
+    );
+}
+
 module.exports = {
 
 
@@ -65,6 +77,18 @@ module.exports = {
             }
         )
 
+    },
+    updateStatusRegister: (data, callBack) => {
+        console.log('update register')
+        console.log(data)
+        let querySql = ''
+        if (data.status === 2) data.status = 1;
+        else data.status = 2;
+        querySql = `
+        UPDATE hr_register SET status = ${data.status} where idcard = '${data.idcard}';
+       `
+        console.log(querySql)
+        return ExcSQL(querySql, callBack)
     },
 
 

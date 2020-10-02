@@ -134,10 +134,24 @@ ORDER BY i.nuddate DESC;`
                 if (data.idcard && data.jobid) {
                     sql = `SELECT *,(select j.topic from hr_jobs as j where j.id = x.jobid ) as pname from ${tableName}  as x
                     WHERE x.idcard = '${data.idcard}' and x.jobid = ${data.jobid}`
+                    sql = `SELECT 
+                    j.* ,
+                    (select jj.topic from hr_jobs as jj where jj.id = j.jobid ) as pname,
+                    ifnull(p.status,-1) AS pstatus,
+                    p.statusnote AS pstatusnote
+                    FROM hr_jobinterest AS j LEFT OUTER JOIN hr_promise AS p ON j.idcard = p.idcard AND j.jobid = p.jobid
+                    WHERE j.idcard = '${data.idcard}' and j.jobid = ${data.jobid}`
                     flegAll = false
                 } else {
                     sql = `SELECT * ,(select j.topic from hr_jobs as j where j.id = x.jobid ) as pname from ${tableName}  as x
                 WHERE x.idcard = '${data.idcard}'`
+                    sql = `SELECT 
+                    j.* ,
+                    (select jj.topic from hr_jobs as jj where jj.id = j.jobid ) as pname,
+                    ifnull(p.status,-1) AS pstatus,
+                    p.statusnote AS pstatusnote
+                    FROM hr_jobinterest AS j LEFT OUTER JOIN hr_promise AS p ON j.idcard = p.idcard AND j.jobid = p.jobid
+                    WHERE j.idcard = '${data.idcard}' `
                     flegAll = true
                 }
                 break;
