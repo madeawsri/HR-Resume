@@ -13,6 +13,7 @@
         "jquery": "^3.5.1",
         "moment": "^2.27.0",
         "vue": "^2.6.11",
+        "vue-enhanced-check": "^1.5.4",
         "vue-loading-button": "^0.2.0",
         "vue-moment": "^4.1.0",
         "vue-multiselect": "^2.1.6",

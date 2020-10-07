@@ -67,9 +67,11 @@
 
                             <td style="padding: 5px 5px;">
 
-                                <button @click="dialogInfo(item.idcard)" class="button" style="margin-right:5px;"> รายละเอียด </button>
+                                <button @click="dialogInfo(item.idcard)" class="button pull-right" style="margin-right:5px;"> รายละเอียด </button>
 
-                                <button @click="updateStatus(item.idcard,item.status)" class="button" style="margin-right:5px;"> {{changeUpdateTextButton(item.status)}} </button>
+                                <enhanced-check @change="onChangeAdmin" label="เป็นสิทธิ์ เจ้าหน้าที่" subClass="success" :checked="item.status===2"></enhanced-check>
+
+                                <!-- <button @click="updateStatus(item.idcard,item.status)" class="button" style="margin-right:5px;"> {{changeUpdateTextButton(item.status)}} </button> -->
 
                             </td>
                         </tr>
@@ -354,10 +356,13 @@
 <script>
 import "vue-select/src/scss/vue-select.scss";
 import memberLayout from '@/components/member-layouts/index'
-
+import {
+    EnhancedCheck
+} from 'vue-enhanced-check'
 export default {
     components: {
-        memberLayout
+        memberLayout,
+        'enhanced-check': EnhancedCheck
     },
 
     mounted() {
@@ -479,12 +484,16 @@ export default {
             lstJobsCopy: [],
             jobInter: " -- ไม่พบข้อมูล --",
             adminStatus: "เปลี่ยนเป็นผู้ใช้งาน",
+            chkAdmin: [],
             listDatas: [{
                 id: 1,
                 topic: 'xxx'
-            }] // data in table
+            }] // data in table 
 
         }
+    },
+    watch: {
+
     },
     methods: {
         changeUpdateTextButton: function (status) {
@@ -492,37 +501,46 @@ export default {
             if (status === 2) adminStatus = "เปลี่ยนเป็นผู้ใช้งาน"
             return adminStatus;
         },
+        onChangeAdmin: function (e) {
+            console.log("on change admin")
+            console.log(e.value)
+        },
         updateStatus: async function (idcard, status) {
-            this.$fire({
-                title: 'ยืนยันรหัสความปลอดภัยในการเปลี่ยนสิทธิ์การใช้งาน',
-                input: 'password',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                showCancelButton: true,
-                confirmButtonText: 'ยืนยัน',
-                showLoaderOnConfirm: true,
-            }).then(async (result) => {
-                if (result.value == 'kslitc@1234') {
 
-                    try {
-                        await this.$http.put('/api/register/permission', {
-                            status: status,
-                            idcard: idcard
-                        });
-                        this.getLstDatas();
+            console.log("ON/OFF")
 
-                    } catch (e) {
-                        console.log(e)
-                    }
+            /*
+                        this.$fire({
+                            title: 'ยืนยันรหัสความปลอดภัยในการเปลี่ยนสิทธิ์การใช้งาน',
+                            input: 'password',
+                            inputAttributes: {
+                                autocapitalize: 'off'
+                            },
+                            showCancelButton: true,
+                            confirmButtonText: 'ยืนยัน',
+                            showLoaderOnConfirm: true,
+                        }).then(async (result) => {
+                            if (result.value == 'kslitc@1234') {
 
-                } else {
-                    this.$fire({
-                        type: 'error',
-                        title: 'รหัสยืนยันไม่ถูกต้อง',
-                    })
-                }
-            })
+                                try {
+                                    await this.$http.put('/api/register/permission', {
+                                        status: status,
+                                        idcard: idcard
+                                    });
+                                    this.getLstDatas();
+
+                                } catch (e) {
+                                    console.log(e)
+                                }
+
+                            } else {
+                                this.$fire({
+                                    type: 'error',
+                                    title: 'รหัสยืนยันไม่ถูกต้อง',
+                                })
+                            }
+                        })
+                        */
         },
         getStatus: function (obj) {
 

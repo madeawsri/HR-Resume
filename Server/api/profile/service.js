@@ -173,9 +173,9 @@ LEFT JOIN (SELECT profileid,workplace,'position',salary,begintime FROM hr_work) 
            (SELECT GROUP_CONCAT(ji.jobid) FROM hr_jobinterest AS ji WHERE ji.idcard = p.profileid) AS jobids,
            (SELECT DISTINCT  GROUP_CONCAT(w.position, w.detail) FROM hr_work AS w WHERE w.profileid = p.profileid ORDER BY w.endtime DESC LIMIT 1) AS worknote
            
-          FROM (SELECT a.*,r.wstatus from hr_profiles AS a RIGHT JOIN hr_register AS r ON a.profileid = r.idcard AND r.wstatus not in (1) and r.status = 1) AS p  
+          FROM (SELECT a.*,r.wstatus from hr_profiles AS a RIGHT JOIN hr_register AS r ON a.profileid = r.idcard ) AS p  
          LEFT JOIN (SELECT profileid,workplace,'position',salary,begintime FROM hr_work) AS w  ON w.profileid = p.profileid
-             where p.profileid = ?`, [idcard],
+             where p.profileid = ?`, [idcard], // AND r.wstatus not in (1) and r.status = 1
             (error, results, fields) => {
                 if (error) {
                     callBack(error);
